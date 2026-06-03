@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الموسوعة الامتحانية للكيمياء 2026</title>
+    <style>
+        :root { --primary: #7d3c98; --accent: #8e44ad; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4ecf7; padding: 20px; }
+        #timer { position: fixed; top: 20px; right: 20px; background: var(--primary); color: white; padding: 15px 25px; border-radius: 50px; font-weight: bold; font-size: 24px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; }
+        .question { margin: 30px 0; padding: 35px; background: white; border-right: 8px solid var(--primary); border-radius: 20px; position: relative; overflow: hidden; }
+        .watermark-overlay { position: absolute; top: 10px; right: 10px; font-size: 16px; color: var(--primary); font-weight: bold; background: rgba(142, 68, 173, 0.2); padding: 5px 10px; border-radius: 5px; border: 1px solid var(--primary); z-index: 10; }
+        label { display: block; padding: 15px; cursor: pointer; border: 2px solid #eee; border-radius: 10px; margin: 10px 0; background: rgba(255,255,255,0.9); }
+        .correct-opt { background: #d4efdf !important; border-color: #27ae60 !important; }
+        .wrong-opt { background: #fadbd8 !important; border-color: #c0392b !important; }
+        .submit-btn { width: 100%; padding: 25px; font-size: 24px; background: var(--primary); color: white; border-radius: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="timer">60:00</div>
+<div style="text-align:center; padding:20px;">
+    <h1>الموسوعة الامتحانية للكيمياء (تاسع)</h1>
+    <p>إعداد: <strong>NOUR EDDIN</strong> | واتساب: 0957869853</p>
+</div>
+
+<form id="quizForm"></form>
+<button type="button" class="submit-btn" onclick="getResult()">تسليم ورقة الكيمياء</button>
+<div id="result" style="text-align:center; margin:30px; font-size:24px; font-weight:bold;"></div>
+
+<script>
+    const quiz = [
+        {q: "عدد البروتونات في النواة يسمى:", options: ["العدد الذري", "العدد الكتلي", "رقم النظير"], ans: "العدد الذري"},
+        {q: "الجسيمات التي تدور حول النواة هي:", options: ["البروتونات", "الإلكترونات", "النيوترونات"], ans: "الإلكترونات"},
+        {q: "الرابطة التي تنشأ بين ذرتين بمشاركة إلكترونات:", options: ["أيونية", "تساهمية", "فلزية"], ans: "تساهمية"},
+        {q: "الرابطة الأيونية تنشأ بين:", options: ["أيون موجب وسالب", "ذرتين متماثلتين", "فلزين"], ans: "أيون موجب وسالب"},
+        {q: "المحلول الذي يلون عباد الشمس بالأحمر هو:", options: ["حمضي", "أساسي", "ملحي"], ans: "حمضي"},
+        {q: "الأساس يطلق في المحلول المائي أيونات:", options: ["هيدروكسيد OH-", "هيدروجين H+", "كلور Cl-"], ans: "هيدروكسيد OH-"},
+        {q: "الغاز الذي يعكر رائق الكلس هو:", options: ["ثنائي أكسيد الكربون", "الأكسجين", "الهيدروجين"], ans: "ثنائي أكسيد الكربون"},
+        {q: "شحنة الإلكترون هي:", options: ["سالبة", "موجبة", "متعادلة"], ans: "سالبة"},
+        {q: "يتكون الماء من اتحاد:", options: ["هيدروجين وأكسجين", "كربون وهيدروجين", "نيتروجين وأكسجين"], ans: "هيدروجين وأكسجين"},
+        {q: "العدد الكتلي يساوي مجموع:", options: ["البروتونات والنيوترونات", "البروتونات والإلكترونات", "الإلكترونات والنيوترونات"], ans: "البروتونات والنيوترونات"},
+        {q: "التفاعل الذي يطلق طاقة حرارية يسمى:", options: ["ناشر للحرارة", "ماص للحرارة", "متعادل"], ans: "ناشر للحرارة"},
+        {q: "العنصر الأساسي في الكيمياء العضوية هو:", options: ["الكربون", "الأكسجين", "الحديد"], ans: "الكربون"},
+        {q: "المادة التي تزيد سرعة التفاعل دون أن تستهلك:", options: ["الوسيط", "المتفاعل", "الناتج"], ans: "الوسيط"},
+        {q: "تفاعل الحمض مع الأساس ينتج:", options: ["ملح وماء", "حمض فقط", "أساس فقط"], ans: "ملح وماء"},
+        {q: "أي مما يلي حمض قوي:", options: ["حمض كلور الماء", "حمض الخل", "حمض الكربون"], ans: "حمض كلور الماء"},
+        {q: "الرقم الهيدروجيني pH للمحلول المتعادل هو:", options: ["7", "أقل من 7", "أكبر من 7"], ans: "7"},
+        {q: "الذرة التي تفقد إلكترونات تصبح:", options: ["أيوناً موجباً", "أيوناً سالباً", "غير مشحونة"], ans: "أيوناً موجباً"},
+        {q: "العناصر النبيلة تتميز بـ:", options: ["استقرارها الكيميائي", "نشاطها العالي", "قدرتها على التأين"], ans: "استقرارها الكيميائي"},
+        {q: "ينتج غاز الهيدروجين عند تفاعل الحمض مع:", options: ["المعادن النشطة", "الأكسجين", "الماء"], ans: "المعادن النشطة"},
+        {q: "يسمى الملح الناتج عن حمض كلور الماء:", options: ["كلوريد", "كبريتات", "نترات"], ans: "كلوريد"}
+    ];
+
+    const container = document.getElementById('quizForm');
+    quiz.forEach((item, index) => {
+        let opts = item.options.map(o => `<label><input type="radio" name="q${index}" value="${o}"> ${o}</label>`).join('');
+        container.innerHTML += `<div class="question">
+            <div class="watermark-overlay">NOUR EDDIN | 0957869853</div>
+            <p style="font-weight:bold;">${index+1}. ${item.q}</p>${opts}
+        </div>`;
+    });
+
+    function getResult() {
+        let s = 0;
+        quiz.forEach((item, i) => {
+            let sel = document.querySelector(`input[name="q${i}"]:checked`);
+            document.getElementsByName(`q${i}`).forEach(r => {
+                r.disabled = true;
+                if(r.value === item.ans) r.parentNode.classList.add('correct-opt');
+                if(sel && sel.value === r.value && r.value !== item.ans) r.parentNode.classList.add('wrong-opt');
+            });
+            if(sel && sel.value === item.ans) s += 5;
+        });
+        document.getElementById('result').innerHTML = `علامتك النهائية: ${s}/100 <br> ${s>=60 ? 'كيميائي متميز! 🌟' : 'راجع دروسك لتصبح محترفاً 💪'}`;
+    }
+
+    let time = 3600;
+    setInterval(() => {
+        let m = Math.floor(--time/60), s = time%60;
+        document.getElementById('timer').innerHTML = `${m}:${s < 10 ? '0'+s : s}`;
+        if(time <= 0) getResult();
+    }, 1000);
+</script>
+</body>
+</html>
