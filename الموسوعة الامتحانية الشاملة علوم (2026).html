@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اختبار النينجا الوزاري 2026</title>
+    <style>
+        :root { --primary: #5d4037; --accent: #2e7d32; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #fdf6e3; padding: 20px; }
+        #timer { position: fixed; top: 20px; right: 20px; background: var(--accent); color: white; padding: 15px 25px; border-radius: 50px; font-weight: bold; font-size: 24px; border: 3px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; }
+        .question { margin: 30px 0; padding: 35px; background: white; border-right: 8px solid var(--primary); border-radius: 20px; position: relative; overflow: hidden; }
+        
+        /* العلامة المائية واضحة وثابتة */
+        .watermark-overlay {
+            position: absolute;
+            top: 10px; right: 10px;
+            font-size: 16px;
+            color: #5d4037;
+            font-weight: bold;
+            background: rgba(221, 160, 221, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #5d4037;
+            z-index: 10;
+        }
+        
+        label { display: block; padding: 15px; cursor: pointer; border: 2px solid #eee; border-radius: 10px; margin: 10px 0; background: rgba(255,255,255,0.9); }
+        .correct-opt { background: #c8e6c9 !important; border-color: #2e7d32 !important; }
+        .wrong-opt { background: #ffcdd2 !important; border-color: #c62828 !important; }
+        .submit-btn { width: 100%; padding: 25px; font-size: 24px; background: var(--primary); color: white; border-radius: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="timer">60:00</div>
+<div style="text-align:center; padding:20px;">
+    <h1>الموسوعة الامتحانية الشاملة (2026)</h1>
+</div>
+
+<form id="quizForm"></form>
+<button type="button" class="submit-btn" onclick="getResult()">تسليم ورقة الامتحان</button>
+<div id="result" style="text-align:center; margin:30px; font-size:24px; font-weight:bold;"></div>
+
+<script>
+    const quiz = [
+        {q: "أين يقع المخيخ؟", options: ["خلف وتحت المخ", "أمام البصلة", "بين الدماغين"], ans: "خلف وتحت المخ"},
+        {q: "ما وظيفة الأنسولين؟", options: ["رفع السكر", "خفض السكر", "تنشيط الكبد"], ans: "خفض السكر"},
+        {q: "أين تتشكل صورة قصر البصر؟", options: ["خلف الشبكية", "على الشبكية", "أمام الشبكية"], ans: "أمام الشبكية"},
+        {q: "ما وظيفة غضروف الاتصال؟", options: ["نمو العظم طولاً", "عرضاً", "تجديد العظم"], ans: "نمو العظم طولاً"},
+        {q: "حلقات الرغامي ناقصة الاستدارة لـ:", options: ["مرور الهواء", "توسع المريء", "قوة الرغامي"], ans: "توسع المريء"},
+        {q: "الزمرة O تعتبر:", options: ["مستقبلاً عاماً", "معطياً عاماً", "لا شيء"], ans: "معطياً عاماً"},
+        {q: "ما هو مركز التنفس؟", options: ["المخ", "المخيخ", "البصلة السيسائية"], ans: "البصلة السيسائية"},
+        {q: "أين يقع نفير أوستاش؟", options: ["الأذن الخارجية", "الوسطى", "الداخلية"], ans: "الأذن الوسطى"},
+        {q: "المادة الرمادية في النخاع الشوكي:", options: ["محيطية", "مركزية", "غير موجودة"], ans: "مركزية"},
+        {q: "تفرز الغدة النخامية هرمون:", options: ["النمو", "الأنسولين", "التستوسترون"], ans: "النمو"},
+        {q: "السمحاق مسؤول عن:", options: ["نمو العظم عرضاً", "تفكيك العظم", "الصلابة فقط"], ans: "نمو العظم عرضاً"},
+        {q: "تتوضع المادة البيضاء في المخ:", options: ["خارجية", "داخلية", "مركزية"], ans: "داخلية"},
+        {q: "المشبك العصبي هو اتصال بين:", options: ["عصبونين", "عضلة وعظم", "خلية وغدة"], ans: "عصبونين"},
+        {q: "ما هو الغاز المسبب للاحتباس الحراري؟", options: ["CO2", "O2", "N2"], ans: "CO2"},
+        {q: "عظيمات السمع بالترتيب:", options: ["مطرقة، سندان، ركاب", "سندان، مطرقة، ركاب", "ركاب، سندان، مطرقة"], ans: "مطرقة، سندان، ركاب"},
+        {q: "الجزء الأكثر صلابة في السن:", options: ["الميناء", "العاج", "اللب"], ans: "الميناء"},
+        {q: "البقعة الصفراء مسؤولة عن:", options: ["الرؤية الليلية", "حدة الرؤية", "العمى"], ans: "حدة الرؤية"},
+        {q: "أين يفرز البنكرياس العصارة؟", options: ["المعدة", "العفج", "الأمعاء الغليظة"], ans: "العفج"},
+        {q: "وظيفة الصفيحات الدموية:", options: ["تخثر الدم", "نقل الأكسجين", "الدفاع"], ans: "تخثر الدم"},
+        {q: "الخصية الهاجرة تسبب عقم بسبب:", options: ["درجة الحرارة", "الغذاء", "الهرمونات"], ans: "درجة الحرارة"}
+    ];
+
+    const container = document.getElementById('quizForm');
+    quiz.forEach((item, index) => {
+        let opts = item.options.map(o => `<label><input type="radio" name="q${index}" value="${o}"> ${o}</label>`).join('');
+        container.innerHTML += `<div class="question">
+            <div class="watermark-overlay">NOUR EDDIN | 0957869853</div>
+            <p style="font-weight:bold;">${index+1}. ${item.q}</p>${opts}
+        </div>`;
+    });
+
+    function getResult() {
+        let s = 0;
+        quiz.forEach((item, i) => {
+            let sel = document.querySelector(`input[name="q${i}"]:checked`);
+            document.getElementsByName(`q${i}`).forEach(r => {
+                r.disabled = true;
+                if(r.value === item.ans) r.parentNode.classList.add('correct-opt');
+                if(sel && sel.value === r.value && r.value !== item.ans) r.parentNode.classList.add('wrong-opt');
+            });
+            if(sel && sel.value === item.ans) s += 5;
+        });
+        document.getElementById('result').innerHTML = `علامتك النهائية: ${s}/100 <br> ${s>=60 ? 'أحسنت! أنت بطل النينجا 🌟' : 'حاول مرة أخرى لتصل للقمة 💪'}`;
+    }
+
+    let time = 3600;
+    setInterval(() => {
+        let m = Math.floor(--time/60), s = time%60;
+        document.getElementById('timer').innerHTML = `${m}:${s < 10 ? '0'+s : s}`;
+        if(time <= 0) getResult();
+    }, 1000);
+</script>
+</body>
+</html>
