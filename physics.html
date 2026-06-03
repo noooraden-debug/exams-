@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الموسوعة الامتحانية للفيزياء - التاسع</title>
+    <style>
+        :root { --primary: #1a5276; --accent: #2980b9; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #ebf5fb; padding: 20px; }
+        #timer { position: fixed; top: 20px; right: 20px; background: var(--primary); color: white; padding: 15px 25px; border-radius: 50px; font-weight: bold; font-size: 24px; border: 3px solid #fff; z-index: 1000; }
+        .question { margin: 30px 0; padding: 35px; background: white; border-right: 8px solid var(--primary); border-radius: 20px; position: relative; overflow: hidden; }
+        .watermark-overlay { position: absolute; top: 10px; right: 10px; font-size: 16px; color: var(--primary); font-weight: bold; background: rgba(41, 128, 185, 0.2); padding: 5px 10px; border-radius: 5px; border: 1px solid var(--primary); z-index: 10; }
+        label { display: block; padding: 15px; cursor: pointer; border: 2px solid #eee; border-radius: 10px; margin: 10px 0; background: rgba(255,255,255,0.9); }
+        .correct-opt { background: #d4efdf !important; border-color: #27ae60 !important; }
+        .wrong-opt { background: #fadbd8 !important; border-color: #c0392b !important; }
+        .submit-btn { width: 100%; padding: 25px; font-size: 24px; background: var(--primary); color: white; border-radius: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="timer">60:00</div>
+<div style="text-align:center; padding:20px;">
+    <h1>الموسوعة الامتحانية للفيزياء (تاسع)</h1>
+    <p>إعداد: NOUR EDDIN</p>
+</div>
+
+<form id="quizForm"></form>
+<button type="button" class="submit-btn" onclick="getResult()">تسليم ورقة الفيزياء</button>
+<div id="result" style="text-align:center; margin:30px; font-size:24px; font-weight:bold;"></div>
+
+<script>
+    const quiz = [
+        {q: "واحد قياس القوة في الجملة الدولية هي:", options: ["النيوتن", "الجول", "الواط"], ans: "النيوتن"},
+        {q: "تتعلق الطاقة الحركية بـ:", options: ["السرعة والكتلة", "الارتفاع", "الزمن"], ans: "السرعة والكتلة"},
+        {q: "ينص مبدأ حفظ الطاقة على أن الطاقة:", options: ["لا تفنى ولا تستحدث", "تختفي دائماً", "تزيد دائماً"], ans: "لا تفنى ولا تستحدث"},
+        {q: "العمل يكون معدوماً إذا كانت القوة:", options: ["عمودية على الانتقال", "موازية للانتقال", "أكبر من الوزن"], ans: "عمودية على الانتقال"},
+        {q: "تزداد الطاقة الكامنة الثقالية لجسم بزيادة:", options: ["ارتفاعه عن سطح الأرض", "سرعته", "حجمه"], ans: "ارتفاعه عن سطح الأرض"},
+        {q: "الاستطاعة هي:", options: ["العمل المنجز في وحدة الزمن", "الطاقة المخزنة", "القوة المطبقة"], ans: "العمل المنجز في وحدة الزمن"},
+        {q: "وحدة قياس الاستطاعة هي:", options: ["الواط", "النيوتن", "الجول"], ans: "الواط"},
+        {q: "جهاز قياس القوة يسمى:", options: ["الدينامومتر", "الميزان العادي", "المسطرة"], ans: "الدينامومتر"},
+        {q: "مركز ثقل الصفيحة المنتظمة هو:", options: ["مركزها الهندسي", "حافتها", "خارجها"], ans: "مركزها الهندسي"},
+        {q: "العمل المنجز يساوي حاصل ضرب:", options: ["القوة في الانتقال", "القوة في الزمن", "الكتلة في السرعة"], ans: "القوة في الانتقال"},
+        {q: "تتحول الطاقة الكهربائية إلى حركية في:", options: ["المحرك الكهربائي", "المصباح", "المقاومة"], ans: "المحرك الكهربائي"},
+        {q: "جسم ساكن طاقته الحركية:", options: ["معدومة", "عظمى", "ثابتة"], ans: "معدومة"},
+        {q: "يتناسب تمدد النابض طرداً مع:", options: ["القوة المؤثرة عليه", "طوله الأصلي", "كتلة الجسم المعلق"], ans: "القوة المؤثرة عليه"},
+        {q: "الوزن هو:", options: ["قوة جذب الأرض للجسم", "كتلة الجسم", "تسارع الجسم"], ans: "قوة جذب الأرض للجسم"},
+        {q: "عند هبوط جسم من ارتفاع ما، تتحول طاقته الكامنة إلى:", options: ["حركية", "حرارية", "كيميائية"], ans: "حركية"},
+        {q: "تتعلق الطاقة الحركية بمربع:", options: ["السرعة", "الكتلة", "الارتفاع"], ans: "السرعة"},
+        {q: "الاستطاعة تساوي العمل مقسوماً على:", options: ["الزمن", "المسافة", "القوة"], ans: "الزمن"},
+        {q: "تكون السرعة ثابتة في:", options: ["الحركة المستقيمة المنتظمة", "الحركة المتسارعة", "السكون"], ans: "الحركة المستقيمة المنتظمة"},
+        {q: "واحد قياس الطاقة هي:", options: ["الجول", "النيوتن", "الواط"], ans: "الجول"},
+        {q: "يسمى استطالة النابض بـ:", options: ["التمدد", "الانضغاط", "المرونة"], ans: "التمدد"}
+    ];
+
+    const container = document.getElementById('quizForm');
+    quiz.forEach((item, index) => {
+        let opts = item.options.map(o => `<label><input type="radio" name="q${index}" value="${o}"> ${o}</label>`).join('');
+        container.innerHTML += `<div class="question">
+            <div class="watermark-overlay">NOUR EDDIN | 0957869853</div>
+            <p style="font-weight:bold;">${index+1}. ${item.q}</p>${opts}
+        </div>`;
+    });
+
+    function getResult() {
+        let s = 0;
+        quiz.forEach((item, i) => {
+            let sel = document.querySelector(`input[name="q${i}"]:checked`);
+            document.getElementsByName(`q${i}`).forEach(r => {
+                r.disabled = true;
+                if(r.value === item.ans) r.parentNode.classList.add('correct-opt');
+                if(sel && sel.value === r.value && r.value !== item.ans) r.parentNode.classList.add('wrong-opt');
+            });
+            if(sel && sel.value === item.ans) s += 5;
+        });
+        document.getElementById('result').innerHTML = `علامتك النهائية: ${s}/100 <br> ${s>=60 ? 'أحسنت! أنت فيزيائي بارع 🌟' : 'حاول مرة أخرى لتتقن الفيزياء 💪'}`;
+    }
+
+    let time = 3600;
+    setInterval(() => {
+        let m = Math.floor(--time/60), s = time%60;
+        document.getElementById('timer').innerHTML = `${m}:${s < 10 ? '0'+s : s}`;
+        if(time <= 0) getResult();
+    }, 1000);
+</script>
+</body>
+</html>
