@@ -65,21 +65,31 @@
             const subjectMap = { "علوم": "science", "فيزياء": "physics", "كيمياء": "chemistry" };
             let mappedSubject = subjectMap[userInputSubject] || userInputSubject.toLowerCase();
 
-            // التعديل هنا: البحث في الجذر '/' مباشرة
             db.ref('/').once('value').then(function(snapshot) {
                 let found = false;
-                snapshot.forEach(function(child) {
-                    const data = child.val();
-                    // التأكد من أن البيانات تحتوي على حقل subject (أي أنها بيانات طالب)
-                    if (data && data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
+                const allData = snapshot.val();
+                
+                // البحث داخل كائنات قاعدة البيانات مباشرة
+                for (let key in allData) {
+                    const data = allData[key];
+                    if (data && typeof data === 'object' && data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
                         found = true;
+                        // تسجيل عملية الدخول
                         db.ref('logs').push({ student: mappedSubject, time: new Date().toLocaleString() });
                         window.location.href = mappedSubject + ".html";
+                        break; 
                     }
-                });
-                if (!found) errText.style.display = "block";
+                }
+                
+                if (!found) {
+                    errText.style.display = "block";
+                }
+            }).catch(function(error) {
+                console.error("خطأ في الاتصال:", error);
+                alert("حدث خطأ في الاتصال بقاعدة البيانات، يرجى المحاولة لاحقاً.");
             });
         });
     </script>
 </body>
 </html>
+ 
