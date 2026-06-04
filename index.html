@@ -26,7 +26,7 @@
         .box:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.12); border-color: #00d4ff; }
         
         .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
-        .box img { width: 100px; height: 100px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(0,212,255,0.5)); object-fit: contain; }
+        .box img { width: 90px; height: 90px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(0,212,255,0.5)); object-fit: contain; }
         .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
         
         .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer; text-align: center; display: inline-block; }
@@ -40,11 +40,9 @@
 <body>
 
     <div class="smart-bg">
-        <!-- Particles -->
         <div class="particle" style="width: 12px; height: 12px; left: 5%; animation-duration: 8s;"></div>
         <div class="particle" style="width: 15px; height: 15px; left: 25%; animation-duration: 10s;"></div>
         <div class="particle" style="width: 20px; height: 20px; left: 55%; animation-duration: 7s;"></div>
-        <div class="particle" style="width: 18px; height: 18px; left: 85%; animation-duration: 9s;"></div>
     </div>
 
     <div class="header">
@@ -53,6 +51,7 @@
     </div>
 
     <div class="container">
+        <!-- قفل الأمان -->
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
             <h2 style="margin-bottom: 20px;">الرجاء إدخال الرمز السري للدخول</h2>
@@ -61,25 +60,23 @@
             <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
         </div>
 
+        <!-- الاختبارات -->
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
-            <!-- العلوم -->
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://png.pngtree.com/png-vector/20240902/ourmid/pngtree-microscope-with-lab-glassware-science-laboratory-on-transparent-background-png-image_17031040.png" alt="علوم">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921334.png" alt="العلوم">
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
-            <!-- الفيزياء -->
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://png.pngtree.com/png-vector/20240507/ourmid/pngtree-atom-model-3d-illustration-science-education-chemistry-physics-atomic-structure-clipart-png-image_16156219.png" alt="فيزياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/2717/2717203.png" alt="الفيزياء">
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
-            <!-- الكيمياء -->
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://png.pngtree.com/png-vector/20240520/ourmid/pngtree-chemistry-lab-equipment-for-science-day-or-school-experiment-themes-png-image_21622919.png" alt="كيمياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
                 <h2>اختبار الكيمياء</h2>
                 <a href="chemistry.html" class="btn">ابدأ الآن</a>
             </div>
@@ -91,13 +88,9 @@
             const userInput = document.getElementById("pass-field").value.trim();
             const errorText = document.getElementById("err-text");
             
-            function unlockPlatform() {
+            if (userInput === "12345") {
                 document.getElementById("auth-box").style.display = "none";
                 document.getElementById("exams-container").style.display = "flex";
-            }
-
-            if (userInput === "12345") {
-                unlockPlatform();
             } else {
                 errorText.style.display = "block";
             }
