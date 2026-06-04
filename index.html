@@ -3,52 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة النماذج الامتحانية الذكية</title>
+    <title>منصة النماذج الامتحانية</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <style>
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; overflow-x: hidden; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; }
         .smart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a2a6c 0%, #05070a 100%); }
-        .header { text-align: center; padding: 20px; }
-        .main-title { font-size: 2rem; font-weight: bold; color: #00d4ff; text-shadow: 0 0 15px rgba(0,212,255,0.7); }
-        .container { width: 90%; max-width: 500px; display: flex; flex-direction: column; gap: 25px; margin-bottom: 50px; }
-        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; }
-        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 15px; }
-        .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; }
-        .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
+        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 80%; max-width: 400px; }
+        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px; border-radius: 25px; color: white; text-align: center; width: 80%; margin-bottom: 15px; }
+        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 10px 30px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <div class="smart-bg"></div>
 
-    <div class="header">
-        <h1 class="main-title">منصة النماذج الامتحانية الذكية</h1>
-        <p>إعداد المبرمج NOUR EDDIN - 0957869853</p>
-    </div>
-
-    <div class="container">
-        <div id="auth-box" class="box">
-            <div class="watermark-box">🔐 قفل الأمان</div>
-            <h2>الرجاء تسجيل الدخول</h2>
-            <input type="text" id="subject-field" class="lock-input" placeholder="اسم المادة (علوم، فيزياء، كيمياء)">
-            <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري">
-            <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
-            <div id="err-text" class="error-message">❌ بيانات غير صحيحة أو انتهى الاشتراك!</div>
-        </div>
-
-        <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
-            <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/3061/3061341.png" alt="العلوم">
-                <h2>اختبار العلوم</h2>
-                <a href="science.html" class="btn">ابدأ الآن</a>
-            </div>
-        </div>
+    <div class="box">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" id="subject-field" class="lock-input" placeholder="اسم المادة (علوم)">
+        <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري (123)">
+        <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
     </div>
 
     <script>
@@ -58,42 +33,25 @@
 
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             let userInputSubject = document.getElementById("subject-field").value.trim();
-            const userPass = document.getElementById("pass-field").value.trim();
-            const errText = document.getElementById("err-text");
-
-            const subjectMap = { "علوم": "science", "فيزياء": "physics", "كيمياء": "chemistry" };
-            let mappedSubject = subjectMap[userInputSubject] || userInputSubject.toLowerCase();
+            let userPass = document.getElementById("pass-field").value.trim();
 
             db.ref('/').once('value').then(function(snapshot) {
-                let found = false;
                 const allData = snapshot.val();
-                
-                for (let key in allData) {
-                    const data = allData[key];
-                    if (data && typeof data === 'object' && data.subject === mappedSubject && data.password === userPass) {
-                        // مقارنة التاريخ بدقة
-                        const expiry = new Date(data.expiryDate);
-                        const now = new Date();
-                        
-                        if (now <= expiry) {
-                            found = true;
-                            db.ref('logs').push({ student: mappedSubject, time: new Date().toLocaleString() });
-                            window.location.href = mappedSubject + ".html";
-                            break; 
-                        } else {
-                            alert("عذراً، اشتراكك منتهي الصلاحية بتاريخ: " + data.expiryDate);
-                            found = true;
-                            break;
-                        }
+                let found = false;
+
+                if (allData.student1) {
+                    let s = allData.student1;
+                    let targetSub = (userInputSubject === "علوم") ? "science" : userInputSubject;
+
+                    if (s.subject === targetSub && String(s.password) === userPass) {
+                        found = true;
+                        window.location.href = s.subject + ".html";
                     }
                 }
-                
+
                 if (!found) {
-                    errText.style.display = "block";
-                    alert("بيانات غير صحيحة! تأكد من المادة (علوم) والرمز (123)");
+                    alert("خطأ: تأكد من كتابة 'علوم' و الرمز '123'");
                 }
-            }).catch(function(error) {
-                alert("خطأ في الاتصال: " + error.message);
             });
         });
     </script>
