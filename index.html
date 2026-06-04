@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة النماذج الامتحانية الذكية</title>
     
-    <!-- إضافة مكتبة Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
@@ -18,7 +17,7 @@
         .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; }
         .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
         .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; }
-        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; }
+        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 15px; }
         .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; }
         .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
     </style>
@@ -35,10 +34,11 @@
     <div class="container">
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
-            <h2>الرجاء إدخال الرمز السري</h2>
-            <input type="password" id="pass-field" class="lock-input" placeholder="أدخل الرمز هنا...">
+            <h2>الرجاء تسجيل الدخول</h2>
+            <input type="text" id="subject-field" class="lock-input" placeholder="اسم المادة (علوم، فيزياء، كيمياء)">
+            <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري">
             <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
-            <div id="err-text" class="error-message">❌ الرمز غير صحيح!</div>
+            <div id="err-text" class="error-message">❌ بيانات غير صحيحة أو انتهى الاشتراك!</div>
         </div>
 
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
@@ -48,42 +48,34 @@
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
-            <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2942/2942767.png" alt="الفيزياء">
-                <h2>اختبار الفيزياء</h2>
-                <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
-            <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
-                <h2>اختبار الكيمياء</h2>
-                <a href="chemistry.html" class="btn">ابدأ الآن</a>
-            </div>
-        </div>
     </div>
 
     <script>
-        const firebaseConfig = {
-            databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com"
-        };
+        const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
-            const userInput = document.getElementById("pass-field").value.trim();
+            let userInputSubject = document.getElementById("subject-field").value.trim();
+            const userPass = document.getElementById("pass-field").value.trim();
+            const today = new Date().toISOString().split('T')[0];
             const errText = document.getElementById("err-text");
 
-            db.ref('secretPassword').once('value').then(function(snapshot) {
-                const serverPassword = snapshot.val();
-                if (userInput === serverPassword.toString()) {
-                    document.getElementById("auth-box").style.display = "none";
-                    document.getElementById("exams-container").style.display = "flex";
-                } else {
-                    errText.style.display = "block";
-                }
-            }).catch(function() {
-                alert("خطأ في الاتصال بقاعدة البيانات");
+            const subjectMap = { "علوم": "science", "فيزياء": "physics", "كيمياء": "chemistry" };
+            let mappedSubject = subjectMap[userInputSubject] || userInputSubject.toLowerCase();
+
+            db.ref('students').once('value').then(function(snapshot) {
+                let found = false;
+                snapshot.forEach(function(child) {
+                    const data = child.val();
+                    if (data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
+                        found = true;
+                        db.ref('logs').push({ student: mappedSubject, time: new Date().toLocaleString() });
+                        window.location.href = mappedSubject + ".html";
+                    }
+                });
+                if (!found) errText.style.display = "block";
             });
         });
     </script>
