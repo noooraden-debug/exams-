@@ -26,15 +26,17 @@
         .box:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.12); border-color: #00d4ff; }
         
         .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
-        .box img { width: 90px; height: 90px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(0,212,255,0.5)); object-fit: contain; }
+        
+        /* تنسيق الصور الجديدة */
+        .box img { width: 120px; height: 120px; margin-bottom: 15px; border-radius: 20px; border: 2px solid rgba(0, 212, 255, 0.3); object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        
         .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
         
         .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer; text-align: center; display: inline-block; }
         .btn:hover { box-shadow: 0 0 25px #00d4ff; transform: scale(1.08); }
 
         .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; outline: none; transition: 0.3s; }
-        .lock-input:focus { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
-        .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
+        .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
@@ -64,19 +66,19 @@
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921334.png" alt="العلوم">
+                <img src="https://img.freepik.com/premium-photo/microscope-laboratory-glassware-science-research-concept_121855-15637.jpg" alt="العلوم">
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2717/2717203.png" alt="الفيزياء">
+                <img src="https://img.freepik.com/premium-photo/abstract-3d-glowing-atom-structure-physics-science-concept_121855-15638.jpg" alt="الفيزياء">
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
+                <img src="https://img.freepik.com/premium-photo/test-tubes-colorful-chemical-solutions-laboratory-science-education_121855-15639.jpg" alt="الكيمياء">
                 <h2>اختبار الكيمياء</h2>
                 <a href="chemistry.html" class="btn">ابدأ الآن</a>
             </div>
@@ -86,13 +88,11 @@
     <script>
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
-            const errorText = document.getElementById("err-text");
-            
             if (userInput === "12345") {
                 document.getElementById("auth-box").style.display = "none";
                 document.getElementById("exams-container").style.display = "flex";
             } else {
-                errorText.style.display = "block";
+                document.getElementById("err-text").style.display = "block";
             }
         });
     </script>
