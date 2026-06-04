@@ -2,28 +2,22 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة النماذج الامتحانية</title>
-    
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-
     <style>
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; }
-        .smart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a2a6c 0%, #05070a 100%); }
-        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 80%; max-width: 400px; }
-        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px; border-radius: 25px; color: white; text-align: center; width: 80%; margin-bottom: 15px; }
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 10px 30px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; }
+        body { font-family: sans-serif; text-align: center; background: #0b1021; color: white; padding: 50px; }
+        .box { background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 20px; display: inline-block; }
+        input { display: block; margin: 10px auto; padding: 10px; width: 200px; color: black; }
+        button { padding: 10px 20px; cursor: pointer; background: #00d4ff; border: none; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div class="smart-bg"></div>
-
     <div class="box">
         <h2>تسجيل الدخول</h2>
-        <input type="text" id="subject-field" class="lock-input" placeholder="اسم المادة (علوم)">
-        <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري (123)">
-        <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
+        <input type="text" id="subject-field" placeholder="المادة (علوم)">
+        <input type="password" id="pass-field" placeholder="الرمز (123)">
+        <button id="submit-auth-btn">تحقق ودخول</button>
     </div>
 
     <script>
@@ -32,25 +26,26 @@
         const db = firebase.database();
 
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
-            let userInputSubject = document.getElementById("subject-field").value.trim();
-            let userPass = document.getElementById("pass-field").value.trim();
+            let inputSub = document.getElementById("subject-field").value.trim();
+            let inputPass = document.getElementById("pass-field").value.trim();
 
             db.ref('/').once('value').then(function(snapshot) {
-                const allData = snapshot.val();
-                let found = false;
+                let data = snapshot.val();
+                if (data && data.student1) {
+                    let s = data.student1;
+                    
+                    // تحويل القيم إلى نصوص لضمان المقارنة الصحيحة
+                    let dbSub = String(s.subject).trim();
+                    let dbPass = String(s.password).trim();
+                    let targetSub = (inputSub === "علوم") ? "science" : inputSub.trim();
 
-                if (allData.student1) {
-                    let s = allData.student1;
-                    let targetSub = (userInputSubject === "علوم") ? "science" : userInputSubject;
+                    console.log("المقارنة:", dbSub, "==", targetSub, "و", dbPass, "==", inputPass);
 
-                    if (s.subject === targetSub && String(s.password) === userPass) {
-                        found = true;
-                        window.location.href = s.subject + ".html";
+                    if (dbSub === targetSub && dbPass === inputPass) {
+                        window.location.href = dbSub + ".html";
+                    } else {
+                        alert("خطأ: تأكد من البيانات. (المادة: " + dbSub + "، الرمز: " + dbPass + ")");
                     }
-                }
-
-                if (!found) {
-                    alert("خطأ: تأكد من كتابة 'علوم' و الرمز '123'");
                 }
             });
         });
