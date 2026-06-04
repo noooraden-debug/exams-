@@ -2,32 +2,59 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>منصة الامتحانات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة النماذج الامتحانية</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; }
+        .smart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a2a6c 0%, #05070a 100%); }
+        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; margin-top: 100px; width: 80%; max-width: 400px; }
+        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px; border-radius: 25px; color: white; text-align: center; width: 80%; margin-bottom: 15px; }
+        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 10px 30px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <input type="text" id="subject-field" placeholder="المادة">
-    <input type="password" id="pass-field" placeholder="الرمز">
-    <button id="submit-auth-btn" onclick="checkLogin()">تحقق ودخول</button>
+    <div class="smart-bg"></div>
+    <div class="box">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" id="subject-field" class="lock-input" placeholder="اسم المادة (علوم)">
+        <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري">
+        <button id="submit-auth-btn" class="btn" onclick="checkLogin()">تحقق ودخول</button>
+    </div>
 
     <script>
-        // 1. تعريف وظيفة بسيطة
         function checkLogin() {
-            alert("تم الضغط على الزر!"); // إذا ظهرت هذه، فالكود يعمل!
-            
             const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
-            firebase.initializeApp(firebaseConfig);
+            if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
             const db = firebase.database();
             
+            let userInputSubject = document.getElementById("subject-field").value.trim();
+            let userPass = document.getElementById("pass-field").value.trim();
+            let targetSub = (userInputSubject === "علوم") ? "science" : userInputSubject.trim();
+
             db.ref('/').once('value').then(function(snapshot) {
-                alert("تم الاتصال بـ Firebase بنجاح!");
-                console.log(snapshot.val());
-            }).catch(function(error) {
-                alert("خطأ في Firebase: " + error.message);
-            });
+                let data = snapshot.val();
+                let found = false;
+                
+                // البحث في البيانات
+                for (let key in data) {
+                    let student = data[key];
+                    if (student && typeof student === 'object') {
+                        // طباعة للمقارنة في Console
+                        console.log("جاري مقارنة:", student.subject, "مع", targetSub, "و", student.password, "مع", userPass);
+                        
+                        if (String(student.subject).trim() === targetSub && String(student.password).trim() === userPass) {
+                            found = true;
+                            window.location.href = targetSub + ".html";
+                            break;
+                        }
+                    }
+                }
+                if (!found) { alert("فشل الدخول! تأكد من البيانات (علوم / 123)"); }
+            }).catch(function(error) { alert("خطأ: " + error.message); });
         }
     </script>
 </body>
 </html>
- 
