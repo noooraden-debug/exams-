@@ -30,7 +30,7 @@
         .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
         .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
         
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer;}
+        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer; text-align: center; display: inline-block; }
         .btn:hover { box-shadow: 0 0 25px #00d4ff; transform: scale(1.08); }
 
         /* تنسيقات قفل الأمان الجديد المتناسق مع تصميمك */
@@ -67,7 +67,7 @@
             <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
         </div>
 
-        <!-- حاوية الاختبارات الأصلية (مخفية تلقائياً حتى يكتب المستخدم الرمز الصحيح) -->
+        <!-- حاوية الاختبارات الأصلية (مخفية تلقائياً حتى يتم التحقق بنجاح) -->
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN | 0957869853</div>
@@ -90,12 +90,12 @@
         </div>
     </div>
 
-    <!-- كود الربط السحابي والتحقق الآمن المباشر -->
+    <!-- كود الربط السحابي والتحقق الآمن المباشر عبر الـ CDN -->
     <script type="module">
         import { initializeApp } from "https://gstatic.com";
         import { getDatabase, ref, get, child } from "https://gstatic.com";
 
-        // بيانات مشروعك الفعلي بعد النقل والتهيئة للـ Web CDN
+        // إعدادات منصتك الفعلية والنهائية المتطابقة مع سيرفرك السحابي
         const firebaseConfig = {
             apiKey: "AIzaSyAQ-DRylo6Sw-CINxG5NxqNELuqDGqEoZg",
             authDomain: "://firebaseapp.com",
@@ -111,15 +111,15 @@
         const app = initializeApp(firebaseConfig);
         const dbRef = ref(getDatabase());
 
-        // منطق التحقق والضغط على الزر
+        // منطق التحقق الآمن والضغط على الزر
         document.getElementById("submit-auth-btn").addEventListener("click", () => {
-            const userInput = document.getElementById("pass-field").value;
+            const userInput = document.getElementById("pass-field").value.trim();
             const errorText = document.getElementById("err-text");
 
             // جلب قيمة الرمز السري المخزن داخل Firebase Realtime Database
             get(child(dbRef, 'secretPassword')).then((snapshot) => {
                 if (snapshot.exists()) {
-                    const cloudPassword = snapshot.val().toString();
+                    const cloudPassword = snapshot.val().toString().trim();
 
                     if (userInput === cloudPassword) {
                         // إخفاء قفل الأمان وإظهار المنصة والامتحانات فوراً
@@ -127,7 +127,7 @@
                         const examsContainer = document.getElementById("exams-container");
                         examsContainer.style.display = "flex";
                     } else {
-                        // إذا كانت كلمة المرور غير صحيحة
+                        // إذا كانت كلمة المرور المكتوبة غير صحيحة
                         errorText.style.display = "block";
                     }
                 } else {
@@ -135,7 +135,7 @@
                 }
             }).catch((error) => {
                 console.error("خطأ أثناء جلب البيانات:", error);
-                alert("فشل الاتصال بقاعدة البيانات، تأكد من أنك قمت بتفعيل قاعدة البيانات بوضع الاختبار (Test Mode)");
+                alert("فشل الاتصال بقاعدة البيانات. يرجى التأكد من اتصال الإنترنت أو تحديث صفحة الموقع.");
             });
         });
     </script>
