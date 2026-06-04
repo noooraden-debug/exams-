@@ -4,61 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة النماذج الامتحانية الذكية</title>
+    
+    <!-- إضافة مكتبة Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
     <style>
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; overflow-x: hidden; }
-        
-        .smart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a2a6c 0%, #05070a 100%); overflow: hidden; }
-        
-        .particle { position: absolute; background: rgba(0, 212, 255, 0.4); border-radius: 50%; animation: moveParticle linear infinite; }
-        @keyframes moveParticle { 
-            0% { transform: translateY(110vh) translateX(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
-        }
-
+        .smart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #1a2a6c 0%, #05070a 100%); }
         .header { text-align: center; padding: 20px; }
         .main-title { font-size: 2rem; font-weight: bold; color: #00d4ff; text-shadow: 0 0 15px rgba(0,212,255,0.7); }
-        .subtitle { font-size: 1.1rem; color: #ffffff; margin-top: 10px; }
-
         .container { width: 90%; max-width: 500px; display: flex; flex-direction: column; gap: 25px; margin-bottom: 50px; }
-        
-        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; transition: 0.4s; }
-        .box:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.12); border-color: #00d4ff; }
-        
-        .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
-        
-        /* تنسيق الأيقونات (التي طلبت استعادتها) */
+        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; }
         .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
-        
-        .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
-        
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer; text-align: center; display: inline-block; }
-        .btn:hover { box-shadow: 0 0 25px #00d4ff; transform: scale(1.08); }
-
-        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; outline: none; transition: 0.3s; }
+        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; }
+        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; }
         .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; }
+        .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="smart-bg">
-        <div class="particle" style="width: 12px; height: 12px; left: 5%; animation-duration: 8s;"></div>
-        <div class="particle" style="width: 15px; height: 15px; left: 25%; animation-duration: 10s;"></div>
-        <div class="particle" style="width: 20px; height: 20px; left: 55%; animation-duration: 7s;"></div>
-    </div>
+    <div class="smart-bg"></div>
 
     <div class="header">
         <h1 class="main-title">منصة النماذج الامتحانية الذكية</h1>
-        <p class="subtitle">إعداد المبرمج NOUR EDDIN - 0957869853</p>
+        <p>إعداد المبرمج NOUR EDDIN - 0957869853</p>
     </div>
 
     <div class="container">
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
-            <h2 style="margin-bottom: 20px;">الرجاء إدخال الرمز السري للدخول</h2>
+            <h2>الرجاء إدخال الرمز السري</h2>
             <input type="password" id="pass-field" class="lock-input" placeholder="أدخل الرمز هنا...">
             <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
-            <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
+            <div id="err-text" class="error-message">❌ الرمز غير صحيح!</div>
         </div>
 
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
@@ -84,14 +64,27 @@
     </div>
 
     <script>
+        const firebaseConfig = {
+            databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
-            if (userInput === "12345") {
-                document.getElementById("auth-box").style.display = "none";
-                document.getElementById("exams-container").style.display = "flex";
-            } else {
-                document.getElementById("err-text").style.display = "block";
-            }
+            const errText = document.getElementById("err-text");
+
+            db.ref('secretPassword').once('value').then(function(snapshot) {
+                const serverPassword = snapshot.val();
+                if (userInput === serverPassword.toString()) {
+                    document.getElementById("auth-box").style.display = "none";
+                    document.getElementById("exams-container").style.display = "flex";
+                } else {
+                    errText.style.display = "block";
+                }
+            }).catch(function() {
+                alert("خطأ في الاتصال بقاعدة البيانات");
+            });
         });
     </script>
 </body>
