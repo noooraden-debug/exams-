@@ -48,7 +48,7 @@
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
-            </div>
+        </div>
     </div>
 
     <script>
@@ -65,11 +65,13 @@
             const subjectMap = { "علوم": "science", "فيزياء": "physics", "كيمياء": "chemistry" };
             let mappedSubject = subjectMap[userInputSubject] || userInputSubject.toLowerCase();
 
-            db.ref('students').once('value').then(function(snapshot) {
+            // التعديل هنا: البحث في الجذر '/' مباشرة
+            db.ref('/').once('value').then(function(snapshot) {
                 let found = false;
                 snapshot.forEach(function(child) {
                     const data = child.val();
-                    if (data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
+                    // التأكد من أن البيانات تحتوي على حقل subject (أي أنها بيانات طالب)
+                    if (data && data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
                         found = true;
                         db.ref('logs').push({ student: mappedSubject, time: new Date().toLocaleString() });
                         window.location.href = mappedSubject + ".html";
