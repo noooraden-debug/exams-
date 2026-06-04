@@ -58,7 +58,6 @@
     </div>
 
     <div class="container">
-        <!-- صندوق قفل الأمان السحابي السري -->
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
             <h2 style="margin-bottom: 20px;">الرجاء إدخال الرمز السري للدخول</h2>
@@ -67,30 +66,28 @@
             <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
         </div>
 
-        <!-- حاوية الاختبارات الأصلية (مخفية تلقائياً حتى يتم التحقق بنجاح) -->
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-                <img src="https://flaticon.com" alt="علوم">
+                <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="علوم">
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-                <img src="https://flaticon.com" alt="فيزياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/2860/2860368.png" alt="فيزياء">
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-                <img src="https://flaticon.com" alt="كيمياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/1167/1167098.png" alt="كيمياء">
                 <h2>اختبار الكيمياء</h2>
                 <a href="chemistry.html" class="btn">ابدأ الآن</a>
             </div>
         </div>
     </div>
 
-    <!-- نظام فحص هجين فائق الأمان (يتصل بالسحاب، ويمتلك خياراً احتياطياً يعمل دائماً) -->
     <script>
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
