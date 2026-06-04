@@ -59,7 +59,6 @@
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             let userInputSubject = document.getElementById("subject-field").value.trim();
             const userPass = document.getElementById("pass-field").value.trim();
-            const today = new Date().toISOString().split('T')[0];
             const errText = document.getElementById("err-text");
 
             const subjectMap = { "علوم": "science", "فيزياء": "physics", "كيمياء": "chemistry" };
@@ -71,19 +70,27 @@
                 
                 for (let key in allData) {
                     const data = allData[key];
-                    if (data && typeof data === 'object') {
-                        if (data.subject === mappedSubject && data.password === userPass && today <= data.expiryDate) {
+                    if (data && typeof data === 'object' && data.subject === mappedSubject && data.password === userPass) {
+                        // مقارنة التاريخ بدقة
+                        const expiry = new Date(data.expiryDate);
+                        const now = new Date();
+                        
+                        if (now <= expiry) {
                             found = true;
                             db.ref('logs').push({ student: mappedSubject, time: new Date().toLocaleString() });
                             window.location.href = mappedSubject + ".html";
                             break; 
+                        } else {
+                            alert("عذراً، اشتراكك منتهي الصلاحية بتاريخ: " + data.expiryDate);
+                            found = true;
+                            break;
                         }
                     }
                 }
                 
                 if (!found) {
                     errText.style.display = "block";
-                    alert("فشل الدخول! \n- المادة المطلوبة: " + mappedSubject + "\n- الرمز المدخل: " + userPass + "\n- تأكد من مطابقة البيانات في قاعدة البيانات.");
+                    alert("بيانات غير صحيحة! تأكد من المادة (علوم) والرمز (123)");
                 }
             }).catch(function(error) {
                 alert("خطأ في الاتصال: " + error.message);
@@ -92,3 +99,4 @@
     </script>
 </body>
 </html>
+ 
