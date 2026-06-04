@@ -30,8 +30,13 @@
         .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
         .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
         
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); }
+        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer;}
         .btn:hover { box-shadow: 0 0 25px #00d4ff; transform: scale(1.08); }
+
+        /* تنسيقات قفل الأمان الجديد المتناسق مع تصميمك */
+        .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; outline: none; transition: 0.3s; }
+        .lock-input:focus { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
+        .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
     </style>
 </head>
 <body>
@@ -53,25 +58,86 @@
     </div>
 
     <div class="container">
-        <div class="box">
-            <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-            <img src="https://cdn-icons-png.flaticon.com/512/3061/3061341.png" alt="علوم">
-            <h2>اختبار العلوم</h2>
-            <a href="science.html" class="btn">ابدأ الآن</a>
+        <!-- صندوق قفل الأمان السحابي السري -->
+        <div id="auth-box" class="box">
+            <div class="watermark-box">🔐 قفل الأمان</div>
+            <h2 style="margin-bottom: 20px;">الرجاء إدخال الرمز السري للدخول</h2>
+            <input type="password" id="pass-field" class="lock-input" placeholder="أدخل الرمز هنا...">
+            <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
+            <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
         </div>
-        <div class="box">
-            <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-            <img src="https://cdn-icons-png.flaticon.com/512/2942/2942767.png" alt="فيزياء">
-            <h2>اختبار الفيزياء</h2>
-            <a href="physics.html" class="btn">ابدأ الآن</a>
-        </div>
-        <div class="box">
-            <div class="watermark-box">NOUR EDDIN | 0957869853</div>
-            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="كيمياء">
-            <h2>اختبار الكيمياء</h2>
-            <a href="chemistry.html" class="btn">ابدأ الآن</a>
+
+        <!-- حاوية الاختبارات الأصلية (مخفية تلقائياً حتى يكتب المستخدم الرمز الصحيح) -->
+        <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
+            <div class="box">
+                <div class="watermark-box">NOUR EDDIN | 0957869853</div>
+                <img src="https://flaticon.com" alt="علوم">
+                <h2>اختبار العلوم</h2>
+                <a href="science.html" class="btn">ابدأ الآن</a>
+            </div>
+            <div class="box">
+                <div class="watermark-box">NOUR EDDIN | 0957869853</div>
+                <img src="https://flaticon.com" alt="فيزياء">
+                <h2>اختبار الفيزياء</h2>
+                <a href="physics.html" class="btn">ابدأ الآن</a>
+            </div>
+            <div class="box">
+                <div class="watermark-box">NOUR EDDIN | 0957869853</div>
+                <img src="https://flaticon.com" alt="كيمياء">
+                <h2>اختبار الكيمياء</h2>
+                <a href="chemistry.html" class="btn">ابدأ الآن</a>
+            </div>
         </div>
     </div>
 
+    <!-- كود الربط السحابي والتحقق الآمن المباشر -->
+    <script type="module">
+        import { initializeApp } from "https://gstatic.com";
+        import { getDatabase, ref, get, child } from "https://gstatic.com";
+
+        // بيانات مشروعك الفعلي بعد النقل والتهيئة للـ Web CDN
+        const firebaseConfig = {
+            apiKey: "AIzaSyAQ-DRylo6Sw-CINxG5NxqNELuqDGqEoZg",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
+            projectId: "exams-platform-999f6",
+            storageBucket: "exams-platform-999f6.firebasestorage.app",
+            messagingSenderId: "364299317807",
+            appId: "1:364299317807:web:7cf5a89ed95be386aa0cda",
+            measurementId: "G-SS1LMEXV49"
+        };
+
+        // تهيئة Firebase والوصول لقاعدة البيانات الفورية
+        const app = initializeApp(firebaseConfig);
+        const dbRef = ref(getDatabase());
+
+        // منطق التحقق والضغط على الزر
+        document.getElementById("submit-auth-btn").addEventListener("click", () => {
+            const userInput = document.getElementById("pass-field").value;
+            const errorText = document.getElementById("err-text");
+
+            // جلب قيمة الرمز السري المخزن داخل Firebase Realtime Database
+            get(child(dbRef, 'secretPassword')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const cloudPassword = snapshot.val().toString();
+
+                    if (userInput === cloudPassword) {
+                        // إخفاء قفل الأمان وإظهار المنصة والامتحانات فوراً
+                        document.getElementById("auth-box").style.display = "none";
+                        const examsContainer = document.getElementById("exams-container");
+                        examsContainer.style.display = "flex";
+                    } else {
+                        // إذا كانت كلمة المرور غير صحيحة
+                        errorText.style.display = "block";
+                    }
+                } else {
+                    alert("تنبيه: لم يتم العثور على حقل باسم secretPassword في قاعدة بياناتك السحابية.");
+                }
+            }).catch((error) => {
+                console.error("خطأ أثناء جلب البيانات:", error);
+                alert("فشل الاتصال بقاعدة البيانات، تأكد من أنك قمت بتفعيل قاعدة البيانات بوضع الاختبار (Test Mode)");
+            });
+        });
+    </script>
 </body>
 </html>
