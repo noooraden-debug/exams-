@@ -27,8 +27,8 @@
         
         .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
         
-        /* تنسيق الصور الجديدة */
-        .box img { width: 120px; height: 120px; margin-bottom: 15px; border-radius: 20px; border: 2px solid rgba(0, 212, 255, 0.3); object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        /* تنسيق الأيقونات (التي طلبت استعادتها) */
+        .box img { width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
         
         .box h2 { color: #ffffff; margin: 10px 0; font-size: 1.4rem; }
         
@@ -53,7 +53,6 @@
     </div>
 
     <div class="container">
-        <!-- قفل الأمان -->
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
             <h2 style="margin-bottom: 20px;">الرجاء إدخال الرمز السري للدخول</h2>
@@ -62,23 +61,22 @@
             <div id="err-text" class="error-message">❌ الرمز السري غير صحيح، حاول مجدداً!</div>
         </div>
 
-        <!-- الاختبارات -->
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://img.freepik.com/premium-photo/microscope-laboratory-glassware-science-research-concept_121855-15637.jpg" alt="العلوم">
+                <img src="https://cdn-icons-png.flaticon.com/512/3061/3061341.png" alt="العلوم">
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://img.freepik.com/premium-photo/abstract-3d-glowing-atom-structure-physics-science-concept_121855-15638.jpg" alt="الفيزياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/2942/2942767.png" alt="الفيزياء">
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
                 <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://img.freepik.com/premium-photo/test-tubes-colorful-chemical-solutions-laboratory-science-education_121855-15639.jpg" alt="الكيمياء">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
                 <h2>اختبار الكيمياء</h2>
                 <a href="chemistry.html" class="btn">ابدأ الآن</a>
             </div>
