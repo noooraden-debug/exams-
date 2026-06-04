@@ -33,7 +33,7 @@
         .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; text-decoration: none; font-weight: bold; border: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4); cursor: pointer; text-align: center; display: inline-block; }
         .btn:hover { box-shadow: 0 0 25px #00d4ff; transform: scale(1.08); }
 
-        /* تنسيقات قفل الأمان الجديد المتناسق مع تصميمك */
+        /* تنسيقات قفل الأمان الجديد */
         .lock-input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.4); padding: 12px 20px; border-radius: 25px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; outline: none; transition: 0.3s; }
         .lock-input:focus { border-color: #00d4ff; box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
         .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; text-shadow: 0 0 5px rgba(255,0,0,0.3); }
@@ -90,54 +90,37 @@
         </div>
     </div>
 
-    <!-- كود الربط السحابي والتحقق الآمن المباشر عبر الـ CDN -->
-    <script type="module">
-        import { initializeApp } from "https://gstatic.com";
-        import { getDatabase, ref, get, child } from "https://gstatic.com";
-
-        // إعدادات منصتك الفعلية والنهائية المتطابقة مع سيرفرك السحابي
-        const firebaseConfig = {
-            apiKey: "AIzaSyAQ-DRylo6Sw-CINxG5NxqNELuqDGqEoZg",
-            authDomain: "://firebaseapp.com",
-            databaseURL: "https://firebaseio.com",
-            projectId: "exams-platform-999f6",
-            storageBucket: "exams-platform-999f6.firebasestorage.app",
-            messagingSenderId: "364299317807",
-            appId: "1:364299317807:web:7cf5a89ed95be386aa0cda",
-            measurementId: "G-SS1LMEXV49"
-        };
-
-        // تهيئة Firebase والوصول لقاعدة البيانات الفورية
-        const app = initializeApp(firebaseConfig);
-        const dbRef = ref(getDatabase());
-
-        // منطق التحقق الآمن والضغط على الزر
-        document.getElementById("submit-auth-btn").addEventListener("click", () => {
+    <!-- كود جلب وقراءة كلمة المرور الفورية عبر تقنية الـ REST API الأسرع والأضمن للمتصفحات -->
+    <script>
+        document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
             const errorText = document.getElementById("err-text");
+            
+            // رابط الـ API المباشر لجلب الرمز من سيرفرك بدون الحاجة لتحميل مكاتب ثقيلة
+            const url = "https://firebaseio.com";
 
-            // جلب قيمة الرمز السري المخزن داخل Firebase Realtime Database
-            get(child(dbRef, 'secretPassword')).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const cloudPassword = snapshot.val().toString().trim();
-
-                    if (userInput === cloudPassword) {
-                        // إخفاء قفل الأمان وإظهار المنصة والامتحانات فوراً
-                        document.getElementById("auth-box").style.display = "none";
-                        const examsContainer = document.getElementById("exams-container");
-                        examsContainer.style.display = "flex";
+            fetch(url)
+                .then(response => response.json())
+                .then(cloudPassword => {
+                    if (cloudPassword !== null) {
+                        // مطابقة الرمز المدخل مع الرمز القادم من السيرفر
+                        if (userInput === cloudPassword.toString().trim()) {
+                            document.getElementById("auth-box").style.display = "none";
+                            const examsContainer = document.getElementById("exams-container");
+                            examsContainer.style.display = "flex";
+                        } else {
+                            errorText.style.display = "block";
+                        }
                     } else {
-                        // إذا كانت كلمة المرور المكتوبة غير صحيحة
-                        errorText.style.display = "block";
+                        alert("خطأ: لم يتم العثور على رمز سري مخزن بسيرفر Firebase الخاص بك.");
                     }
-                } else {
-                    alert("تنبيه: لم يتم العثور على حقل باسم secretPassword في قاعدة بياناتك السحابية.");
-                }
-            }).catch((error) => {
-                console.error("خطأ أثناء جلب البيانات:", error);
-                alert("فشل الاتصال بقاعدة البيانات. يرجى التأكد من اتصال الإنترنت أو تحديث صفحة الموقع.");
-            });
+                })
+                .catch(error => {
+                    console.error("حدث خطأ:", error);
+                    alert("فشل الاتصال بالسيرفر السحابي. يرجى التحقق من اتصال الإنترنت.");
+                });
         });
     </script>
 </body>
 </html>
+ 
