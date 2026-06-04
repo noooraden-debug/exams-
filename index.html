@@ -2,53 +2,31 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>منصة النماذج الامتحانية</title>
+    <title>منصة الامتحانات</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <style>
-        body { font-family: sans-serif; text-align: center; background: #0b1021; color: white; padding: 50px; }
-        .box { background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 20px; display: inline-block; }
-        input { display: block; margin: 10px auto; padding: 10px; width: 200px; color: black; }
-        button { padding: 10px 20px; cursor: pointer; background: #00d4ff; border: none; border-radius: 10px; }
-    </style>
 </head>
 <body>
-    <div class="box">
-        <h2>تسجيل الدخول</h2>
-        <input type="text" id="subject-field" placeholder="المادة (علوم)">
-        <input type="password" id="pass-field" placeholder="الرمز (123)">
-        <button id="submit-auth-btn">تحقق ودخول</button>
-    </div>
+    <input type="text" id="subject-field" placeholder="المادة">
+    <input type="password" id="pass-field" placeholder="الرمز">
+    <button id="submit-auth-btn" onclick="checkLogin()">تحقق ودخول</button>
 
     <script>
-        const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        document.getElementById("submit-auth-btn").addEventListener("click", function() {
-            let inputSub = document.getElementById("subject-field").value.trim();
-            let inputPass = document.getElementById("pass-field").value.trim();
-
+        // 1. تعريف وظيفة بسيطة
+        function checkLogin() {
+            alert("تم الضغط على الزر!"); // إذا ظهرت هذه، فالكود يعمل!
+            
+            const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
+            
             db.ref('/').once('value').then(function(snapshot) {
-                let data = snapshot.val();
-                if (data && data.student1) {
-                    let s = data.student1;
-                    
-                    // تحويل القيم إلى نصوص لضمان المقارنة الصحيحة
-                    let dbSub = String(s.subject).trim();
-                    let dbPass = String(s.password).trim();
-                    let targetSub = (inputSub === "علوم") ? "science" : inputSub.trim();
-
-                    console.log("المقارنة:", dbSub, "==", targetSub, "و", dbPass, "==", inputPass);
-
-                    if (dbSub === targetSub && dbPass === inputPass) {
-                        window.location.href = dbSub + ".html";
-                    } else {
-                        alert("خطأ: تأكد من البيانات. (المادة: " + dbSub + "، الرمز: " + dbPass + ")");
-                    }
-                }
+                alert("تم الاتصال بـ Firebase بنجاح!");
+                console.log(snapshot.val());
+            }).catch(function(error) {
+                alert("خطأ في Firebase: " + error.message);
             });
-        });
+        }
     </script>
 </body>
 </html>
