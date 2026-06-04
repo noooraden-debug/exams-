@@ -44,28 +44,19 @@
 
         <div id="exams-container" style="display: none; flex-direction: column; gap: 25px;">
             <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
                 <img src="https://cdn-icons-png.flaticon.com/512/3061/3061341.png" alt="العلوم">
                 <h2>اختبار العلوم</h2>
                 <a href="science.html" class="btn">ابدأ الآن</a>
             </div>
             <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
                 <img src="https://cdn-icons-png.flaticon.com/512/2942/2942767.png" alt="الفيزياء">
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
-            </div>
-            <div class="box">
-                <div class="watermark-box">NOUR EDDIN</div>
-                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
-                <h2>اختبار الكيمياء</h2>
-                <a href="chemistry.html" class="btn">ابدأ الآن</a>
             </div>
         </div>
     </div>
 
     <script>
-        // تفعيل الجسيمات المتحركة
         particlesJS("particles-js", {"particles": {"number": {"value": 80}, "color": {"value": "#00d4ff"}, "move": {"enable": true, "speed": 4}}});
 
         const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
@@ -76,7 +67,8 @@
             const userInput = document.getElementById("pass-field").value.trim();
             const errText = document.getElementById("err-text");
 
-            db.ref('secretPassword').once('value').then(function(snapshot) {
+            // تم تغيير المسار هنا ليطابق القاعدة: 'password'
+            db.ref('password').once('value').then(function(snapshot) {
                 const serverPassword = snapshot.val();
                 if (userInput === String(serverPassword)) {
                     document.getElementById("auth-box").style.display = "none";
