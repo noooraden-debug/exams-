@@ -53,6 +53,11 @@
                 <h2>اختبار الفيزياء</h2>
                 <a href="physics.html" class="btn">ابدأ الآن</a>
             </div>
+            <div class="box">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921225.png" alt="الكيمياء">
+                <h2>اختبار الكيمياء</h2>
+                <a href="chemistry.html" class="btn">ابدأ الآن</a>
+            </div>
         </div>
     </div>
 
@@ -67,10 +72,8 @@
             const userInput = document.getElementById("pass-field").value.trim();
             const errText = document.getElementById("err-text");
 
-            // تم تغيير المسار هنا ليطابق القاعدة: 'password'
             db.ref('password').once('value').then(function(snapshot) {
-                const serverPassword = snapshot.val();
-                if (userInput === String(serverPassword)) {
+                if (userInput === String(snapshot.val())) {
                     document.getElementById("auth-box").style.display = "none";
                     document.getElementById("exams-container").style.display = "flex";
                 } else {
