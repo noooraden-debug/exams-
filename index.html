@@ -64,7 +64,9 @@
                     let html = `<h2 style="margin-top:0;">${subject}</h2>`;
                     html += `<select id="${subject}-select" class="lock-input" style="margin-bottom:15px;">`;
                     
-                    subjects[subject].forEach(exam => {
+                    // تحويل البيانات لتعمل سواء كانت مصفوفة أو كائن
+                    let examsList = subjects[subject];
+                    Object.values(examsList).forEach(exam => {
                         html += `<option value="${exam.url}">${exam.name}</option>`;
                     });
                     
@@ -80,7 +82,9 @@
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
             db.ref('password').once('value').then(function(snapshot) {
-                if (userInput === String(snapshot.val())) {
+                // التأكد من أن كلمة السر تقارن كنص
+                const correctPass = String(snapshot.val());
+                if (userInput === correctPass) {
                     document.getElementById("auth-box").style.display = "none";
                     document.getElementById("exams-container").style.display = "flex";
                     loadExams();
