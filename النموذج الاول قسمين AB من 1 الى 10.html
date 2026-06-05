@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الاختبار الشامل - المدرس عامر</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f4f7f6; padding: 20px; }
+        .exam-card { max-width: 850px; margin: auto; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-right: 12px solid #2c3e50; }
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #1a5276; padding-bottom: 20px; }
+        .q-text { font-weight: bold; margin: 30px 0 15px 0; color: #1a5276; font-size: 1.6em; }
+        .option-item { font-size: 1.4em; margin: 8px 0; display: block; padding: 8px; border-radius: 8px; }
+        textarea { width: 100%; height: 80px; padding: 10px; border: 3px solid #bdc3c7; border-radius: 10px; font-size: 1.4em; }
+        button { background: #2980b9; color: white; border: none; padding: 20px; width: 100%; border-radius: 10px; font-size: 1.8em; cursor: pointer; margin-top: 40px; }
+        .correct { color: #27ae60; font-weight: bold; background-color: #e8f8f0; }
+        .wrong { color: #c0392b; font-weight: bold; background-color: #fdeaea; }
+        .footer-section { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 2px solid #ccc; font-size: 1.2em; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="exam-card">
+    <div class="header-section">
+        <h1>الاختبار الشامل في اللغة الإنجليزية</h1>
+        <p>عزيزي الطالب، هذا النموذج يغطي الأسئلة من 1 إلى 10. بالتوفيق!</p>
+    </div>
+
+    <div id="content"></div>
+    <button onclick="correctAll()">تصحيح الاختبار</button>
+
+    <div class="footer-section">
+        <p><strong>إعداد المدرس: عامر</strong> | للتواصل: 0982287950</p>
+    </div>
+</div>
+
+<script>
+    const radioQs = [
+        {n: 1, q: "Life in the space city will be:", o: ["risky", "difficult", "ordinary", "strange"], ans: 2},
+        {n: 2, q: "Living on a space station will be:", o: ["cost less", "be cheaper"], ans: 1},
+        {n: 3, q: "Space tourists will:", o: ["fly in a rocket", "walk on the moon"], ans: 0},
+        {n: 4, q: "The first space tourist was:", o: ["an American", "an Italian"], ans: 1},
+        {n: 5, q: "Space hotels will be:", o: ["very comfortable", "very small"], ans: 0},
+        {n: 6, q: "Selfies are usually taken with a smart phone:", o: ["True", "False"], ans: 0},
+        {n: 7, q: "Selfies are very old:", o: ["True", "False"], ans: 1},
+        {n: 8, q: "Only young people take selfies:", o: ["True", "False"], ans: 1}
+    ];
+
+    const textQs = [
+        {n: 9, q: "Why did Marat Dupri climb higher?", ans: "To get the most incredible views."},
+        {n: 10, q: "What are selfies often shared on?", ans: "Facebook, Twitter, Snapchat, or Instagram."}
+    ];
+
+    const container = document.getElementById('content');
+    
+    radioQs.forEach(item => {
+        let html = `<div class="q-text">${item.n}. ${item.q}</div>`;
+        item.o.forEach((opt, i) => html += `<label class="option-item" id="opt${item.n}_${i}"><input type="radio" name="q${item.n}" value="${i}"> ${opt}</label>`);
+        container.innerHTML += html;
+    });
+
+    textQs.forEach(item => {
+        container.innerHTML += `<div class="q-text">${item.n}. ${item.q}</div><textarea id="t${item.n}"></textarea><div id="res-t${item.n}" style="margin-top:10px; font-size:1.3em;"></div>`;
+    });
+
+    function correctAll() {
+        radioQs.forEach(item => {
+            let selected = document.querySelector(`input[name="q${item.n}"]:checked`);
+            item.o.forEach((opt, i) => {
+                let lbl = document.getElementById(`opt${item.n}_${i}`);
+                if (i == item.ans) lbl.className = "option-item correct";
+                else if (selected && selected.value == i) lbl.className = "option-item wrong";
+            });
+        });
+        textQs.forEach(item => {
+            let val = document.getElementById('t'+item.n).value.trim();
+            let res = document.getElementById('res-t'+item.n);
+            res.innerHTML = (val.length > 5) ? '<span class="correct">✔ إجابتك: "' + val + '" | النموذجية: "' + item.ans + '"</span>' : '<span class="wrong">⚠️ لم يتم كتابة إجابة كافية. النموذجية: "' + item.ans + '"</span>';
+        });
+    }
+</script>
+</body>
+</html>
