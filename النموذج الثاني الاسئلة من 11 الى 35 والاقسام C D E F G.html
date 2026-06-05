@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الاختبار الشامل - المدرس عامر</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f4f7f6; padding: 20px; }
+        .exam-card { max-width: 850px; margin: auto; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-right: 12px solid #2c3e50; }
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #1a5276; padding-bottom: 20px; }
+        .q-text { font-weight: bold; margin: 30px 0 15px 0; color: #1a5276; font-size: 1.6em; }
+        .option-item { font-size: 1.4em; margin: 8px 0; display: block; padding: 8px; border-radius: 8px; }
+        textarea { width: 100%; height: 80px; padding: 10px; border: 3px solid #bdc3c7; border-radius: 10px; font-size: 1.4em; }
+        button { background: #2980b9; color: white; border: none; padding: 20px; width: 100%; border-radius: 10px; font-size: 1.8em; cursor: pointer; margin-top: 40px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1.3em; }
+        td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        .correct { color: #27ae60; font-weight: bold; background-color: #e8f8f0; }
+        .wrong { color: #c0392b; font-weight: bold; background-color: #fdeaea; }
+        .footer-section { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 2px solid #ccc; font-size: 1.2em; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="exam-card">
+    <div class="header-section">
+        <h1>الاختبار الشامل في اللغة الإنجليزية</h1>
+        <p>عزيزي الطالب، أهلاً بك في هذا الاختبار. يرجى قراءة الأسئلة بتركيز والإجابة عليها بدقة. نتمنى لك التوفيق والنجاح.</p>
+    </div>
+
+    <div id="content"></div>
+    
+    <button onclick="correctAll()">تصحيح الاختبار</button>
+
+    <div class="footer-section">
+        <p>انتهت الأسئلة. نرجو أن تكون قد حققت الاستفادة المطلوبة!</p>
+        <p><strong>إعداد المدرس: عامر</strong></p>
+        <p>للتواصل والاستفسار: 0982287950</p>
+    </div>
+</div>
+
+<script>
+    // الأسئلة (كما هي في النموذج السابق)
+    const radioQs = [
+        {n: 11, q: "She --- from university last year.", o: ["divided", "graduated", "practised", "studied"], ans: 1},
+        {n: 12, q: "The information that we --- were kept in a file.", o: ["gathered", "bought", "watched", "paid"], ans: 0},
+        {n: 13, q: "Do you have --- on your house and its contents?", o: ["a station", "a garage", "insurance", "a ground"], ans: 2},
+        {n: 14, q: "I felt better after I --- the medicine.", o: ["have take", "was taking", "had taken", "take"], ans: 2},
+        {n: 15, q: "Ruba hurt her ankle while she --- in the park.", o: ["run", "is running", "has run", "was running"], ans: 3},
+        {n: 16, q: "My parents --- us to the museum next Monday.", o: ["were taking", "have taken", "had taken", "are going to take"], ans: 3},
+        {n: 17, q: "Maya --- for this company since 2000.", o: ["has worked", "is working", "was working", "worked"], ans: 0},
+        {n: 18, q: "Bilal teaches in the school --- we all studied.", o: ["who", "where", "when", "which"], ans: 1},
+        {n: 19, q: "Maha and Sally collected the stickers ---.", o: ["them", "theirs", "herself", "themselves"], ans: 3},
+        {n: 20, q: "She wanted to know if --- her exams.", o: ["Mary had passed", "Mary will pass", "did Mary pass", "has Mary passed"], ans: 0},
+        {n: 21, q: "I can't drive. I wish I ---.", o: ["can", "do", "could", "did"], ans: 2},
+        {n: 22, q: "He plays computer games very well, --- he?", o: ["didn't", "hasn't", "isn't", "doesn't"], ans: 3},
+        {n: 23, q: "A new bridge --- by our company last year.", o: ["was built", "is built", "has built", "had built"], ans: 0},
+        {n: 24, q: "Hassan doesn't have --- money.", o: ["a few", "some", "any", "many"], ans: 2},
+        {n: 25, q: "The word which has a long vowel sound is ---.", o: ["fit", "heat", "kill", "hit"], ans: 1}
+    ];
+
+    const matchQs = [
+        {n: 26, left: "Volunteers record the book", right: "D. the syllabus into Braille", ans: "D"},
+        {n: 27, left: "Nowadays, volunteers are turning", right: "E. after it is divided into several tasks", ans: "E"},
+        {n: 28, left: "Learning another language", right: "B. can help us build bonds with people", ans: "B"},
+        {n: 29, left: "If you look into the night sky", right: "A. you may notice the moon.", ans: "A"},
+        {n: 30, left: "You can listen to the recordings", right: "C. if you have a network.", ans: "C"}
+    ];
+
+    const textQs = [
+        {n: 31, q: "Amer was repairing the car. (Passive)", ans: "The car was being repaired by Amer."},
+        {n: 32, q: "We arrived in Homs yesterday. (Question)", ans: "When did you arrive in Homs?"},
+        {n: 33, q: "I'm sixteen years old. (Question)", ans: "How old are you?"},
+        {n: 34, q: "What do you usually do in your free time?", ans: "I usually read books."},
+        {n: 35, q: "What is your favourite subject and why?", ans: "My favourite subject is English."},
+        {n: "G", q: "Write a 50- words paragraph about: 'Think of a job you would like to have in future' OR 'Talk about your family'.", ans: "نموذج إجابة: كتابة فقرة مترابطة (50 كلمة) حول الموضوع المختار."}
+    ];
+
+    const container = document.getElementById('content');
+    
+    // بناء الصفحة (نفس منطق التوزيع)
+    radioQs.forEach(item => {
+        let html = `<div class="q-text">${item.n}. ${item.q}</div>`;
+        item.o.forEach((opt, i) => html += `<label class="option-item" id="opt${item.n}_${i}"><input type="radio" name="q${item.n}" value="${i}"> ${opt}</label>`);
+        container.innerHTML += html;
+    });
+
+    let mHtml = `<div class="q-text">D- Match each item:</div><table>`;
+    matchQs.forEach(item => {
+        mHtml += `<tr><td>${item.left} .${item.n}</td><td><select id="m${item.n}"><option>اختر</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></td><td>${item.right}</td></tr>
+                 <tr id="row${item.n}"><td colspan="3" id="res-m${item.n}"></td></tr>`;
+    });
+    container.innerHTML += mHtml + `</table>`;
+
+    textQs.forEach(item => {
+        container.innerHTML += `<div class="q-text">${item.n}. ${item.q}</div><textarea id="t${item.n}"></textarea><div id="res-t${item.n}" style="margin-top:10px; font-size:1.3em;"></div>`;
+    });
+
+    function correctAll() {
+        radioQs.forEach(item => {
+            let selected = document.querySelector(`input[name="q${item.n}"]:checked`);
+            item.o.forEach((opt, i) => {
+                let lbl = document.getElementById(`opt${item.n}_${i}`);
+                if (i == item.ans) lbl.className = "option-item correct";
+                else if (selected && selected.value == i) lbl.className = "option-item wrong";
+            });
+        });
+        matchQs.forEach(item => {
+            let val = document.getElementById('m'+item.n).value;
+            document.getElementById('res-m'+item.n).innerHTML = (val == item.ans) ? '<span class="correct">✔ صحيح</span>' : '<span class="wrong">✘ خطأ، الصحيحة: ' + item.ans + '</span>';
+        });
+        textQs.forEach(item => {
+            let val = document.getElementById('t'+item.n).value.trim();
+            document.getElementById('res-t'+item.n).innerHTML = (val.length > 5) ? '<span class="correct">✔ إجابتك: "' + val + '" | النموذجية: "' + item.ans + '"</span>' : '<span class="wrong">⚠️ لم يتم كتابة إجابة كافية. النموذجية: "' + item.ans + '"</span>';
+        });
+    }
+</script>
+</body>
+</html>
