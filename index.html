@@ -18,7 +18,7 @@
         .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 30px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; text-align: center; }
         .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 13px 45px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; margin-top: 10px; width: 100%; }
         .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #00d4ff; }
-        .lock-input { background: rgba(0,0,0,0.3); border: 1px solid #00d4ff; padding: 15px 20px; border-radius: 20px; color: white; font-size: 1.1rem; text-align: center; width: 80%; margin-bottom: 20px; }
+        .lock-input { background: rgba(0,0,0,0.3); border: 1px solid #00d4ff; padding: 15px 20px; border-radius: 20px; color: white; font-size: 1.1rem; text-align: center; width: 100%; margin-bottom: 10px; }
         .error-message { color: #ff4a4a; font-size: 0.95rem; margin-top: 10px; display: none; }
         .watermark-box { position: absolute; top: 12px; right: 18px; font-size: 0.75rem; color: #00d4ff; font-weight: bold; }
     </style>
@@ -36,7 +36,7 @@
         <div id="auth-box" class="box">
             <div class="watermark-box">🔐 قفل الأمان</div>
             <h2>الرجاء إدخال الرمز السري</h2>
-            <input type="password" id="pass-field" class="lock-input" placeholder="أدخل الرمز هنا...">
+            <input type="password" id="pass-field" class="lock-input" style="width: 80%;" placeholder="أدخل الرمز هنا...">
             <button id="submit-auth-btn" class="btn">تحقق ودخول</button>
             <div id="err-text" class="error-message">❌ الرمز غير صحيح!</div>
         </div>
@@ -51,7 +51,6 @@
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // قاموس الصور الافتراضي (إذا لم تكن الصورة موجودة في Firebase)
         const defaultImages = {
             "العلوم": "https://cdn-icons-png.flaticon.com/512/3061/3061341.png",
             "الفيزياء": "https://cdn-icons-png.flaticon.com/512/2942/2942767.png",
@@ -66,18 +65,26 @@
                 container.innerHTML = ""; 
                 
                 for (let subject in subjects) {
-                    let examData = subjects[subject][0]; 
-                    // استخدام صورة من Firebase إذا وجدت، وإلا استخدام الصورة الافتراضية
-                    let imgSrc = examData.img || defaultImages[subject] || "https://cdn-icons-png.flaticon.com/512/1048/1048325.png";
-                    
                     let box = document.createElement("div");
                     box.className = "box";
                     
+                    // جلب الصورة (من أول عنصر في قائمة المادة)
+                    let imgSrc = subjects[subject][0].img || defaultImages[subject] || "https://cdn-icons-png.flaticon.com/512/1048/1048325.png";
+                    
+                    // بناء خيارات الاختبارات
+                    let optionsHtml = "";
+                    subjects[subject].forEach(exam => {
+                        optionsHtml += `<option value="${exam.url}">${exam.name}</option>`;
+                    });
+
+                    let selectId = "sel_" + subject.replace(/\s+/g, '');
+
                     box.innerHTML = `
                         <div class="watermark-box">NOUR EDDIN</div>
                         <img src="${imgSrc}" alt="${subject}" style="width:100px; height:100px; margin-bottom:15px; border-radius:15px;">
                         <h2>${subject}</h2>
-                        <a href="${examData.url}" class="btn">ابدأ الآن</a>
+                        <select id="${selectId}" class="lock-input">${optionsHtml}</select>
+                        <button class="btn" onclick="window.location.href=document.getElementById('${selectId}').value">ابدأ الآن</button>
                     `;
                     container.appendChild(box);
                 }
