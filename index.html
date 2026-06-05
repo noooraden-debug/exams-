@@ -57,21 +57,26 @@
                 const subjects = snapshot.val();
                 container.innerHTML = ""; 
                 
+                if (!subjects) return;
+
                 for (let subject in subjects) {
                     let box = document.createElement("div");
                     box.className = "box";
-                    
                     let html = `<h2 style="margin-top:0;">${subject}</h2>`;
                     html += `<select id="${subject}-select" class="lock-input" style="margin-bottom:15px;">`;
                     
-                    // استخدام Object.values لضمان قراءة البيانات بغض النظر عن طريقة تسمية العقد (0, 1...)
-                    Object.values(subjects[subject]).forEach(exam => {
-                        html += `<option value="${exam.url}">${exam.name}</option>`;
+                    // القراءة الآمنة للبيانات مهما كان شكلها في Firebase
+                    let examsData = subjects[subject];
+                    let examsArray = Array.isArray(examsData) ? examsData : Object.values(examsData);
+                    
+                    examsArray.forEach(exam => {
+                        if(exam) { // التأكد أن العنصر موجود
+                            html += `<option value="${exam.url}">${exam.name}</option>`;
+                        }
                     });
                     
                     html += `</select>`;
                     html += `<button class="btn" onclick="window.location.href=document.getElementById('${subject}-select').value">ابدأ الاختبار</button>`;
-                    
                     box.innerHTML = html;
                     container.appendChild(box);
                 }
@@ -80,11 +85,9 @@
 
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
-            
-            // التعديل هنا: المسار أصبح password/password ليتطابق مع هيكل صورتك
+            // المسار الدقيق بناءً على صورك: password/password
             db.ref('password/password').once('value').then(function(snapshot) {
-                const correctPass = String(snapshot.val());
-                if (userInput === correctPass) {
+                if (userInput === String(snapshot.val())) {
                     document.getElementById("auth-box").style.display = "none";
                     document.getElementById("exams-container").style.display = "flex";
                     loadExams();
