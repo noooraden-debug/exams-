@@ -27,7 +27,8 @@
 
         document.getElementById("submit-auth-btn").addEventListener("click", () => {
             const userInput = document.getElementById("pass-field").value.trim();
-            // البحث عن كلمة السر في المسار الصحيح (exams/password) بناءً على صورتك الأخيرة
+            
+            // تم تحديث المسار هنا ليبحث عن كلمة السر داخل مجلد exams كما في صورتك
             db.ref('exams/password').once('value').then(snap => {
                 if (userInput == snap.val()) {
                     document.getElementById("auth-box").style.display = "none";
@@ -41,9 +42,12 @@
         function loadExams() {
             const container = document.getElementById("exams-container");
             container.style.display = "flex";
-            // المسار هنا أصبح exams/exams لجلب المواد
+            
+            // جلب البيانات من المجلد الفرعي الثاني المسمى exams
             db.ref('exams/exams').once('value').then(snap => {
                 const data = snap.val();
+                if (!data) return;
+                
                 for (let subject in data) {
                     let div = document.createElement("div");
                     div.className = "box";
@@ -73,3 +77,4 @@
     </script>
 </body>
 </html>
+ 
