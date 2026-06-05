@@ -2,100 +2,74 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة النماذج الامتحانية الذكية</title>
-    
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
     <style>
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: #0b1021; color: white; overflow-x: hidden; }
-        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
-        .header { text-align: center; padding: 20px; }
-        .main-title { font-size: 2rem; font-weight: bold; color: #00d4ff; text-shadow: 0 0 15px rgba(0,212,255,0.7); }
-        .container { width: 90%; max-width: 500px; display: flex; flex-direction: column; gap: 25px; margin-bottom: 50px; }
-        .box { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 25px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .btn { background: linear-gradient(90deg, #00d4ff, #0055ff); color: white; padding: 12px 30px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 0 15px #00d4ff; }
-        .lock-input { background: rgba(0,0,0,0.3); border: 1px solid #00d4ff; padding: 12px; border-radius: 15px; color: white; font-size: 1rem; text-align: center; width: 100%; box-sizing: border-box; }
-        .error-message { color: #ff4a4a; font-size: 0.9rem; margin-top: 10px; display: none; }
-        .watermark-box { position: absolute; top: 10px; right: 20px; font-size: 0.7rem; color: #00d4ff; font-weight: bold; }
+        body { background: #0b1021; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .box { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; margin: 10px; width: 300px; text-align: center; border: 1px solid #00d4ff; }
+        .btn { background: #00d4ff; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .select { padding: 8px; width: 100%; margin-bottom: 10px; border-radius: 5px; background: #0b1021; color: white; }
     </style>
 </head>
 <body>
-
-    <div id="particles-js"></div>
-
-    <div class="header">
-        <h1 class="main-title">منصة النماذج الامتحانية الذكية</h1>
-        <p>إعداد المبرمج NOUR EDDIN - 0957869853</p>
+    <div id="auth-box" class="box">
+        <h2>أدخل الرمز السري</h2>
+        <input type="password" id="pass-field" style="padding:10px; border-radius:5px; border:none; width: 80%;">
+        <button id="submit-auth-btn" class="btn">دخول</button>
     </div>
-
-    <div class="container">
-        <div id="auth-box" class="box">
-            <div class="watermark-box">🔐 قفل الأمان</div>
-            <h2>الرجاء إدخال الرمز السري</h2>
-            <input type="password" id="pass-field" class="lock-input" placeholder="أدخل الرمز هنا...">
-            <button id="submit-auth-btn" class="btn" style="margin-top: 15px;">تحقق ودخول</button>
-            <div id="err-text" class="error-message">❌ الرمز غير صحيح!</div>
-        </div>
-
-        <div id="exams-container" style="display: none; flex-direction: column; gap: 20px;"></div>
-    </div>
+    <div id="exams-container" style="display: none; flex-direction: column;"></div>
 
     <script>
-        particlesJS("particles-js", {"particles": {"number": {"value": 80}, "color": {"value": "#00d4ff"}, "move": {"enable": true, "speed": 3}}});
-
         const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        function loadExams() {
-            const container = document.getElementById("exams-container");
-            db.ref('exams').once('value').then(function(snapshot) {
-                const subjects = snapshot.val();
-                container.innerHTML = ""; 
-                
-                if (!subjects) return;
-
-                for (let subject in subjects) {
-                    let box = document.createElement("div");
-                    box.className = "box";
-                    let html = `<h2 style="margin-top:0;">${subject}</h2>`;
-                    html += `<select id="${subject}-select" class="lock-input" style="margin-bottom:15px;">`;
-                    
-                    // القراءة الآمنة للبيانات مهما كان شكلها في Firebase
-                    let examsData = subjects[subject];
-                    let examsArray = Array.isArray(examsData) ? examsData : Object.values(examsData);
-                    
-                    examsArray.forEach(exam => {
-                        if(exam) { // التأكد أن العنصر موجود
-                            html += `<option value="${exam.url}">${exam.name}</option>`;
-                        }
-                    });
-                    
-                    html += `</select>`;
-                    html += `<button class="btn" onclick="window.location.href=document.getElementById('${subject}-select').value">ابدأ الاختبار</button>`;
-                    box.innerHTML = html;
-                    container.appendChild(box);
-                }
-            });
-        }
-
-        document.getElementById("submit-auth-btn").addEventListener("click", function() {
+        document.getElementById("submit-auth-btn").addEventListener("click", () => {
             const userInput = document.getElementById("pass-field").value.trim();
-            // المسار الدقيق بناءً على صورك: password/password
-            db.ref('password/password').once('value').then(function(snapshot) {
-                if (userInput === String(snapshot.val())) {
+            // البحث عن كلمة السر في المسار الصحيح (exams/password) بناءً على صورتك الأخيرة
+            db.ref('exams/password').once('value').then(snap => {
+                if (userInput == snap.val()) {
                     document.getElementById("auth-box").style.display = "none";
-                    document.getElementById("exams-container").style.display = "flex";
                     loadExams();
                 } else {
-                    document.getElementById("err-text").style.display = "block";
+                    alert("رمز خاطئ!");
                 }
             });
         });
+
+        function loadExams() {
+            const container = document.getElementById("exams-container");
+            container.style.display = "flex";
+            // المسار هنا أصبح exams/exams لجلب المواد
+            db.ref('exams/exams').once('value').then(snap => {
+                const data = snap.val();
+                for (let subject in data) {
+                    let div = document.createElement("div");
+                    div.className = "box";
+                    div.innerHTML = `<h3>${subject}</h3>`;
+                    let select = document.createElement("select");
+                    select.className = "select";
+                    
+                    let items = Object.values(data[subject]);
+                    items.forEach(item => {
+                        let opt = document.createElement("option");
+                        opt.value = item.url;
+                        opt.textContent = item.name;
+                        select.appendChild(opt);
+                    });
+                    
+                    let btn = document.createElement("button");
+                    btn.className = "btn";
+                    btn.textContent = "ابدأ الاختبار";
+                    btn.onclick = () => window.location.href = select.value;
+                    
+                    div.appendChild(select);
+                    div.appendChild(btn);
+                    container.appendChild(div);
+                }
+            });
+        }
     </script>
 </body>
 </html>
