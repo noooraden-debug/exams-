@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الاختبار الشامل - عامر انكلش</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #eef2f3; padding: 20px; }
+        .exam-card { max-width: 850px; margin: auto; background: #fff; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-right: 15px solid #2c3e50; }
+        .section-title { font-size: 1.5em; font-weight: bold; color: #8e44ad; margin-top: 40px; margin-bottom: 20px; border-bottom: 2px solid #8e44ad; padding-bottom: 10px; }
+        .match-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .match-table th, .match-table td { padding: 15px; border: 1px solid #ddd; text-align: center; }
+        .q-text { font-weight: bold; margin-top: 25px; color: #2c3e50; font-size: 1.3em; }
+        textarea { width: 100%; height: 70px; margin-top: 10px; border: 3px solid #bdc3c7; border-radius: 15px; padding: 15px; font-size: 1.2em; box-sizing: border-box; }
+        button { background: #8e44ad; color: white; border: none; padding: 20px; width: 100%; border-radius: 15px; font-size: 1.5em; cursor: pointer; margin-top: 30px; }
+        .whatsapp-btn { background: #25d366; margin-top: 15px; }
+        .correct-choice { background-color: #d4edda !important; border: 2px solid #28a745 !important; }
+        .wrong-choice { background-color: #f8d7da !important; border: 2px solid #dc3545 !important; }
+        .hint-msg { color: #27ae60; margin-top: 5px; font-weight: bold; display: block; }
+        .end-msg { text-align: center; font-size: 1.4em; font-weight: bold; color: #2c3e50; margin-top: 30px; padding: 15px; background: #fdfdfd; border-radius: 10px; border: 2px dashed #8e44ad; }
+        .footer-card { margin-top: 50px; padding: 20px; text-align: center; border-top: 2px solid #eee; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+<div class="exam-card">
+    <div class="section-title">D- Match each item in A with the suitable choice from B:</div>
+    <table class="match-table">
+        <tr><th>( B )</th><th>الاختيار</th><th>( A )</th></tr>
+        <tr><td>A. has always been there in our minds.</td><td><select id="sel26"><option value="-">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></td><td>26. opposite of “silly”</td></tr>
+        <tr><td>B. options available to us.</td><td><select id="sel27"><option value="-">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></td><td>27. Desire to communicate with space</td></tr>
+        <tr><td>C. serious.</td><td><select id="sel28"><option value="-">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></td><td>28. bleeding</td></tr>
+        <tr><td>D. to rethink of our health.</td><td><select id="sel29"><option value="-">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></td><td>29. This world is full of</td></tr>
+        <tr><td>E. the process of losing blood.</td><td><select id="sel30"><option value="-">-</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></td><td>30. It will be better</td></tr>
+    </table>
+
+    <div class="section-title">E- Write the suitable questions:</div>
+    <div class="q-text">31. We went to the zoo last Friday.</div><textarea id="q31" data-ans="when did you go to the zoo?"></textarea><div id="h31"></div>
+    <div class="q-text">32. Salma lives in a small village.</div><textarea id="q32" data-ans="where does salma live?"></textarea><div id="h32"></div>
+    <div class="q-text">33. My brother has worked for two hours.</div><textarea id="q33" data-ans="how long has your brother worked?"></textarea><div id="h33"></div>
+
+    <div class="section-title">F- Answer the following questions:</div>
+    <div class="q-text">34. How many siblings do you have?</div><textarea id="q34"></textarea><div id="h34"></div>
+    <div class="q-text">35. Where do you live?</div><textarea id="q35"></textarea><div id="h35"></div>
+
+    <div class="section-title">G- Write a 50-word paragraph:</div>
+    <textarea id="topic" placeholder="اكتب هنا موضوعك..."></textarea>
+
+    <div class="end-msg">لقد انتهت الأسئلة! يرجى مراجعة إجاباتك جيداً.</div>
+
+    <button onclick="correctAll()">تصحيح الإجابات</button>
+    <button class="whatsapp-btn" onclick="sendWhatsApp()">إرسال الإجابات للمدرس عبر واتساب</button>
+
+    <div class="footer-card">
+        <p>أتمنى لكم كل التوفيق والنجاح!</p>
+        <p>لأي استفسار يرجى التواصل مع: <strong>عامر انكلش - 0982287950</strong></p>
+    </div>
+</div>
+
+<script>
+    function correctAll() {
+        const keys = {26: "C", 27: "A", 28: "E", 29: "B", 30: "D"};
+        for (let i in keys) {
+            let s = document.getElementById("sel"+i);
+            s.className = (s.value === keys[i]) ? "correct-choice" : "wrong-choice";
+        }
+
+        for(let i=31; i<=33; i++) {
+            let t = document.getElementById("q"+i);
+            let h = document.getElementById("h"+i);
+            let ans = t.getAttribute("data-ans");
+            if(t.value.toLowerCase().trim().includes(ans.replace("?",""))) {
+                t.className = "correct-choice";
+                h.innerHTML = "<span class='hint-msg'>إجابة صحيحة!</span>";
+            } else {
+                t.className = "wrong-choice";
+                h.innerHTML = "<span class='hint-msg' style='color:#c0392b'>الإجابة الصحيحة: " + ans + "</span>";
+            }
+        }
+
+        document.getElementById("h34").innerHTML = "<span class='hint-msg' style='color:#2980b9;'>تلميح: ابدأ جملتك بـ I have ...</span>";
+        document.getElementById("h35").innerHTML = "<span class='hint-msg' style='color:#2980b9;'>تلميح: ابدأ جملتك بـ I live in ...</span>";
+        
+        alert("تم تصحيح الإجابات، انظر للنتائج والتلميحات!");
+    }
+
+    function sendWhatsApp() {
+        let msg = "إجابات الطالب:%0A";
+        for(let i=31; i<=35; i++) msg += "س" + i + ": " + document.getElementById("q"+i).value + "%0A";
+        msg += "الموضوع: " + document.getElementById("topic").value;
+        window.open("https://wa.me/963982287950?text=" + msg, "_blank");
+    }
+</script>
+</body>
+</html>
