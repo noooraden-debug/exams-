@@ -46,28 +46,32 @@
             max-width: 480px;
         }
 
+        /* تنسيق الشعار المتوهج بدقة وطبق الأصل */
         .logo-text {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             letter-spacing: 2px;
             background: linear-gradient(90deg, #00f0ff, #ff007f, #d946ef);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0;
-            text-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            text-shadow: 0 0 35px rgba(0, 240, 255, 0.35);
         }
 
         .sub-logo {
             font-size: 0.75rem;
             color: #94a3b8;
-            margin: 2px 0 15px 0;
+            margin: 4px 0 18px 0;
+            opacity: 0.8;
         }
 
+        /* تنسيق الترحيب المحدث باسمك بالإنجليزية */
         .welcome-msg {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin: 5px 0;
             color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         .welcome-sub {
@@ -85,7 +89,6 @@
             margin-bottom: 100px; 
         }
 
-        /* قفل الأمان الزجاجي */
         .box-auth {
             background: rgba(13, 20, 38, 0.6); 
             backdrop-filter: blur(20px); 
@@ -98,7 +101,6 @@
             width: 100%;
         }
 
-        /* شبكة المواد ثنائية الأعمدة */
         .subjects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -142,7 +144,6 @@
             color: #edf2f7;
         }
 
-        /* القائمة المنسدلة النيون المتناسقة للبطاقة الكرتية */
         .card-select {
             background: rgba(10, 15, 30, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -157,7 +158,6 @@
             margin-bottom: 10px;
         }
 
-        /* أزرار البطاقات الصغيرة */
         .card-btn {
             background: linear-gradient(90deg, #00f0ff, #a855f7);
             color: white;
@@ -176,7 +176,6 @@
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
         }
 
-        /* صندوق الامتحان التفاعلي السفلي */
         .exam-section-title {
             font-size: 1.1rem;
             font-weight: 700;
@@ -224,7 +223,6 @@
             box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
         }
 
-        /* حقل الرمز السري */
         .lock-input { 
             background: rgba(5, 8, 19, 0.8); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -249,7 +247,6 @@
         .error-message { color: #ff467e; font-size: 0.9rem; margin-top: 10px; display: none; font-weight: bold;}
         .watermark-box { position: absolute; top: 10px; right: 12px; font-size: 0.6rem; color: #00f0ff; font-weight: 700; opacity: 0.5;}
 
-        /* شريط التنقل السفلي - الثابت */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -297,7 +294,7 @@
         <h1 class="logo-text">THE SMART SERIES</h1>
         <p class="sub-logo">سلسلة الذكاء الالكترونية الامتحانية - تأسست 2024</p>
         
-        <h2 class="welcome-msg">أهلاً بك، نور الدين!</h2>
+        <h2 class="welcome-msg">أهلاً بك، NOUR EDDIN!</h2>
         <p class="welcome-sub">اكتشف عالم المعرفة التفاعلي</p>
     </div>
 
@@ -342,15 +339,12 @@
     </div>
 
     <script>
-        // إعداد الجزيئات الخفيفة بالخلفية
         particlesJS("particles-js", {"particles": {"number": {"value": 40}, "color": {"value": "#00f0ff"}, "move": {"enable": true, "speed": 2}}});
 
-        // ربط الـ Firebase الخاص بك
         const firebaseConfig = { databaseURL: "https://exams-platform-999f6-default-rtdb.firebaseio.com" };
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // الأيقونات التلقائية للمواد الأساسية
         const defaultImages = {
             "العلوم": "https://cdn-icons-png.flaticon.com/512/3061/3061341.png",
             "الفيزياء": "https://cdn-icons-png.flaticon.com/512/2942/2942767.png",
@@ -358,7 +352,6 @@
             "اللغة الإنجليزية": "https://cdn-icons-png.flaticon.com/512/2991/2991634.png"
         };
 
-        // دالة بناء جلب البيانات وبناء الكروت الثنائية الشبكية تلقائياً
         function loadExams() {
             const container = document.getElementById("exams-container");
             db.ref('exams').once('value').then(function(snapshot) {
@@ -395,20 +388,18 @@
                     container.appendChild(card);
                 }
                 
-                // تحديث بيانات الصندوق السفلي تلقائياً بأول اختبار متوفر لقاعدة البيانات
                 document.getElementById("exam-title-display").innerText = `الاختبار التالي: ${firstExamName}`;
                 document.getElementById("start-exam-action").onclick = function() {
                     window.location.href = firstExamUrl;
                 };
 
                 document.getElementById("main-dashboard").style.display = "flex";
-                startCountdown(); // تشغيل عداد الوقت الحي
+                startCountdown();
             });
         }
 
-        // كود تشغيل العداد التنازلي البرمجي الحي المماثل للصورة
         function startCountdown() {
-            let distance = 5025; // مؤقت افتراضي ثابت وتنازلي بالثواني (ساعة و23 دقيقة و45 ثانية)
+            let distance = 5025; 
             setInterval(function() {
                 if (distance < 0) return;
                 let hours = Math.floor(distance / 3600);
@@ -423,7 +414,6 @@
             }, 1000);
         }
 
-        // نظام التحقق الفوري والدخول
         document.getElementById("submit-auth-btn").addEventListener("click", function() {
             const userInput = document.getElementById("pass-field").value.trim();
             db.ref('password').once('value').then(function(snapshot) {
@@ -438,4 +428,3 @@
     </script>
 </body>
 </html>
- 
