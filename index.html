@@ -605,14 +605,12 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
 
 <canvas id="stars"></canvas>
 
-<!-- LOADING OVERLAY -->
 <div class="loader-overlay" id="loader">
   <div class="loader-logo">SMART SERIES</div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
   <div class="loader-txt">جاري التحضير...</div>
 </div>
 
-<!-- ============ AUTH SCREEN ============ -->
 <div id="auth-screen" class="screen active" style="display:flex">
   <div class="auth-wrap">
     <div class="auth-logo">
@@ -654,7 +652,6 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
   </div>
 </div>
 
-<!-- ============ DASHBOARD SCREEN ============ -->
 <div id="dash-screen" class="screen">
   <div class="dash-header">
     <div class="header-glow"></div>
@@ -682,7 +679,6 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
   <div class="subjects-grid" id="subjects-grid"></div>
 </div>
 
-<!-- ============ DETAIL SCREEN ============ -->
 <div id="detail-screen" class="screen">
   <div class="detail-header" id="detail-header">
     <button class="detail-back-btn" id="back-btn">
@@ -699,7 +695,6 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
   <div id="detail-content"></div>
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="bottom-nav" id="bottom-nav" style="display:none">
   <div class="nav-i active" onclick="showScreen('dash')">
     <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1164,7 +1159,7 @@ function buildGrid(){
         '<div class="card-title">'+s.name+'</div>'+
         '<div class="card-sub">'+s.desc+'</div>'+
         '<div class="card-meta">'+tags+'</div>'+
-        '<button class="card-cta" onclick="event.stopPropagation();openSubject(\''+s.id+'\')">📚 ابدأ المكثّف</button>'+
+        '<button class="card-cta">📚 ابدأ المكثّف</button>'+
       '</div>';
     g.appendChild(card);
   });
