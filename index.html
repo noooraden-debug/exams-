@@ -10,8 +10,15 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cyan:#00f0ff;--purple:#a855f7;--pink:#ff007f;--gold:#f59e0b;
-  --bg:#040610;--bg-card:rgba(10,15,35,0.72);--border:rgba(255,255,255,0.07);
+  --bg-dark:#040610;--bg-card:rgba(10,15,35,0.72);
   --text-dim:#8892a4;--text-bright:#edf2f7;
+  
+  /* Light Theme Variables */
+  --light-bg: #f0f4f8;
+  --light-text: #2c3e50;
+  --subj-primary: #1565c0;
+  --subj-light: #e3f2fd;
+  --shadow: 0 4px 20px rgba(0,0,0,0.12);
 }
 body{
   font-family:'Cairo',sans-serif;min-height:100vh;
@@ -21,6 +28,11 @@ body{
     radial-gradient(ellipse at 50% 100%,rgba(255,0,127,.13) 0%,transparent 50%),
     linear-gradient(170deg,#04060f 0%,#070b1b 60%,#030508 100%);
   background-attachment:fixed;color:#fff;overflow-x:hidden;
+  transition: background 0.4s, color 0.4s;
+}
+body.light-mode {
+  background: var(--light-bg);
+  color: var(--light-text);
 }
 canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
 
@@ -29,576 +41,148 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
 .screen.active{display:block}
 
 /* ===================== AUTH SCREEN ===================== */
-#auth-screen{
-  display:flex;align-items:center;justify-content:center;
-  min-height:100vh;padding:20px;
-}
+#auth-screen{display:flex;align-items:center;justify-content:center;padding:20px;}
 #auth-screen.active{display:flex}
 .auth-wrap{width:100%;max-width:420px}
-
 .auth-logo{text-align:center;margin-bottom:28px}
-.auth-logo svg{filter:drop-shadow(0 0 30px rgba(0,240,255,.3))}
-
-.platform-title-wrap{
-  text-align:center;margin-bottom:18px;
-  animation:fadeSlideDown .8s ease both;
-}
+.platform-title-wrap{text-align:center;margin-bottom:18px;animation:fadeSlideDown .8s ease both;}
 @keyframes fadeSlideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
 .platform-title{
   font-size:1.55rem;font-weight:900;letter-spacing:1px;
   background:linear-gradient(90deg,#00f0ff,#a855f7,#ff007f);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  text-shadow:none;
-  filter:drop-shadow(0 0 18px rgba(0,240,255,.35));
-  margin:10px 0 4px;line-height:1.2;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 18px rgba(0,240,255,.35));margin:10px 0 4px;
 }
-.platform-subtitle{
-  font-size:.72rem;color:rgba(255,255,255,.45);
-  letter-spacing:2px;font-weight:700;margin-bottom:8px;
-}
-.platform-title-line{
-  height:1px;width:80%;margin:0 auto;
-  background:linear-gradient(90deg,transparent,rgba(0,240,255,.4),rgba(168,85,247,.4),transparent);
-}
-
+.platform-subtitle{font-size:.72rem;color:rgba(255,255,255,.45);letter-spacing:2px;font-weight:700;}
 .auth-card{
-  background:rgba(8,12,30,0.9);
-  border:1px solid rgba(0,240,255,.18);
-  border-radius:28px;padding:36px 28px;
-  box-shadow:0 30px 70px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter:blur(40px);text-align:center;
+  background:rgba(8,12,30,0.9);border:1px solid rgba(0,240,255,.18);
+  border-radius:28px;padding:36px 28px;text-align:center;
+  box-shadow:0 30px 70px rgba(0,0,0,.7);backdrop-filter:blur(40px);
   animation:authCardIn .7s ease .2s both;
 }
 @keyframes authCardIn{from{opacity:0;transform:scale(.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.auth-icon-ring{
-  width:80px;height:80px;margin:0 auto 20px;
-  background:linear-gradient(135deg,rgba(0,240,255,.12),rgba(168,85,247,.15));
-  border:1.5px solid rgba(0,240,255,.3);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:2.2rem;
-  box-shadow:0 0 30px rgba(0,240,255,.12),inset 0 0 20px rgba(0,240,255,.05);
-  animation:pulse-ring 3s ease-in-out infinite;
-}
-@keyframes pulse-ring{0%,100%{box-shadow:0 0 30px rgba(0,240,255,.12),inset 0 0 20px rgba(0,240,255,.05)}50%{box-shadow:0 0 45px rgba(0,240,255,.25),inset 0 0 30px rgba(0,240,255,.1)}}
-.auth-card h2{font-size:1.25rem;font-weight:900;margin-bottom:6px;color:#fff}
-.auth-card p{font-size:.8rem;color:var(--text-dim);margin-bottom:24px}
 .lock-input{
   background:rgba(3,6,18,.8);border:1.5px solid rgba(255,255,255,.1);
-  padding:15px 20px;border-radius:16px;color:#fff;
-  font-size:1rem;font-family:'Cairo',sans-serif;text-align:center;
-  width:100%;margin-bottom:14px;outline:none;
-  transition:border-color .25s,box-shadow .25s;letter-spacing:3px;
+  padding:15px 20px;border-radius:16px;color:#fff;font-size:1rem;
+  font-family:'Cairo',sans-serif;text-align:center;width:100%;margin-bottom:14px;outline:none;
 }
-.lock-input:focus{border-color:rgba(0,240,255,.55);box-shadow:0 0 0 3px rgba(0,240,255,.08)}
-.lock-input::placeholder{letter-spacing:0;color:rgba(255,255,255,.25)}
 .auth-btn{
-  background:linear-gradient(90deg,#00f0ff,#d946ef);
-  color:#fff;padding:15px;width:100%;border:none;border-radius:16px;
-  font-weight:800;font-size:1rem;cursor:pointer;
+  background:linear-gradient(90deg,#00f0ff,#d946ef);color:#fff;padding:15px;width:100%;
+  border:none;border-radius:16px;font-weight:800;font-size:1rem;cursor:pointer;
   font-family:'Cairo',sans-serif;
-  box-shadow:0 6px 24px rgba(0,240,255,.3);
-  transition:transform .2s,box-shadow .2s;letter-spacing:.5px;
 }
-.auth-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,240,255,.4)}
-.auth-btn:active{transform:translateY(0)}
-.auth-error{color:#ff5c8a;font-size:.82rem;margin-top:12px;display:none;font-weight:700;animation:shake .4s}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.auth-footer{margin-top:20px;font-size:.7rem;color:rgba(255,255,255,.2);text-align:center}
+.auth-error{color:#ff5c8a;font-size:.82rem;margin-top:12px;display:none;font-weight:700;}
 
 /* ===================== DASHBOARD SCREEN ===================== */
 #dash-screen{padding-bottom:88px}
-
-/* HEADER */
-.dash-header{
-  text-align:center;padding:36px 20px 0;position:relative;
-}
-.header-glow{
-  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
-  width:400px;height:250px;
-  background:radial-gradient(ellipse,rgba(0,240,255,.1) 0%,rgba(168,85,247,.07) 40%,transparent 70%);
-  pointer-events:none;
-}
-.brand-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(90deg,rgba(0,240,255,.08),rgba(168,85,247,.08));
-  border:1px solid rgba(0,240,255,.22);
-  border-radius:100px;padding:6px 18px 6px 12px;margin-bottom:18px;
-  box-shadow:0 0 20px rgba(0,240,255,.06);
-}
-.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.brand-pill span{font-size:.73rem;font-weight:800;color:var(--cyan);letter-spacing:.5px}
-
-.welcome-name{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:5px;text-shadow:0 0 40px rgba(0,240,255,.15)}
-.welcome-name span{background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.welcome-sub{font-size:.8rem;color:var(--text-dim);margin-bottom:26px}
-
-/* STATS STRIP */
-.stats-row{
-  display:flex;gap:10px;padding:0 16px;margin-bottom:28px;
-  overflow-x:auto;scrollbar-width:none;
-}
-.stats-row::-webkit-scrollbar{display:none}
-.stat-c{
-  flex:1;min-width:76px;
-  background:linear-gradient(135deg,rgba(10,15,40,0.9),rgba(8,12,30,0.9));
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;padding:14px 8px;text-align:center;
-  backdrop-filter:blur(20px);
-  transition:transform .2s,box-shadow .2s;
-  position:relative;overflow:hidden;
-}
-.stat-c::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,240,255,.04),transparent);
-  pointer-events:none;
-}
-.stat-c:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.stat-c .n{
-  font-size:1.45rem;font-weight:900;line-height:1;
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
+.dash-header{text-align:center;padding:36px 20px 0;position:relative;}
+.welcome-name{font-size:1.5rem;font-weight:900;color:#fff;margin:bottom:5px;}
+.welcome-name span{background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stats-row{display:flex;gap:10px;padding:0 16px;margin-bottom:28px;overflow-x:auto;scrollbar-width:none;}
+.stat-c{flex:1;min-width:76px;background:linear-gradient(135deg,rgba(10,15,40,0.9),rgba(8,12,30,0.9));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 8px;text-align:center;}
+.stat-c .n{font-size:1.45rem;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .stat-c .l{font-size:.6rem;color:var(--text-dim);margin-top:4px;font-weight:600}
-
-/* SECTION HEAD */
-.sec-head{display:flex;align-items:center;gap:10px;padding:0 16px;margin-bottom:18px}
-.sec-head h2{font-size:.95rem;font-weight:900;color:var(--text-bright);white-space:nowrap}
-.sec-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);flex-shrink:0}
-.sec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(0,240,255,.3),rgba(168,85,247,.15),transparent)}
-
-/* SUBJECTS GRID */
-.subjects-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:14px;padding:0 14px;
-}
-
-/* SUBJECT CARD */
+.subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:0 14px;}
 .sub-card{
-  background:rgba(8,13,32,0.82);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;
-  overflow:hidden;cursor:pointer;
-  transition:transform .4s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s;
-  position:relative;
-  display:flex;flex-direction:column;
-  animation:cardFadeIn .6s ease both;
+  background:rgba(8,13,32,0.82);border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;animation:cardFadeIn .6s ease both;
 }
 @keyframes cardFadeIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.sub-card:nth-child(1){animation-delay:.05s}
-.sub-card:nth-child(2){animation-delay:.1s}
-.sub-card:nth-child(3){animation-delay:.15s}
-.sub-card:nth-child(4){animation-delay:.2s}
-.sub-card:nth-child(5){animation-delay:.25s}
-.sub-card:nth-child(6){animation-delay:.3s}
-.sub-card:nth-child(7){animation-delay:.35s}
-.sub-card:nth-child(8){animation-delay:.4s}
-.sub-card:nth-child(9){animation-delay:.45s}
-.sub-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 55%);
-  pointer-events:none;z-index:1;
-}
-.sub-card:active{transform:scale(.97)!important}
-.sub-card:hover{
-  transform:translateY(-8px) scale(1.02);
-  box-shadow:0 24px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.1);
-}
-
-/* CARD TOP ACCENT BAR */
-.card-bar{height:4px;width:100%;flex-shrink:0}
-
-/* CARD THUMBNAIL */
-.card-thumb{
-  width:100%;aspect-ratio:1;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  flex-shrink:0;
-}
-.thumb-bg{
-  position:absolute;inset:0;
-  opacity:.08;
-}
-.thumb-icon{
-  position:relative;z-index:2;
-  font-size:4rem;
-  filter:drop-shadow(0 4px 20px rgba(0,0,0,.6));
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-  line-height:1;
-}
-.sub-card:hover .thumb-icon{transform:scale(1.15) rotate(-4deg)}
-.thumb-label{
-  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,255,255,.08);
-  color:rgba(255,255,255,.65);
-  font-size:.55rem;font-weight:700;
-  padding:3px 10px;border-radius:100px;
-  white-space:nowrap;z-index:3;letter-spacing:.5px;
-}
-.card-shine{
-  position:absolute;top:-50%;left:-60%;width:50%;height:200%;
-  background:linear-gradient(105deg,transparent,rgba(255,255,255,.06),transparent);
-  transform:skewX(-15deg);
-  transition:left .6s ease;z-index:4;
-}
-.sub-card:hover .card-shine{left:150%}
-
-/* CARD BODY */
-.card-body{
-  padding:12px 12px 14px;
-  display:flex;flex-direction:column;flex:1;
-  position:relative;z-index:2;
-}
-.card-title{font-size:.88rem;font-weight:900;color:#fff;margin-bottom:3px;line-height:1.3}
-.card-sub{font-size:.63rem;color:var(--text-dim);margin-bottom:10px;line-height:1.4}
-.card-meta{
-  display:flex;align-items:center;gap:5px;margin-bottom:11px;flex-wrap:wrap;
-}
-.card-tag{
-  font-size:.55rem;font-weight:700;
-  padding:2px 8px;border-radius:100px;
-  border:1px solid;opacity:.85;
-}
+.card-bar{height:4px;width:100%;}
+.card-thumb{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;background:rgba(255,255,255,.03);}
+.thumb-icon{font-size:4rem;position:relative;z-index:2;}
+.card-body{padding:12px;display:flex;flex-direction:column;flex:1;}
+.card-title{font-size:.88rem;font-weight:900;color:#fff;margin-bottom:3px;}
+.card-sub{font-size:.63rem;color:var(--text-dim);margin-bottom:10px;}
 .card-cta{
-  margin-top:auto;
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  color:#fff;border:none;padding:9px 12px;
-  width:100%;border-radius:12px;
-  font-size:.75rem;font-weight:800;cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  transition:box-shadow .2s,transform .2s;
-  letter-spacing:.3px;
-}
-.card-cta:hover{box-shadow:0 0 20px rgba(0,240,255,.4);transform:scale(1.02)}
-.watermark{
-  position:absolute;top:8px;right:10px;
-  font-size:.5rem;color:var(--cyan);
-  font-weight:700;opacity:.28;letter-spacing:.8px;z-index:5;
+  margin-top:auto;background:linear-gradient(90deg,var(--cyan),var(--purple));
+  color:#fff;border:none;padding:9px 12px;border-radius:12px;font-size:.75rem;font-weight:800;font-family:'Cairo',sans-serif;
 }
 
-.th-arabic   .card-bar{background:linear-gradient(90deg,#f59e0b,#ef4444)}
-.th-arabic   .sub-card:hover{border-color:rgba(245,158,11,.4);box-shadow:0 20px 50px rgba(245,158,11,.15),0 0 0 1px rgba(245,158,11,.15)}
-.th-arabic   .thumb-bg{background:linear-gradient(135deg,#f59e0b,#ef4444)}
-.th-arabic   .card-cta{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+/* ===================== DETAIL SCREEN (LIGHT THEME) ===================== */
+#detail-screen { padding-bottom: 88px; }
+.main-header {
+  background: linear-gradient(135deg, var(--subj-primary) 0%, #1a1a2e 100%);
+  color: white; padding: 40px 20px 30px; text-align: center; position: relative; overflow: hidden;
+}
+.main-header h1 { font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; }
+.main-header .subtitle { font-size: 1rem; color: #f5c842; font-weight: 700; }
+.badge-row { display: flex; justify-content: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 14px; font-size: 0.75rem; }
 
-.th-math     .card-bar{background:linear-gradient(90deg,#00f0ff,#3b82f6)}
-.th-math     .sub-card:hover{border-color:rgba(0,240,255,.4);box-shadow:0 20px 50px rgba(0,240,255,.12),0 0 0 1px rgba(0,240,255,.15)}
-.th-math     .thumb-bg{background:linear-gradient(135deg,#00f0ff,#3b82f6)}
+.sub-nav {
+  background: #1a1a2e; padding: 0 10px; display: flex; overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 100;
+}
+.sub-nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  color: rgba(255,255,255,0.7); padding: 14px 16px; cursor: pointer; font-size: 0.85rem; font-family: 'Cairo'; font-weight: 700; white-space: nowrap; border: none; background: none; border-bottom: 3px solid transparent;
+}
+.nav-btn.active { color: #f5c842; border-bottom-color: #f5c842; }
 
-.th-english  .card-bar{background:linear-gradient(90deg,#10b981,#3b82f6)}
-.th-english  .sub-card:hover{border-color:rgba(16,185,129,.4);box-shadow:0 20px 50px rgba(16,185,129,.12),0 0 0 1px rgba(16,185,129,.15)}
-.th-english  .thumb-bg{background:linear-gradient(135deg,#10b981,#3b82f6)}
-.th-english  .card-cta{background:linear-gradient(90deg,#10b981,#3b82f6)}
+.container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+.section { display: none; animation: fadeIn 0.4s ease; }
+.section.active { display: block; }
 
-.th-science  .card-bar{background:linear-gradient(90deg,#6ee7b7,#06b6d4)}
-.th-science  .sub-card:hover{border-color:rgba(110,231,183,.4);box-shadow:0 20px 50px rgba(110,231,183,.1),0 0 0 1px rgba(110,231,183,.15)}
-.th-science  .thumb-bg{background:linear-gradient(135deg,#6ee7b7,#06b6d4)}
-.th-science  .card-cta{background:linear-gradient(90deg,#6ee7b7,#06b6d4);color:#0a0e24}
+/* Unit Cards */
+.unit-card-l {
+  background: white; border-radius: 16px; margin-bottom: 24px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid rgba(0,0,0,0.06);
+}
+.unit-header {
+  padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer; position: relative;
+  background: linear-gradient(135deg, var(--subj-light), #fff); border-right: 5px solid var(--subj-primary);
+}
+.unit-num-l {
+  width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 900; color: white; background: var(--subj-primary);
+}
+.unit-info h2 { font-size: 1.1rem; font-weight: 800; color: var(--subj-primary); margin-bottom: 4px; }
+.unit-info .unit-meta { font-size: 0.8rem; opacity: 0.8; color: #555; font-weight: 600;}
+.unit-body { display: none; padding: 16px 24px 24px; }
+.unit-card-l.open .unit-body { display: block; }
 
-.th-history  .card-bar{background:linear-gradient(90deg,#d97706,#b45309)}
-.th-history  .sub-card:hover{border-color:rgba(217,119,6,.4);box-shadow:0 20px 50px rgba(217,119,6,.12),0 0 0 1px rgba(217,119,6,.15)}
-.th-history  .thumb-bg{background:linear-gradient(135deg,#d97706,#b45309)}
-.th-history  .card-cta{background:linear-gradient(90deg,#d97706,#b45309)}
+/* Lessons */
+.lesson {
+  background: #f8f9fa; border-radius: 12px; padding: 18px; margin-bottom: 16px; border-right: 4px solid var(--subj-primary);
+}
+.lesson h3 { font-size: 1rem; font-weight: 800; color: var(--subj-primary); margin-bottom: 10px; }
+.lesson-content ul { padding-right: 20px; margin: 8px 0; }
+.lesson-content li { margin-bottom: 6px; font-size: 0.9rem; line-height: 1.7; }
+.gold-tip {
+  background: #fff8d6; border: 2px solid #D4A017; border-radius: 12px; padding: 14px; margin: 14px 0; display: flex; gap: 10px;
+}
+.gold-tip .tip-icon { font-size: 1.4rem; }
+.gold-tip .tip-text { font-size: 0.88rem; font-weight: 600; color: #7a5c00; line-height: 1.6; }
 
-.th-islamic  .card-bar{background:linear-gradient(90deg,#34d399,#059669)}
-.th-islamic  .sub-card:hover{border-color:rgba(52,211,153,.4);box-shadow:0 20px 50px rgba(52,211,153,.1),0 0 0 1px rgba(52,211,153,.15)}
-.th-islamic  .thumb-bg{background:linear-gradient(135deg,#34d399,#059669)}
-.th-islamic  .card-cta{background:linear-gradient(90deg,#34d399,#059669);color:#0a0e24}
+/* Answer Box */
+.show-btn {
+  background: linear-gradient(135deg, #1565c0, #1976d2); color: white; border: none; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-family: 'Cairo'; font-size: 0.85rem; font-weight: 700; margin-top: 10px;
+}
+.answer-box {
+  display: none; background: #e3f2fd; border: 2px solid #1976d2; border-radius: 10px; padding: 14px; margin-top: 8px; font-size: 0.88rem; font-weight: 600;
+}
+.answer-box.visible { display: block; }
 
-.th-civic    .card-bar{background:linear-gradient(90deg,#818cf8,#6366f1)}
-.th-civic    .sub-card:hover{border-color:rgba(129,140,248,.4);box-shadow:0 20px 50px rgba(129,140,248,.1),0 0 0 1px rgba(129,140,248,.15)}
-.th-civic    .thumb-bg{background:linear-gradient(135deg,#818cf8,#6366f1)}
-.th-civic    .card-cta{background:linear-gradient(90deg,#818cf8,#6366f1)}
+/* General Blocks */
+.welcome-box { background: white; border: 2px solid var(--subj-primary); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 24px; box-shadow: var(--shadow); }
+.welcome-box h2 { color: var(--subj-primary); font-size: 1.3rem; font-weight: 900; margin-bottom: 10px; }
 
-.th-physics  .card-bar{background:linear-gradient(90deg,#c084fc,#7c3aed)}
-.th-physics  .sub-card:hover{border-color:rgba(192,132,252,.4);box-shadow:0 20px 50px rgba(192,132,252,.1),0 0 0 1px rgba(192,132,252,.15)}
-.th-physics  .thumb-bg{background:linear-gradient(135deg,#c084fc,#7c3aed)}
-.th-physics  .card-cta{background:linear-gradient(90deg,#c084fc,#7c3aed)}
-
-.th-chemistry .card-bar{background:linear-gradient(90deg,#fb923c,#ea580c)}
-.th-chemistry .sub-card:hover{border-color:rgba(251,146,60,.4);box-shadow:0 20px 50px rgba(251,146,60,.1),0 0 0 1px rgba(251,146,60,.15)}
-.th-chemistry .thumb-bg{background:linear-gradient(135deg,#fb923c,#ea580c)}
-.th-chemistry .card-cta{background:linear-gradient(90deg,#fb923c,#ea580c)}
-
-/* ===================== SUBJECT DETAIL SCREEN ===================== */
-#detail-screen{padding-bottom:88px}
-.detail-header{
-  position:relative;overflow:hidden;
-  padding:70px 20px 30px;text-align:center;
-}
-.detail-bg-glow{
-  position:absolute;inset:0;opacity:.18;
-  background:radial-gradient(ellipse at center,currentColor,transparent 70%);
-}
-.detail-back-btn{
-  position:absolute;top:16px;right:16px;z-index:10;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  color:#fff;padding:8px 16px;border-radius:100px;
-  font-size:.78rem;font-weight:700;cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  display:flex;align-items:center;gap:6px;
-  transition:background .2s;
-}
-.detail-back-btn:hover{background:rgba(255,255,255,.14)}
-.detail-icon-wrap{
-  font-size:4.5rem;display:block;margin-bottom:14px;
-  filter:drop-shadow(0 8px 24px rgba(0,0,0,.5));
-}
-.detail-title{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:5px}
-.detail-desc{font-size:.82rem;color:var(--text-dim);margin-bottom:18px}
-.detail-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.detail-pill{
-  font-size:.65rem;font-weight:700;
-  padding:4px 14px;border-radius:100px;
-  border:1px solid rgba(255,255,255,.15);
-  color:rgba(255,255,255,.7);
-  background:rgba(255,255,255,.05);
-}
-
-/* CONTENT TABS */
-.detail-tabs{
-  display:flex;overflow-x:auto;scrollbar-width:none;
-  padding:0 14px;gap:8px;margin-bottom:20px;
-}
-.detail-tabs::-webkit-scrollbar{display:none}
-.tab-btn{
-  flex-shrink:0;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  color:var(--text-dim);padding:9px 18px;border-radius:100px;
-  font-size:.75rem;font-weight:700;cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  transition:all .2s;white-space:nowrap;
-}
-.tab-btn.active{
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  border-color:transparent;color:#fff;
-  box-shadow:0 4px 15px rgba(0,240,255,.3);
-}
-.tab-pane{display:none;padding:0 14px}
-.tab-pane.active{display:block}
-
-/* LESSON CARD */
-.lesson-card{
-  background:rgba(8,13,32,0.75);border:1px solid rgba(255,255,255,.07);
-  border-radius:20px;padding:20px;margin-bottom:14px;
-  backdrop-filter:blur(20px);
-}
-.lesson-num{
-  font-size:.62rem;font-weight:800;letter-spacing:1px;
-  color:var(--cyan);margin-bottom:6px;opacity:.7;
-}
-.lesson-title{font-size:1rem;font-weight:900;color:#fff;margin-bottom:8px}
-.lesson-content{font-size:.82rem;color:var(--text-dim);line-height:1.8;margin-bottom:14px}
-.lesson-content strong{color:var(--cyan)}
-.lesson-rule{
-  background:rgba(0,240,255,.06);border:1px solid rgba(0,240,255,.18);
-  border-radius:14px;padding:14px 16px;margin:12px 0;
-}
-.lesson-rule h4{font-size:.8rem;font-weight:800;color:var(--cyan);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.lesson-rule p{font-size:.78rem;color:var(--text-dim);line-height:1.7}
-.lesson-example{
-  background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);
-  border-radius:14px;padding:14px 16px;margin:12px 0;
-}
-.lesson-example h4{font-size:.8rem;font-weight:800;color:var(--purple);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.lesson-example p{font-size:.78rem;color:var(--text-dim);line-height:1.7}
-
-/* VISUAL DIAGRAM */
-.diagram{
-  background:rgba(4,6,18,.8);border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;padding:20px;margin:14px 0;
-  text-align:center;font-size:.78rem;color:var(--text-dim);
-  line-height:1.8;position:relative;overflow:hidden;
-}
-.diagram::before{content:'📊';font-size:1.4rem;display:block;margin-bottom:8px}
-.diagram pre{
-  font-family:'Cairo',sans-serif;font-size:.76rem;
-  color:rgba(255,255,255,.6);text-align:center;
-}
-
-/* TIPS BOX */
-.tips-box{
-  background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(239,68,68,.06));
-  border:1px solid rgba(245,158,11,.2);border-radius:16px;
-  padding:16px;margin-top:16px;
-}
-.tips-box h4{font-size:.82rem;font-weight:800;color:#f59e0b;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.tips-box ul{list-style:none;display:flex;flex-direction:column;gap:7px}
-.tips-box li{font-size:.77rem;color:var(--text-dim);display:flex;align-items:flex-start;gap:8px;line-height:1.6}
-.tips-box li::before{content:'💡';flex-shrink:0}
-
-/* LESSON SUMMARY */
-.lesson-summary{
-  background:rgba(0,240,255,.05);border:1px solid rgba(0,240,255,.15);
-  border-radius:14px;padding:14px 16px;margin-top:12px;
-}
-.lesson-summary h4{font-size:.8rem;font-weight:800;color:var(--cyan);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.lesson-summary p{font-size:.77rem;color:rgba(255,255,255,.65);line-height:1.7}
-
-/* MINI EXERCISES */
-.mini-exercises{margin-top:14px}
-.mini-exercises h4{font-size:.82rem;font-weight:800;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.mini-q{
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;padding:14px;margin-bottom:10px;
-}
-.mini-q p{font-size:.8rem;color:var(--text-bright);margin-bottom:10px;line-height:1.6}
-.mini-opts{display:flex;flex-direction:column;gap:6px}
-.mini-opt{
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;padding:9px 14px;font-size:.77rem;
-  color:var(--text-dim);cursor:pointer;text-align:right;
-  font-family:'Cairo',sans-serif;
-  transition:all .2s;display:flex;align-items:center;gap:8px;
-}
-.mini-opt:hover{background:rgba(0,240,255,.08);border-color:rgba(0,240,255,.3);color:#fff}
-.mini-opt.correct{background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.4);color:#34d399}
-.mini-opt.wrong{background:rgba(255,92,138,.1);border-color:rgba(255,92,138,.3);color:#ff5c8a}
-.mini-opt-letter{
-  width:22px;height:22px;border-radius:50%;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  font-size:.65rem;font-weight:800;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.mini-feedback{
-  font-size:.75rem;padding:8px 12px;border-radius:10px;margin-top:8px;
-  display:none;font-weight:700;
-}
-.mini-feedback.show{display:block}
-.mini-feedback.ok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#34d399}
-.mini-feedback.no{background:rgba(255,92,138,.08);border:1px solid rgba(255,92,138,.25);color:#ff5c8a}
-
-/* COMPREHENSIVE QUIZ */
-.quiz-section{padding:0 14px}
-.quiz-intro{
-  background:var(--bg-card);border:1px solid rgba(0,240,255,.15);
-  border-radius:20px;padding:22px;margin-bottom:16px;text-align:center;
-}
-.quiz-intro h3{font-size:1rem;font-weight:900;color:#fff;margin-bottom:6px}
-.quiz-intro p{font-size:.78rem;color:var(--text-dim);margin-bottom:16px;line-height:1.6}
-.quiz-start-btn{
-  background:linear-gradient(90deg,#00f0ff,#a855f7);
-  color:#fff;border:none;padding:13px 30px;border-radius:14px;
-  font-size:.9rem;font-weight:800;cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  box-shadow:0 6px 22px rgba(0,240,255,.3);
-  transition:transform .2s,box-shadow .2s;
-}
-.quiz-start-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,240,255,.4)}
-
-.quiz-container{display:none}
-.quiz-progress-bar{
-  height:5px;background:rgba(255,255,255,.06);
-  border-radius:5px;margin-bottom:18px;overflow:hidden;
-}
-.quiz-progress-fill{
-  height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));
-  border-radius:5px;transition:width .4s ease;
-}
-.quiz-q-label{
-  font-size:.65rem;font-weight:800;color:var(--cyan);
-  letter-spacing:1px;margin-bottom:8px;opacity:.75;
-}
-.quiz-q-text{
-  font-size:.92rem;font-weight:700;color:#fff;
-  line-height:1.6;margin-bottom:16px;
-}
-.quiz-opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
-.quiz-opt{
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);
-  border-radius:14px;padding:13px 16px;cursor:pointer;
-  display:flex;align-items:center;gap:10px;
-  transition:all .25s;
-}
-.quiz-opt:hover{background:rgba(0,240,255,.07);border-color:rgba(0,240,255,.3);transform:translateX(-4px)}
-.quiz-opt.sel-correct{background:rgba(52,211,153,.12);border-color:#34d399;color:#34d399}
-.quiz-opt.sel-wrong{background:rgba(255,92,138,.1);border-color:#ff5c8a;color:#ff5c8a}
-.quiz-opt.show-correct{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4);color:#34d399}
-.quiz-opt-letter{
-  width:28px;height:28px;border-radius:50%;flex-shrink:0;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.72rem;font-weight:800;transition:all .25s;
-}
-.quiz-opt-text{font-size:.82rem;font-weight:700;color:var(--text-bright)}
-.quiz-explain{
-  background:rgba(0,240,255,.06);border:1px solid rgba(0,240,255,.2);
-  border-radius:14px;padding:14px;font-size:.8rem;color:var(--text-dim);
-  line-height:1.7;display:none;margin-bottom:14px;
-}
-.quiz-explain.show{display:block}
-.quiz-next-btn{
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  color:#fff;border:none;padding:13px;width:100%;border-radius:14px;
-  font-size:.88rem;font-weight:800;cursor:pointer;
-  font-family:'Cairo',sans-serif;display:none;
-  transition:transform .2s,box-shadow .2s;
-}
-.quiz-next-btn.show{display:block}
-.quiz-next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,240,255,.35)}
-
-/* QUIZ RESULT */
-.quiz-result{
-  display:none;text-align:center;
-  background:var(--bg-card);border:1px solid rgba(255,255,255,.07);
-  border-radius:22px;padding:30px 20px;
-}
-.result-emoji{font-size:3.5rem;display:block;margin-bottom:12px}
-.result-score{
-  font-size:2.5rem;font-weight:900;
-  background:linear-gradient(90deg,var(--cyan),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:6px;
-}
-.result-msg{font-size:.88rem;color:var(--text-dim);margin-bottom:20px;line-height:1.6}
-.result-retry{
-  background:linear-gradient(90deg,#00f0ff,#a855f7);
-  color:#fff;border:none;padding:13px 28px;border-radius:14px;
-  font-size:.85rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;
-  transition:transform .2s;
-}
-.result-retry:hover{transform:translateY(-2px)}
-
-/* BOTTOM NAV */
+/* Bottom Nav */
 .bottom-nav{
-  position:fixed;bottom:0;left:0;width:100%;height:68px;
-  background:rgba(4,6,18,.98);backdrop-filter:blur(40px);
-  border-top:1px solid rgba(0,240,255,.1);
+  position:fixed;bottom:0;left:0;width:100%;height:65px;
+  background:rgba(4,6,18,.98);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.05);
   display:flex;justify-content:space-around;align-items:center;z-index:100;
-  box-shadow:0 -10px 40px rgba(0,0,0,.4);
 }
 .nav-i{
   display:flex;flex-direction:column;align-items:center;
-  color:#3a4558;text-decoration:none;font-size:.6rem;font-weight:700;
-  transition:all .25s cubic-bezier(.4,0,.2,1);gap:3px;padding:0 14px;cursor:pointer;
-  position:relative;
+  color:#8892a4;font-size:.65rem;font-weight:700;cursor:pointer;
 }
-.nav-i.active,.nav-i:hover{color:var(--cyan);transform:translateY(-2px)}
-.nav-i svg{width:22px;height:22px;fill:currentColor;transition:all .25s}
-.nav-i.active svg{filter:drop-shadow(0 0 6px var(--cyan))}
-.nav-dot{width:4px;height:4px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);margin-top:2px;display:none;animation:blink 2s infinite}
-.nav-i.active .nav-dot{display:block}
-.nav-i.active span{color:var(--cyan)}
+.nav-i svg{width:22px;height:22px;fill:currentColor;margin-bottom:3px;}
+.nav-i.active { color:var(--cyan); }
 
-/* SCROLLBAR */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(0,240,255,.2);border-radius:4px}
-
-/* LOADING OVERLAY */
-.loader-overlay{
-  position:fixed;inset:0;z-index:999;
-  background:var(--bg);display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:16px;
-}
-.loader-logo{font-size:2rem;font-weight:900;letter-spacing:4px;
-  background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.loader-bar{width:160px;height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
-.loader-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:3px;animation:loader-anim 1.8s ease-in-out forwards}
-@keyframes loader-anim{0%{width:0}100%{width:100%}}
-.loader-txt{font-size:.72rem;color:var(--text-dim);letter-spacing:1px}
+/* Loader */
+.loader-overlay{position:fixed;inset:0;z-index:999;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+.loader-logo{font-size:2rem;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 </style>
 </head>
 <body>
@@ -607,849 +191,355 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
 
 <div class="loader-overlay" id="loader">
   <div class="loader-logo">SMART SERIES</div>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
-  <div class="loader-txt">جاري التحضير...</div>
+  <div style="color:#8892a4; font-size:0.8rem;">جاري التحضير...</div>
 </div>
 
-<div id="auth-screen" class="screen active" style="display:flex">
+<div id="auth-screen" class="screen active">
   <div class="auth-wrap">
     <div class="auth-logo">
       <div class="platform-title-wrap">
-        <div class="platform-title-line"></div>
         <div class="platform-title">منصة المكثفات الذكية</div>
         <div class="platform-subtitle">الصف التاسع الأساسي · منهج سوريا 2026</div>
-        <div class="platform-title-line"></div>
       </div>
-      <svg width="240" height="100" viewBox="0 0 240 100">
-        <defs>
-          <linearGradient id="gT" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00f0ff"/>
-            <stop offset="50%" stop-color="#9333ea"/>
-            <stop offset="100%" stop-color="#ff007f"/>
-          </linearGradient>
-          <linearGradient id="gR" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff9900"/>
-            <stop offset="50%" stop-color="#00f0ff"/>
-            <stop offset="100%" stop-color="#d946ef"/>
-          </linearGradient>
-          <filter id="gl"><feGaussianBlur stdDeviation="3" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
-        </defs>
-        <text x="45" y="24" font-family="Cairo,sans-serif" font-weight="900" font-size="14" fill="#00f0ff" letter-spacing="4" opacity=".8">THE</text>
-        <rect x="15" y="30" width="210" height="52" rx="26" fill="none" stroke="url(#gR)" stroke-width="2.5" stroke-dasharray="360 110" stroke-dashoffset="220" stroke-linecap="round" filter="url(#gl)"/>
-        <text x="120" y="68" font-family="Cairo,sans-serif" font-weight="900" font-size="40" fill="url(#gT)" text-anchor="middle" letter-spacing="2" filter="url(#gl)">SMART</text>
-        <text x="120" y="94" font-family="Cairo,sans-serif" font-weight="700" font-size="11" fill="#94a3b8" text-anchor="middle" letter-spacing="10">SERIES</text>
-      </svg>
     </div>
     <div class="auth-card">
-      <div class="auth-icon-ring">🔐</div>
-      <h2>مرحباً في منصتك التعليمية</h2>
-      <p>أدخل الرمز السري للوصول إلى مواد الصف التاسع</p>
-      <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري">
+      <h2 style="font-size:1.2rem; font-weight:900; margin-bottom:10px; color:#fff;">مرحباً NOUR EDDIN 👋</h2>
+      <input type="password" id="pass-field" class="lock-input" placeholder="الرمز السري (9999)">
       <button id="submit-btn" class="auth-btn">دخول المنصة ←</button>
-      <div id="auth-err" class="auth-error">❌ الرمز غير صحيح، حاول مجدداً</div>
-      <div class="auth-footer">THE SMART SERIES · منهج سوريا 2026 · الصف التاسع</div>
+      <div id="auth-err" class="auth-error">❌ الرمز غير صحيح</div>
     </div>
   </div>
 </div>
 
 <div id="dash-screen" class="screen">
   <div class="dash-header">
-    <div class="header-glow"></div>
-    <div class="brand-pill">
-      <div class="brand-dot"></div>
-      <span>منصة SMART SERIES — الصف التاسع</span>
-    </div>
     <h1 class="welcome-name">أهلاً، <span>NOUR EDDIN</span> 👋</h1>
-    <p class="welcome-sub">اختر مادتك وابدأ رحلة التفوق الآن</p>
+    <p style="color:#8892a4; font-size:0.8rem; margin-bottom:20px;">اختر مادتك وابدأ رحلة التفوق الآن (منهاج 2026)</p>
   </div>
-
-  <div class="stats-row">
-    <div class="stat-c"><div class="n">9</div><div class="l">مواد دراسية</div></div>
-    <div class="stat-c"><div class="n">45+</div><div class="l">درساً شاملاً</div></div>
-    <div class="stat-c"><div class="n">9</div><div class="l">اختبار تفاعلي</div></div>
-    <div class="stat-c"><div class="n">2026</div><div class="l">منهج سوريا</div></div>
-  </div>
-
-  <div class="sec-head">
-    <div class="sec-dot"></div>
-    <h2>مواد الصف التاسع الأساسي</h2>
-    <div class="sec-line"></div>
-  </div>
-
   <div class="subjects-grid" id="subjects-grid"></div>
 </div>
 
 <div id="detail-screen" class="screen">
-  <div class="detail-header" id="detail-header">
-    <div class="detail-bg-glow"></div> <button class="detail-back-btn" id="back-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-      رجوع للمواد
-    </button>
-    <span class="detail-icon-wrap" id="d-icon"></span>
-    <h1 class="detail-title" id="d-title"></h1>
-    <p class="detail-desc" id="d-desc"></p>
-    <div class="detail-pills" id="d-pills"></div>
+  <div class="main-header" id="det-header">
+    <button onclick="showDash()" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.2); border:none; color:white; padding:6px 14px; border-radius:20px; cursor:pointer; font-family:'Cairo'; font-weight:700;">رجوع ↩</button>
+    <div style="font-size:2.5rem; margin-bottom:10px;" id="det-emoji">📚</div>
+    <h1 id="det-title">المادة</h1>
+    <div class="subtitle" id="det-sub">الوصف</div>
+    <div class="badge-row" id="det-badges"></div>
   </div>
 
-  <div class="detail-tabs" id="detail-tabs"></div>
-  <div id="detail-content"></div>
+  <nav class="sub-nav">
+    <button class="nav-btn active" onclick="showSubSection('s-home', this)">🏠 الرئيسية</button>
+    <button class="nav-btn" onclick="showSubSection('s-units', this)">📚 الوحدات والدروس</button>
+    <button class="nav-btn" onclick="showSubSection('s-quiz', this)">✅ اختبارات</button>
+    <button class="nav-btn" onclick="showSubSection('s-tips', this)">💡 نصائح</button>
+  </nav>
+
+  <div class="container">
+    <div id="s-home" class="section active">
+      <div class="welcome-box" id="det-intro"></div>
+    </div>
+    
+    <div id="s-units" class="section">
+      <div id="units-container"></div>
+    </div>
+
+    <div id="s-quiz" class="section">
+      <div class="welcome-box"><h2>قسم الاختبارات</h2><p>سيتم تفعيل الاختبارات الشاملة قريباً بناءً على بنك الأسئلة.</p></div>
+    </div>
+    <div id="s-tips" class="section">
+      <div class="welcome-box"><h2>نصائح ذهبية</h2><p>راجع القواعد المرفقة ضمن الدروس لضمان العلامة التامة.</p></div>
+    </div>
+  </div>
 </div>
 
 <div class="bottom-nav" id="bottom-nav" style="display:none">
-  <div class="nav-i active" onclick="showScreen('dash')">
+  <div class="nav-i active" onclick="showDash()">
     <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    <span>الرئيسية</span><div class="nav-dot"></div>
+    <span>الرئيسية</span>
   </div>
-  <div class="nav-i" onclick="showScreen('dash')">
+  <div class="nav-i" onclick="showDash()">
     <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.47 15.14L12 18.7l6.53-3.56v1.66L12 20.36l-6.53-3.56v-1.66z"/></svg>
-    <span>المواد</span><div class="nav-dot"></div>
-  </div>
-  <div class="nav-i" id="nav-exam" onclick="navToExam()">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-    <span>الاختبار</span><div class="nav-dot"></div>
-  </div>
-  <div class="nav-i" onclick="logout()">
-    <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-    <span>خروج</span><div class="nav-dot"></div>
+    <span>المواد</span>
   </div>
 </div>
 
 <script>
-/* ============================================================
-   STARS CANVAS
-   ============================================================ */
-(function(){
-  var c=document.getElementById('stars'),ctx=c.getContext('2d');
-  function resize(){c.width=innerWidth;c.height=innerHeight}
-  resize();window.addEventListener('resize',resize);
-  var pts=Array.from({length:120},()=>({
-    x:Math.random(),y:Math.random(),
-    r:Math.random()*1.8+.2,
-    o:Math.random()*.7+.1,
-    d:Math.random()*.005+.001,
-    col:Math.random()>.6?'#00f0ff':Math.random()>.5?'#d946ef':Math.random()>.5?'#a855f7':'#ffffff'
-  }));
-  function draw(){
-    ctx.clearRect(0,0,c.width,c.height);
-    pts.forEach(p=>{
-      p.o+=p.d*(Math.random()>.5?1:-1);
-      if(p.o>1)p.o=1;if(p.o<.08)p.o=.08;
-      ctx.beginPath();ctx.arc(p.x*c.width,p.y*c.height,p.r,0,Math.PI*2);
-      ctx.fillStyle=p.col;ctx.globalAlpha=p.o;ctx.fill();
-    });
-    ctx.globalAlpha=1;requestAnimationFrame(draw);
+/* =================== DATABASE (Syrian Curriculum 2026) =================== */
+const DB = {
+  math: {
+    name: "الرياضيات", subtitle: "جبر وهندسة | المنهاج السوري 2026", emoji: "🔢📐",
+    theme: { primary: "#1565c0", light: "#e3f2fd" },
+    badges: ["📖 10 وحدات", "📝 مبرهنة تالس", "💡 قواعد للحل"],
+    intro: "ملخص شامل لقسمي الجبر والهندسة، يغطي جميع النظريات والقواعد الأساسية كالأعداد الحقيقية والنسب المثلثية.",
+    units: [
+      { num: 1, title: "الجبر: الأعداد الحقيقية", meta: "الفصل الأول",
+        lessons: [
+          { title: "📌 الأعداد النسبية وغير النسبية", html: "<ul><li>العدد النسبي: يمكن كتابته على شكل كسر (بسط ومقام أعداد صحيحة).</li><li>العدد غير النسبي: لا يمكن كتابته ككسر (مثل الجذور الصماء و π).</li></ul><div class='gold-tip'><div class='tip-icon'>💡</div><div class='tip-text'>تذكر: كل عدد طبيعي هو عدد صحيح، وكل عدد صحيح هو عدد نسبي.</div></div>" },
+          { title: "📌 الجذور التربيعية", html: "<ul><li>قواعد ضرب وقسمة الجذور.</li><li>إزالة الجذر من المقام.</li></ul><button class='show-btn' onclick='toggleAnswer(this)'>📋 مثال توضيحي ▼</button><div class='answer-box'>لإزالة الجذر من مقام الكسر 5/√3 نضرب البسط والمقام بـ √3 فيصبح 5√3 / 3.</div>" }
+        ]
+      },
+      { num: 2, title: "الهندسة: النسب المثلثية", meta: "الفصل الأول",
+        lessons: [
+          { title: "📌 النسب المثلثية لزاوية حادة", html: "<ul><li>Sin (الجيب) = المقابل / الوتر</li><li>Cos (التجيب) = المجاور / الوتر</li><li>Tan (الظل) = المقابل / المجاور</li></ul>" }
+        ]
+      },
+      { num: 3, title: "الجبر: القوى وكثيرات الحدود", meta: "الفصل الأول",
+        lessons: [ { title: "📌 قوى العدد العادي والنشر والتحليل", html: "<p>محتوى الدرس قيد الإعداد...</p>" } ]
+      },
+      { num: 4, title: "الهندسة: مبرهنة تالس", meta: "الفصل الأول",
+        lessons: [ { title: "📌 مبرهنة تالس وعكسها", html: "<p>المستقيمات المتوازية تقطع قاطعين بقطع متناسبة...</p>" } ]
+      },
+      { num: 5, title: "الجبر: المعادلات والمتراجحات", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 معادلات ومتراجحات الدرجة الأولى", html: "<p>طرق النقل وتغيير الإشارة...</p>" } ]
+      },
+      { num: 6, title: "الهندسة: الدائرة", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الزوايا المحيطية والمركزية والمماس", html: "<div class='gold-tip'><div class='tip-icon'>⭐</div><div class='tip-text'>الزاوية المحيطية تساوي نصف قياس القوس المقابل لها (أو نصف المركزية المشتركة معها).</div></div>" } ]
+      },
+      { num: 7, title: "الجبر: جملة معادلتين خطيتين", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الحل الجبري (الحذف بالتعويض أو الجمع) والحل البياني", html: "<p>محتوى الدرس قيد الإعداد...</p>" } ]
+      },
+      { num: 8, title: "الهندسة: المضلعات والمجسمات", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الهرم، المخروط الدوراني، والأسطوانة", html: "<p>حساب الحجوم والمساحات السطحية...</p>" } ]
+      },
+      { num: 9, title: "الجبر: الإحصاء والاحتمالات", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 مقاييس النزعة المركزية (المتوسط، الوسيط، المنوال) والاحتمال", html: "<p>محتوى الدرس قيد الإعداد...</p>" } ]
+      },
+      { num: 10, title: "الهندسة: التحويلات الهندسية", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الانسحاب والتناظر", html: "<p>محتوى الدرس قيد الإعداد...</p>" } ]
+      }
+    ]
+  },
+  science: {
+    name: "علم الأحياء والأرض", subtitle: "العلوم العامة | المنهاج السوري 2026", emoji: "🔬🧬",
+    theme: { primary: "#2e7d32", light: "#e8f5e9" },
+    badges: ["📖 6 وحدات", "🧠 التنسيق العصبي", "🌱 الوراثة"],
+    intro: "يتناول الكتاب بنية جسم الإنسان من الجملة العصبية والحواس وصولاً للوراثة وعلم البيئة.",
+    units: [
+      { num: 1, title: "التنسيق العصبي", meta: "الفصل الأول",
+        lessons: [
+          { title: "📌 الجملة العصبية والدماغ", html: "<ul><li>أقسام الجهاز العصبي: مركزي ومحيطي.</li><li>البصلة السيسائية والمخيخ.</li></ul>" },
+          { title: "📌 الأعصاب والقوس الانعكاسية", html: "<div class='gold-tip'><div class='tip-icon'>⚡</div><div class='tip-text'>المنعكس الشوكي فعل لاإرادي مركزه النخاع الشوكي لحماية الجسم من الأذى.</div></div>" }
+        ]
+      },
+      { num: 2, title: "المستقبلات الحسية", meta: "الفصل الأول",
+        lessons: [
+          { title: "📌 العين والأذن (الرؤية والسمع)", html: "<p>آلية عمل المطابقة في العين واهتزازات غشاء الطبل...</p>" },
+          { title: "📌 الشم، الذوق، واللمس", html: "<p>محتوى الدرس قيد الإعداد...</p>" }
+        ]
+      },
+      { num: 3, title: "التنسيق الهرموني", meta: "الفصل الأول",
+        lessons: [ { title: "📌 الغدد الصم وهرموناتها", html: "<p>النخامية، الدرقية، الكظرية، وجزر لانغرهانس...</p>" } ]
+      },
+      { num: 4, title: "التكاثر", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 التكاثر عند الإنسان والنبات", html: "<p>جهاز التكاثر الذكري والأنثوي، والإلقاح...</p>" } ]
+      },
+      { num: 5, title: "الوراثة", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الصفات والقوانين الوراثية", html: "<p>قوانين مندل في الوراثة والرجحان التام...</p>" } ]
+      },
+      { num: 6, title: "علم البيئة", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 المنظومة البيئية والتلوث", html: "<p>مكونات حية ولا حية والتوازن البيئي...</p>" } ]
+      }
+    ]
+  },
+  physics: {
+    name: "الفيزياء", subtitle: "ميكانيك، طاقة، وكهرباء | منهاج 2026", emoji: "⚛️⚡",
+    theme: { primary: "#6a1b9a", light: "#f3e5f5" },
+    badges: ["📖 4 وحدات", "📝 مسائل محلولة", "⚙️ قوانين نيوتن"],
+    intro: "شرح مبسط لقوانين الحركة والتحريك، وحل مسائل الطاقة والكهرباء.",
+    units: [
+      { num: 1, title: "الحركة والتحريك", meta: "الفصل الأول",
+        lessons: [
+          { title: "📌 الحركة المستقيمة والسرعة", html: "<ul><li>السرعة v = d / t</li><li>التسارع a = Δv / Δt</li></ul>" },
+          { title: "📌 قوانين نيوتن وقوة الثقل", html: "<div class='gold-tip'><div class='tip-icon'>🍎</div><div class='tip-text'>العلاقة الأساسية في التحريك: F = m × a (القوة = الكتلة × التسارع).</div></div>" }
+        ]
+      },
+      { num: 2, title: "العمل والطاقة", meta: "الفصل الأول",
+        lessons: [ { title: "📌 العمل الميكانيكي، الطاقة الحركية والكامنة", html: "<ul><li>الطاقة الحركية Ek = ½ m v²</li><li>الطاقة الكامنة Ep = m g h</li></ul>" } ]
+      },
+      { num: 3, title: "ميكانيك الموائع", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الضغط ودافعة أرخميدس", html: "<p>حساب دافعة أرخميدس وشروط طفو الأجسام...</p>" } ]
+      },
+      { num: 4, title: "الكهرباء والمغناطيسية", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الحقل المغناطيسي، قوة لابلاس، والتحريض", html: "<p>تأثير الحقل المغناطيسي في تيار كهربائي...</p>" } ]
+      }
+    ]
+  },
+  chemistry: {
+    name: "الكيمياء", subtitle: "بنية المادة والتفاعلات | منهاج 2026", emoji: "🧪⚗️",
+    theme: { primary: "#e65100", light: "#fff3e0" },
+    badges: ["📖 4 وحدات", "⚖️ موازنة المعادلات", "⚗️ الكيمياء العضوية"],
+    intro: "المرجع الشامل للكيمياء العضوية واللاعضوية، مع طرق مبسطة لموازنة التفاعلات.",
+    units: [
+      { num: 1, title: "بنية المادة", meta: "الفصل الأول",
+        lessons: [ { title: "📌 الذرة، الجدول الدوري، والروابط", html: "<p>الرابطة الأيونية والمشتركة، والتكافؤات...</p>" } ]
+      },
+      { num: 2, title: "التفاعلات الكيميائية", meta: "الفصل الأول",
+        lessons: [ { title: "📌 أنواع التفاعلات (اتحاد، تفكك، إزاحة)", html: "<button class='show-btn' onclick='toggleAnswer(this)'>📋 أمثلة ▼</button><div class='answer-box'>تفاعل الاتحاد: A + B → AB<br>تفاعل الإزاحة: A + BC → AC + B</div>" } ]
+      },
+      { num: 3, title: "الكيمياء اللاعضوية", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 المحاليل المائية، الحموض، الأسس، الأملاح", html: "<p>حساب التركيز الغرامي والمولي...</p>" } ]
+      },
+      { num: 4, title: "الكيمياء العضوية", meta: "الفصل الثاني",
+        lessons: [ { title: "📌 الألكانات والألكينات", html: "<div class='gold-tip'><div class='tip-icon'>🔥</div><div class='tip-text'>الصيغة العامة للألكانات: CnH2n+2 (تتميز بروابط مشتركة أحادية).</div></div>" } ]
+      }
+    ]
+  },
+  arabic: {
+    name: "اللغة العربية", subtitle: "نصوص وقواعد | المنهاج السوري 2026", emoji: "📖✒️",
+    theme: { primary: "#c62828", light: "#ffebee" },
+    badges: ["📖 6 وحدات", "📝 التوابع والمنصوبات", "✍️ إعراب وتعبير"],
+    intro: "يتضمن تحليل النصوص الأدبية والقواعد النحوية المقررة (النداء، الاستثناء، التوابع).",
+    units: [
+      { num: 1, title: "قضايا اجتماعية", meta: "الفصل الأول", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>محتوى الوحدة (المنادى، المفعول المطلق)...</p>" } ] },
+      { num: 2, title: "قضايا وطنية وقومية", meta: "الفصل الأول", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>محتوى الوحدة (الاستثناء، التمييز)...</p>" } ] },
+      { num: 3, title: "من وحي التراث", meta: "الفصل الأول", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>محتوى الوحدة (الحال، المفعول لأجله)...</p>" } ] },
+      { num: 4, title: "الفن والحياة", meta: "الفصل الثاني", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>محتوى الوحدة (التوابع: النعت والعطف)...</p>" } ] },
+      { num: 5, title: "العلم والعلماء", meta: "الفصل الثاني", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>محتوى الوحدة (التوابع: التوكيد والبدل)...</p>" } ] },
+      { num: 6, title: "قضايا إنسانية", meta: "الفصل الثاني", lessons: [ { title: "📌 نصوص وقواعد", html: "<p>مراجعات عامة وتعبير إبداعي...</p>" } ] }
+    ]
+  },
+  history: {
+    name: "التاريخ", subtitle: "تاريخ العرب الحديث | منهاج 2026", emoji: "🏛️📜", theme: { primary: "#4527a0", light: "#ede7f6" }, badges: ["📖 4 وحدات"], intro: "تاريخ الوطن العربي والحركات الوطنية.",
+    units: [ { num: 1, title: "الوطن العربي في العصر الحديث", meta: "الفصل 1", lessons: [ {title: "📌 الاحتلال العثماني والسيطرة الأوروبية", html: "..."} ] }, { num: 2, title: "سورية المعاصرة", meta: "الفصل 2", lessons: [ {title: "📌 النضال والاستقلال", html: "..."} ] } ]
+  },
+  civic: {
+    name: "التربية الوطنية", subtitle: "المواطنة والدولة | منهاج 2026", emoji: "🇸🇾⚖️", theme: { primary: "#00838f", light: "#e0f7fa" }, badges: ["📖 4 وحدات"], intro: "مفاهيم الدستور، السلطات العامة، والمجتمع المدني.",
+    units: [ { num: 1, title: "الدولة والسلطات", meta: "الفصل 1", lessons: [ {title: "📌 الدستور والسلطات الثلاث", html: "..."} ] }, { num: 2, title: "المجتمع والمنظمات", meta: "الفصل 2", lessons: [ {title: "📌 منظمات دولية وعربية", html: "..."} ] } ]
+  },
+  islamic: {
+    name: "التربية الإسلامية", subtitle: "عقيدة، فقه، وسيرة | منهاج 2026", emoji: "🕌🕋", theme: { primary: "#0277bd", light: "#e1f5fe" }, badges: ["📖 5 وحدات"], intro: "تلاوة القرآن، العقيدة الإسلامية، والأخلاق.",
+    units: [ { num: 1, title: "القرآن والعقيدة", meta: "الفصل 1", lessons: [ {title: "📌 أحكام التجويد والتوحيد", html: "..."} ] }, { num: 2, title: "السيرة والفقه", meta: "الفصل 2", lessons: [ {title: "📌 مواقف من السيرة وأحكام فقهية", html: "..."} ] } ]
+  },
+  english: {
+    name: "اللغة الإنجليزية", subtitle: "IMAR Series 9 | 2026", emoji: "🌍🇬🇧", theme: { primary: "#d84315", light: "#fbe9e7" }, badges: ["📖 6 Modules"], intro: "Reading, Grammar, and Writing skills for 9th grade.",
+    units: [ { num: 1, title: "Modules 1-3", meta: "Term 1", lessons: [ {title: "📌 Grammar & Vocabulary", html: "..."} ] }, { num: 2, title: "Modules 4-6", meta: "Term 2", lessons: [ {title: "📌 Reading & Writing", html: "..."} ] } ]
   }
-  draw();
-})();
+};
 
-/* ============================================================
-   NO FIREBASE — standalone mode
-   ============================================================ */
-var db=null;
-
-/* ============================================================
-   SUBJECTS DATA (ترتيب المنهج السوري — بدون التربية الفنية)
-   ============================================================ */
-var SUBJECTS=[
-  {
-    id:'arabic',theme:'th-arabic',
-    icon:'📖',name:'اللغة العربية',
-    desc:'نحو · صرف · أدب · تعبير · بلاغة',
-    pills:['القواعد النحوية','الصرف','الأدب العربي','التعبير'],
-    color:'#f59e0b',
-    chapters:['النحو','الصرف','الأدب','البلاغة','التعبير']
-  },
-  {
-    id:'math',theme:'th-math',
-    icon:'🔢',name:'الرياضيات',
-    desc:'جبر · هندسة · مثلثات · إحصاء',
-    pills:['الجبر','الهندسة','المثلثات','الإحصاء'],
-    color:'#00f0ff',
-    chapters:['الأعداد والعمليات','المعادلات','الهندسة','المثلثات','الإحصاء']
-  },
-  {
-    id:'english',theme:'th-english',
-    icon:'🌍',name:'اللغة الإنجليزية',
-    desc:'IMAR Series · Reading · Grammar · Writing',
-    pills:['Grammar','Reading','Vocabulary','Writing'],
-    color:'#10b981',
-    chapters:['Unit 1','Unit 2','Unit 3','Grammar','Writing Skills']
-  },
-  {
-    id:'science',theme:'th-science',
-    icon:'🔬',name:'العلوم العامة',
-    desc:'أحياء · كيمياء · فيزياء',
-    pills:['الأحياء','الكيمياء','الفيزياء'],
-    color:'#6ee7b7',
-    chapters:['الخلية الحية','التفاعلات الكيميائية','الحركة والقوة','الطاقة']
-  },
-  {
-    id:'history',theme:'th-history',
-    icon:'🏛️',name:'التاريخ والجغرافيا',
-    desc:'تاريخ عربي وإسلامي · جغرافيا طبيعية وبشرية',
-    pills:['التاريخ','الجغرافيا','الدراسات الاجتماعية'],
-    color:'#d97706',
-    chapters:['الحضارة العربية','العصر الإسلامي','الجغرافيا الطبيعية','الجغرافيا البشرية']
-  },
-  {
-    id:'islamic',theme:'th-islamic',
-    icon:'🕌',name:'التربية الإسلامية',
-    desc:'فقه · عقيدة · سيرة نبوية · أخلاق',
-    pills:['الفقه','العقيدة','السيرة النبوية','الأخلاق'],
-    color:'#34d399',
-    chapters:['العقيدة الإسلامية','الفقه وأحكامه','السيرة النبوية','الأخلاق الإسلامية']
-  },
-  {
-    id:'civic',theme:'th-civic',
-    icon:'🇸🇾',name:'التربية الوطنية',
-    desc:'المواطنة · الدستور · الحياة المدنية',
-    pills:['المواطنة','الدستور','الحقوق والواجبات'],
-    color:'#818cf8',
-    chapters:['مفهوم المواطنة','الدستور السوري','الحياة المدنية','حقوق الإنسان']
-  },
-  {
-    id:'physics',theme:'th-physics',
-    icon:'⚛️',name:'الفيزياء',
-    desc:'ميكانيك · حرارة · كهرباء · ضوء',
-    pills:['الميكانيك','الحرارة','الكهرباء','الضوء'],
-    color:'#c084fc',
-    chapters:['الحركة والقوة','الشغل والطاقة','الحرارة','الكهرباء الساكنة','الضوء']
-  },
-  {
-    id:'chemistry',theme:'th-chemistry',
-    icon:'🧪',name:'الكيمياء',
-    desc:'عناصر · تفاعلات · مركبات · حسابات',
-    pills:['الجدول الدوري','التفاعلات','المحاليل','الحسابات'],
-    color:'#fb923c',
-    chapters:['البنية الذرية','الجدول الدوري','التفاعلات الكيميائية','المحاليل','الكيمياء العضوية']
-  }
+/* =================== UI CONTROLLERS =================== */
+const SUBJECTS_LIST = [
+  { id:'math', name:'الرياضيات', icon:'1️⃣', bg:'#1565c0' },
+  { id:'science', name:'العلوم العامة', icon:'🔬', bg:'#2e7d32' },
+  { id:'physics', name:'الفيزياء', icon:'⚛️', bg:'#6a1b9a' },
+  { id:'chemistry', name:'الكيمياء', icon:'🧪', bg:'#e65100' },
+  { id:'arabic', name:'اللغة العربية', icon:'📖', bg:'#c62828' },
+  { id:'history', name:'التاريخ', icon:'🏛️', bg:'#4527a0' },
+  { id:'civic', name:'التربية الوطنية', icon:'🇸🇾', bg:'#00838f' },
+  { id:'islamic', name:'التربية الإسلامية', icon:'🕌', bg:'#0277bd' },
+  { id:'english', name:'اللغة الإنجليزية', icon:'🌍', bg:'#d84315' }
 ];
 
-/* ============================================================
-   SUBJECT CONTENT DATABASE
-   ============================================================ */
-var CONTENT={};
-
-/* --- نموذج محتوى اللغة العربية (سيُستكمل لكل مادة) --- */
-CONTENT['arabic']={
-  tabs:['الدروس','الاختبار الشامل'],
-  lessons:[
-    {
-      num:'الدرس الأول',
-      title:'الجملة الاسمية وأركانها',
-      content:'<strong>الجملة الاسمية</strong> هي الجملة التي تبدأ بالاسم، وتتكوّن من ركنين أساسيين: المبتدأ والخبر.',
-      rules:[
-        {title:'📌 قاعدة: المبتدأ',body:'المبتدأ هو الاسم المرفوع الذي تبنى عليه الجملة الاسمية. يكون في أوّل الجملة ويُرفع بالضمة أو الواو أو الألف حسب نوعه.'},
-        {title:'📌 قاعدة: الخبر',body:'الخبر هو الاسم المرفوع الذي يُتمّ المعنى مع المبتدأ. يجوز أن يكون مفرداً أو جملةً أو شبه جملة.'}
-      ],
-      examples:[
-        {title:'📝 أمثلة',body:'• العلمُ نورٌ — العلم: مبتدأ مرفوع / نور: خبر مرفوع\n• الطالبُ مجتهدٌ — الطالب: مبتدأ / مجتهد: خبر\n• السماءُ صافيةٌ — السماء: مبتدأ / صافية: خبر'}
-      ],
-      diagram:{title:'مخطط الجملة الاسمية',content:'الجملة الاسمية\n┌──────────┬──────────┐\nالمبتدأ (مرفوع)    الخبر (مرفوع)\n  اسم أو ضمير   مفرد / جملة / شبه جملة'},
-      tips:['اربط قاعدة المبتدأ بأنه يأتي أولاً دائماً، مثل "البطل" في القصة!','تذكّر: كلاهما مرفوع = ضمة أو ما ينوب عنها','لاختبار الخبر: اسأل "ما حال المبتدأ؟" فالجواب هو الخبر'],
-      summary:'الجملة الاسمية تبدأ باسم وتتكوّن من مبتدأ وخبر، كلاهما مرفوع. المبتدأ هو المحدَّث عنه، والخبر هو ما يُفيد عنه.',
-      exercises:[
-        {q:'ما إعراب كلمة "الطالبُ" في جملة: الطالبُ نشيطٌ؟',opts:['مبتدأ مرفوع','خبر مرفوع','فاعل مرفوع','مفعول به منصوب'],correct:0,explain:'الطالب تبدأ به الجملة الاسمية فهو المبتدأ المرفوع بالضمة الظاهرة على آخره.'},
-        {q:'كم عدد أركان الجملة الاسمية الأساسية؟',opts:['ثلاثة أركان','أربعة أركان','ركنان فقط','لا تحدّد'],correct:2,explain:'أركان الجملة الاسمية ركنان فقط: المبتدأ والخبر، وكلاهما ضروري لتمام المعنى.'}
-      ]
-    },
-    {
-      num:'الدرس الثاني',
-      title:'النعت وأحكامه',
-      content:'<strong>النعت (الصفة)</strong> هو تابع يصف الاسم قبله ويوضّح معناه أو يُخصّصه. يتبع منعوته في أربعة أمور.',
-      rules:[
-        {title:'📌 قاعدة: مطابقة النعت للمنعوت',body:'يجب أن يتبع النعت منعوته في: الإعراب (رفعاً ونصباً وجراً) · التذكير والتأنيث · الإفراد والتثنية والجمع · التعريف والتنكير.'},
-      ],
-      examples:[
-        {title:'📝 أمثلة على النعت',body:'• جاء طالبٌ مجتهدٌ (نكرة للنكرة)\n• جاء الطالبُ المجتهدُ (معرفة للمعرفة)\n• رأيتُ طالباً مجتهداً (المنعوت منصوب)\n• مررتُ بطالبٍ مجتهدٍ (المنعوت مجرور)'}
-      ],
-      diagram:{title:'أنواع النعت',content:'النعت\n┌───────────────────┐\nنعت حقيقي          نعت سببي\n(يصف المنعوت)    (يصف ما يتعلق بالمنعوت)\nالكتابُ الجديدُ   جاء طالبٌ مرتفعٌ صوتُه'},
-      tips:['تذكّر الأربعة بعبارة: "إعراب · جنس · عدد · تعريف"','كلما رأيت اسمين متتاليين بنفس الإعراب → غالباً الثاني نعت!','النعت يجيب عن سؤال: كيف؟ أيّ؟'],
-      summary:'النعت تابع يصف الاسم ويتبعه في الإعراب والجنس والعدد والتعريف. استخدامه يجعل الكلام أكثر دقة ووضوحاً.',
-      exercises:[
-        {q:'في جملة "قرأتُ كتاباً مفيداً"، ما إعراب كلمة "مفيداً"؟',opts:['فاعل منصوب','نعت منصوب','مفعول به','خبر مرفوع'],correct:1,explain:'مفيداً نعت منصوب لأنه تابع لـ"كتاباً" المنصوب بالفتحة، ويتطابق معه في الإعراب.'},
-        {q:'كم شرطاً يجب أن يتبع النعتُ فيه منعوتَه؟',opts:['شرطان','ثلاثة شروط','أربعة شروط','خمسة شروط'],correct:2,explain:'يجب أن يتبع النعت منعوته في أربعة: الإعراب، والجنس، والعدد، والتعريف والتنكير.'}
-      ]
-    },
-    {
-      num:'الدرس الثالث',
-      title:'الفعل المضارع وإعرابه',
-      content:'<strong>الفعل المضارع</strong> يدل على حدث يقع في الحال أو الاستقبال. يُعرب بالحركات أو الحروف وفق موقعه من الجملة.',
-      rules:[
-        {title:'📌 قاعدة: رفع المضارع',body:'يُرفع الفعل المضارع بالضمة الظاهرة إذا لم يسبقه ناصب أو جازم: يكتبُ / يذهبُ / تسمعُ'},
-        {title:'📌 قاعدة: نصب المضارع',body:'ينتصب المضارع بـ (أن، لن، كي، حتى، لام التعليل) وعلامة نصبه الفتحة: لن يكتبَ / أن يذهبَ'},
-        {title:'📌 قاعدة: جزم المضارع',body:'يجزم المضارع بـ (لم، لمّا، لا الناهية، لام الأمر) وعلامة جزمه السكون: لم يكتبْ / لا تذهبْ'}
-      ],
-      examples:[
-        {title:'📝 مقارنة بين الحالات',body:'• يكتبُ الطالبُ (مرفوع بالضمة)\n• لن يكتبَ الطالبُ (منصوب بالفتحة)\n• لم يكتبْ الطالبُ (مجزوم بالسكون)'}
-      ],
-      diagram:{title:'إعراب المضارع',content:'الفعل المضارع\n│\n┌─────────────────────┐\nمرفوع (أصل)    منصوب (ناصب)    مجزوم (جازم)\nبالضمة        بالفتحة          بالسكون\n│              │                │\nيكتبُ        لن يكتبَ         لم يكتبْ'},
-      tips:['عند رؤية "لن" → المضارع منصوب دائماً!','عند رؤية "لم" → المضارع مجزوم دائماً!','بدون حروف ناصبة أو جازمة → المضارع مرفوع (الأصل)'],
-      summary:'الفعل المضارع يُرفع في الأصل، وينتصب بعد النواصب، ويُجزم بعد الجوازم. المفتاح هو التعرف على الأداة السابقة له.',
-      exercises:[
-        {q:'ما حالة الفعل المضارع في: "لن يتأخّرَ الطالب"؟',opts:['مرفوع','منصوب','مجزوم','مبني'],correct:1,explain:'"لن" من أدوات النصب، فينتصب الفعل بعدها بالفتحة.'},
-        {q:'ما علامة جزم "يذهب" في: "لم يذهبْ أحد"؟',opts:['الفتحة','الضمة','السكون','الكسرة'],correct:2,explain:'"لم" جازمة للمضارع، وعلامة الجزم هنا السكون لأنه صحيح الآخر.'}
-      ]
-    }
-  ],
-  quiz:[
-    {q:'من ركنا الجملة الاسمية؟',opts:['الفعل والفاعل','المبتدأ والخبر','الاسم والفعل','الحال والتمييز'],correct:1,explain:'الجملة الاسمية تتكون من المبتدأ والخبر، وكلاهما مرفوع.'},
-    {q:'يتبع النعت منعوته في كم أمر؟',opts:['أمرين','ثلاثة أمور','أربعة أمور','خمسة أمور'],correct:2,explain:'يتبع النعت منعوته في أربعة: الإعراب، الجنس، العدد، التعريف والتنكير.'},
-    {q:'ما إعراب كلمة "مجتهدٌ" في: "أنتَ مجتهدٌ"؟',opts:['مبتدأ','خبر مرفوع','فاعل','نعت'],correct:1,explain:'مجتهد جاءت بعد المبتدأ "أنتَ" لتتمّ المعنى، فهي خبر مرفوع بالضمة.'},
-    {q:'ما الأداة التي تنصب الفعل المضارع؟',opts:['لم','لا الناهية','لن','لمّا'],correct:2,explain:'"لن" من حروف النصب للمضارع، بينما لم ولا الناهية ولمّا من حروف الجزم.'},
-    {q:'في جملة: "يقرأ الطفلُ قصةً جميلةً" ما إعراب "جميلةً"؟',opts:['خبر','مفعول به','نعت منصوب','حال'],correct:2,explain:'"جميلةً" نعت لـ"قصةً" المنصوبة، وتبعتها في نصبها.'},
-    {q:'ما علامة رفع المبتدأ المفرد؟',opts:['الفتحة','الضمة','الكسرة','الواو'],correct:1,explain:'المبتدأ المفرد يُرفع بالضمة الظاهرة على آخره.'},
-    {q:'ما نوع الجملة: "نجح المجتهدون"؟',opts:['اسمية','فعلية','شبه جملة','ليست جملة'],correct:1,explain:'الجملة بدأت بالفعل "نجح"، فهي جملة فعلية لا اسمية.'},
-    {q:'ما الفعل المضارع المجزوم في: "لا تكذبْ"؟',opts:['لا','تكذبْ','الجملة كلها','لا يوجد'],correct:1,explain:'"تكذبْ" فعل مضارع مجزوم بـ"لا الناهية" وعلامة جزمه السكون.'},
-    {q:'الخبر في جملة: "العلمُ نافعٌ" هو:',opts:['العلم','نافع','الجملة كلها','لا يوجد خبر'],correct:1,explain:'"نافعٌ" هو الخبر المرفوع بالضمة الذي أتمّ المعنى مع المبتدأ "العلمُ".'},
-    {q:'ما الصواب: أيٌّ من الجمل التالية فيها نعت صحيح الإعراب؟',opts:['قرأتُ كتابٌ مفيدٌ','جاء طالبٌ مجتهداً','مررتُ بطالبٍ مجتهدٍ','رأيتُ رجلٌ طويلٌ'],correct:2,explain:'"مجتهدٍ" نعت لـ"طالبٍ" المجرور فتبعه في جره، وهذا هو التطابق الصحيح.'}
-  ]
-};
-
-/* --- محتوى الرياضيات --- */
-CONTENT['math']={
-  tabs:['الدروس','الاختبار الشامل'],
-  lessons:[
-    {
-      num:'الدرس الأول',
-      title:'الأعداد الحقيقية وخصائصها',
-      content:'<strong>الأعداد الحقيقية</strong> تشمل جميع الأعداد التي يمكن تمثيلها على المحور العددي. وتُقسم إلى أعداد نسبية وأعداد غير نسبية.',
-      rules:[
-        {title:'📌 خاصية الإبدال',body:'أ + ب = ب + أ  ,  أ × ب = ب × أ\nمثال: 3 + 5 = 5 + 3 = 8'},
-        {title:'📌 خاصية التجميع',body:'(أ + ب) + ج = أ + (ب + ج)\nمثال: (2+3)+4 = 2+(3+4) = 9'},
-        {title:'📌 خاصية التوزيع',body:'أ × (ب + ج) = أ×ب + أ×ج\nمثال: 3×(4+5) = 3×4 + 3×5 = 27'}
-      ],
-      examples:[
-        {title:'📝 تصنيف الأعداد',body:'• √4 = 2 → عدد طبيعي (نسبي)\n• 3/4 → كسر (نسبي)\n• √2 = 1.414... → عدد غير نسبي\n• π = 3.14159... → عدد غير نسبي'}
-      ],
-      diagram:{title:'مجموعات الأعداد الحقيقية',content:'الأعداد الحقيقية ℝ\n┌─────────────────────────┐\nنسبية ℚ               غير نسبية\n┌────────┐          (√2, π, √3...)\nصحيحة ℤ   كسرية\n┌──────┐   (1/2, 3/4...)\nطبيعية ℕ  سالبة\n(0,1,2..) (-1,-2...)'},
-      tips:['تذكّر: كل عدد طبيعي → صحيح → نسبي → حقيقي (من الأصغر للأكبر)','العدد غير النسبي: لا يمكن كتابته كسراً من الأعداد الصحيحة','π ليس 22/7 بدقة — هذه مجرد تقريب!'],
-      summary:'الأعداد الحقيقية تنقسم لنسبية (تُكتب كسراً) وغير نسبية. تخضع لخواص الإبدال والتجميع والتوزيع.',
-      exercises:[
-        {q:'أيٌّ من الأعداد التالية عدد غير نسبي؟',opts:['√9','2/3','-7','√5'],correct:3,explain:'√5 لا يمكن كتابته كسراً من الأعداد الصحيحة لأن 5 ليس مربعاً كاملاً.'},
-        {q:'حسب خاصية التوزيع: 5×(3+7) = ؟',opts:['50','35','22','5×10'],correct:0,explain:'5×(3+7) = 5×3 + 5×7 = 15+35 = 50 (أو 5×10 = 50)'}
-      ]
-    },
-    {
-      num:'الدرس الثاني',
-      title:'المعادلات من الدرجة الأولى بمجهول واحد',
-      content:'<strong>المعادلة من الدرجة الأولى</strong> هي معادلة تحتوي على مجهول واحد مرفوعاً للأس الأول. حلّها يعني إيجاد قيمة المجهول.',
-      rules:[
-        {title:'📌 قاعدة: خطوات حل المعادلة',body:'١- جمع الحدود المشابهة\n٢- عزل الحدود المتضمّنة للمجهول على جانب\n٣- نقل الأعداد للجانب الآخر مع تغيير الإشارة\n٤- القسمة على معامل المجهول'},
-        {title:'📌 قاعدة: التحقق',body:'عوّض قيمة المجهول في المعادلة الأصلية وتحقق أن طرفيها متساويان.'}
-      ],
-      examples:[
-        {title:'📝 مثال محلول',body:'حلّ: 2س + 5 = 13\n2س = 13 - 5\n2س = 8\nس = 8 ÷ 2\nس = 4\nالتحقق: 2(4)+5 = 8+5 = 13 ✓'}
-      ],
-      diagram:{title:'خوارزمية حل المعادلة',content:'المعادلة\n↓\nجمع الحدود المشابهة\n↓\nعزل المجهول\n↓\nالقسمة على المعامل\n↓\nالحل (س = ؟)\n↓\nالتحقق'},
-      tips:['"نقل الحد من جانب لآخر = تغيير إشارته"','ابدأ دائماً بالتحقق — درجة اختبارية إضافية!','إذا كانت معاملات المجهول كسراً → اضرب الكل في المقام'],
-      summary:'المعادلة من الدرجة الأولى تُحلّ بعزل المجهول والقسمة على معامله، مع التحقق في النهاية.',
-      exercises:[
-        {q:'ما قيمة س في: 3س - 6 = 9؟',opts:['س = 1','س = 5','س = 3','س = 4'],correct:1,explain:'3س = 9+6 = 15، إذاً س = 15÷3 = 5. التحقق: 3(5)-6 = 15-6 = 9 ✓'},
-        {q:'ما قيمة المجهول في: 2س + 3 = 3س - 2؟',opts:['س = 5','س = 1','س = -5','س = 2'],correct:0,explain:'3+2 = 3س-2س، إذاً 5 = س. التحقق: 2(5)+3 = 13 و 3(5)-2 = 13 ✓'}
-      ]
-    },
-    {
-      num:'الدرس الثالث',
-      title:'المثلثات وخصائصها الأساسية',
-      content:'<strong>المثلث</strong> شكل هندسي مغلق يتكوّن من ثلاثة أضلاع وثلاث زوايا. مجموع زوايا أي مثلث يساوي 180°.',
-      rules:[
-        {title:'📌 أنواع المثلثات حسب الأضلاع',body:'• متساوي الأضلاع: الأضلاع الثلاثة متساوية، وكل زاوية = 60°\n• متساوي الساقين: ضلعان متساويان، والزاويتان القاعديتان متساويتان\n• مختلف الأضلاع: الأضلاع الثلاثة مختلفة'},
-        {title:'📌 قاعدة مجموع الزوايا',body:'مجموع زوايا المثلث = 180°\nمثال: إذا كانت زاويتان 60° و 70°، فالزاوية الثالثة = 180 - 60 - 70 = 50°'},
-        {title:'📌 نظرية فيثاغورس (للمثلث القائم)',body:'و² = أ² + ب²\nحيث: و = الوتر (أطول ضلع) · أ وب = الضلعان الآخران\nمثال: أ=3، ب=4 → و = √(9+16) = √25 = 5'}
-      ],
-      examples:[
-        {title:'📝 أمثلة على مجموع الزوايا',body:'مثلث زواياه: 45°، 90°، والثالثة = ؟\n180 - 45 - 90 = 45°\n\nفيثاغورس: أضلاع 6، 8، جد الوتر\nو = √(36+64) = √100 = 10 وحدات'}
-      ],
-      diagram:{title:'أنواع المثلثات',content:'المثلثات\n┌──────────────────────────┐\nحسب الزوايا       حسب الأضلاع\n│                          │\nقائم (90°)         متساوي الأضلاع\nحادة (كل زوايا<90°) متساوي الساقين\nمنفرجة (زاوية>90°) مختلف الأضلاع'},
-      tips:['تذكّر: مجموع الزوايا دائماً 180° — هذا ثابت!','فيثاغورس: "3-4-5" أشهر مجموعة — احفظها!','الزاوية القائمة تشير للزاوية = 90° (المربع الصغير)'],
-      summary:'المثلثات تُصنّف بحسب أضلاعها وزوايا. مجموع الزوايا 180° دائماً. المثلث القائم يخضع لنظرية فيثاغورس: و²=أ²+ب².',
-      exercises:[
-        {q:'مثلث زاويتان فيه 65° و 75°. الزاوية الثالثة تساوي:',opts:['30°','40°','50°','60°'],correct:1,explain:'الزاوية الثالثة = 180 - 65 - 75 = 40°'},
-        {q:'مثلث قائم أضلاعه القائمة 3 و 4. الوتر يساوي:',opts:['5','7','6','√7'],correct:0,explain:'و = √(3²+4²) = √(9+16) = √25 = 5 وحدات. هذه المجموعة الفيثاغورسية الأشهر!'}
-      ]
-    }
-  ],
-  quiz:[
-    {q:'أيٌّ من الأعداد التالية ليس عدداً نسبياً؟',opts:['0.333...','√2','-7','5/3'],correct:1,explain:'√2 عدد غير نسبي لأنه لا يمكن تمثيله كنسبة كسرية من الأعداد الصحيحة.'},
-    {q:'ما قيمة س إذا كانت: س + 8 = 15؟',opts:['س = 7','س = 23','س = 6','س = 8'],correct:0,explain:'س = 15 - 8 = 7. التحقق: 7+8 = 15 ✓'},
-    {q:'خاصية التوزيع: 4×(2+6) = ؟',opts:['48','32','28','24'],correct:1,explain:'4×(2+6) = 4×2 + 4×6 = 8+24 = 32'},
-    {q:'ما أس المجهول في المعادلة من الدرجة الأولى؟',opts:['أس 0','أس 1','أس 2','أس 3'],correct:1,explain:'تُعرَّف المعادلة من الدرجة الأولى بأن أعلى أس للمجهول فيها هو 1.'},
-    {q:'مجموعة الأعداد الطبيعية تحتوي على:',opts:['الأعداد السالبة','الكسور','الأعداد الصحيحة الموجبة والصفر','الأعداد غير النسبية'],correct:2,explain:'الأعداد الطبيعية هي: 0, 1, 2, 3, ... أي الأعداد الصحيحة غير السالبة.'},
-    {q:'حلّ: 5س = 25',opts:['س = 5','س = 20','س = 125','س = 3'],correct:0,explain:'س = 25 ÷ 5 = 5. التحقق: 5×5 = 25 ✓'},
-    {q:'ما خاصية التجميع بالنسبة للجمع؟',opts:['أ×ب = ب×أ','(أ+ب)+ج = أ+(ب+ج)','أ+ب = ب+أ','أ×(ب+ج) = أ×ب+أ×ج'],correct:1,explain:'خاصية التجميع تنص على أن تغيير طريقة تجميع الأعداد لا يغيّر النتيجة.'},
-    {q:'في المعادلة: 2س + 4 = 10، قيمة س هي:',opts:['7','3','4','2'],correct:1,explain:'2س = 10-4 = 6، إذاً س = 6÷2 = 3. التحقق: 2(3)+4 = 10 ✓'},
-    {q:'أيٌّ من الأعداد التالية عدد غير نسبي؟',opts:['22/7','√16','π','0.5'],correct:2,explain:'π عدد غير نسبي، أما 22/7 فهي مجرد تقريب له وليست مساوية له تماماً.'},
-    {q:'ما نتيجة: (-3) × (-4)؟',opts:['-12','+12','-7','+7'],correct:1,explain:'سالب × سالب = موجب، إذاً (-3)×(-4) = +12'}
-  ]
-};
-
-/* --- محتوى الفيزياء --- */
-CONTENT['physics']={
-  tabs:['الدروس','الاختبار الشامل'],
-  lessons:[
-    {
-      num:'الدرس الأول',
-      title:'الحركة المنتظمة والتسارع',
-      content:'<strong>الحركة المنتظمة</strong> هي حركة يقطع فيها الجسم مسافات متساوية في أزمنة متساوية، بينما <strong>الحركة المتسارعة</strong> تتغير فيها السرعة.',
-      rules:[
-        {title:'📌 قانون السرعة المتوسطة',body:'ع = م ÷ ز\nحيث: ع = السرعة المتوسطة (م/ث) · م = المسافة (م) · ز = الزمن (ث)'},
-        {title:'📌 قانون التسارع',body:'ت = (ع٢ - ع١) ÷ ز\nحيث: ت = التسارع (م/ث²) · ع٢ = السرعة النهائية · ع١ = السرعة الابتدائية'}
-      ],
-      examples:[
-        {title:'📝 مثال محلول',body:'سيارة تقطع 120 كم في ساعتين:\nالسرعة = 120 ÷ 2 = 60 كم/ساعة\n\nسيارة تسرّعت من 20 م/ث إلى 40 م/ث في 5 ثوانٍ:\nالتسارع = (40-20) ÷ 5 = 4 م/ث²'}
-      ],
-      diagram:{title:'العلاقة بين المسافة والزمن والسرعة',content:'المسافة (م)\n│\n│      /\n│    /\n│  /\n│/\n└─────── الزمن (ث)\nخط مستقيم = سرعة ثابتة (حركة منتظمة)'},
-      tips:['ترتيب وحدات القانون يساعدك: م ÷ ث = م/ث','التسارع الموجب = زيادة السرعة / السالب = نقص السرعة (تباطؤ)','السرعة كمية متجهة (لها اتجاه)، والسرعة اللحظية تختلف عن المتوسطة'],
-      summary:'الحركة المنتظمة ذات سرعة ثابتة، والمتسارعة يتغير فيها السرعة. القانونان الأساسيان: ع=م/ز للسرعة، وت=(ع٢-ع١)/ز للتسارع.',
-      exercises:[
-        {q:'جسم يتحرك 200م في 40 ثانية. ما سرعته المتوسطة؟',opts:['4 م/ث','5 م/ث','8 م/ث','10 م/ث'],correct:1,explain:'ع = م ÷ ز = 200 ÷ 40 = 5 م/ث'},
-        {q:'إذا تسارعت سيارة من 10 م/ث إلى 30 م/ث في 4 ثوانٍ، فالتسارع هو:',opts:['5 م/ث²','4 م/ث²','10 م/ث²','8 م/ث²'],correct:0,explain:'ت = (30-10) ÷ 4 = 20 ÷ 4 = 5 م/ث²'}
-      ]
-    },
-    {
-      num:'الدرس الثاني',
-      title:'قوانين نيوتن للحركة',
-      content:'وضع <strong>إسحاق نيوتن</strong> ثلاثة قوانين تصف حركة الأجسام وتفسّر العلاقة بين القوة والكتلة والتسارع.',
-      rules:[
-        {title:'📌 القانون الأول: القصور الذاتي',body:'الجسم الساكن يبقى ساكناً، والمتحرك يبقى على حركته المنتظمة ما لم تؤثر عليه قوة خارجية.'},
-        {title:'📌 القانون الثاني: F = m × a',body:'القوة = الكتلة × التسارع\nف = ك × ت (وحدة القوة: النيوتن N)'},
-        {title:'📌 القانون الثالث: التفاعل',body:'لكل فعل ردّ فعل مساوٍ له في المقدار ومعاكس له في الاتجاه.'}
-      ],
-      examples:[
-        {title:'📝 تطبيقات نيوتن',body:'القانون الثاني:\nجسم كتلته 5 كغ يتسارع بـ 3م/ث²\nالقوة = 5 × 3 = 15 نيوتن\n\nالقانون الثالث:\nالصاروخ يدفع الغازات للخلف ← الغازات تدفعه للأمام'}
-      ],
-      diagram:{title:'قوانين نيوتن الثلاثة',content:'نيوتن I: ΣF=0 → لا تسارع\nnيوتن II: F = m × a\nnيوتن III: F₁₂ = -F₂₁'},
-      tips:['نيوتن الأول = "الكسل الطبيعي" — الأجسام تكره التغيير!','للقانون الثاني: زادت القوة → زاد التسارع (كتلة ثابتة)','القانون الثالث: قوة الفعل وردّ الفعل تؤثران على جسمين مختلفين'],
-      summary:'قوانين نيوتن الثلاثة تُفسّر الحركة: القصور الذاتي، وF=ma، والفعل وردّ الفعل.',
-      exercises:[
-        {q:'قوة 20 نيوتن تؤثر على جسم كتلته 4 كغ. ما تسارعه؟',opts:['2 م/ث²','5 م/ث²','80 م/ث²','8 م/ث²'],correct:1,explain:'من القانون الثاني: ت = ف÷ك = 20÷4 = 5 م/ث²'},
-        {q:'حسب قانون نيوتن الأول، جسم ساكن سيبقى ساكناً إذا:',opts:['تأثرت عليه قوة واحدة','لم تؤثر عليه أي قوى خارجية','كانت سرعته صفراً فقط','كانت كتلته صغيرة'],correct:1,explain:'القانون الأول (القصور الذاتي): الجسم يبقى على حالته (سكوناً أو حركةً منتظمة) ما لم تؤثر عليه قوة محصّلة.'}
-      ]
-    },
-    {
-      num:'الدرس الثالث',
-      title:'الشغل والطاقة والقدرة',
-      content:'<strong>الشغل</strong> يُؤدَّى حين تؤثر قوة على جسم فينتقل مسافة باتجاه القوة. <strong>الطاقة</strong> هي القدرة على أداء الشغل. <strong>القدرة</strong> هي معدل أداء الشغل.',
-      rules:[
-        {title:'📌 قانون الشغل',body:'ش = ق × م\nحيث: ش = الشغل (جول J) · ق = القوة (نيوتن N) · م = الإزاحة (متر)\nالشغل موجب: إذا كانت القوة باتجاه الحركة'},
-        {title:'📌 الطاقة الحركية',body:'ط.ح = ½ × ك × ع²\nحيث: ك = الكتلة (كغ) · ع = السرعة (م/ث)'},
-        {title:'📌 قانون القدرة',body:'قد = ش ÷ ز  (بالواط W)\nأو: قد = ق × ع\n1 كيلوواط = 1000 واط'}
-      ],
-      examples:[
-        {title:'📝 أمثلة محلولة',body:'شغل: قوة 50N تحرّك جسماً 3م\nش = 50 × 3 = 150 جول\n\nطاقة حركية: جسم كتلته 2كغ بسرعة 4م/ث\nط.ح = ½ × 2 × 16 = 16 جول\n\nقدرة: 300 جول في 10 ثوانٍ\nقد = 300 ÷ 10 = 30 واط'}
-      ],
-      diagram:{title:'مثلث الشغل والطاقة',content:'الطاقة (جول)\n│\n┌──────────────────────┐\nطاقة حركية    طاقة وضع (كامنة)\n½mv²            mgh\n│\nالشغل = تحوّل طاقة\nش = ق × م = ΔE'},
-      tips:['الشغل صفر إذا كانت القوة عمودية على الحركة (لا إزاحة بالاتجاه)!','الطاقة الحركية تتضاعف أربع مرات إذا تضاعفت السرعة (ع²)','القدرة = الشغل ÷ الزمن — مثل حصان القوة في السيارات!'],
-      summary:'الشغل = قوة × مسافة (جول). الطاقة الحركية = ½mv². القدرة = شغل ÷ زمن (واط). هذه المفاهيم مترابطة في قانون حفظ الطاقة.',
-      exercises:[
-        {q:'قوة 40N تحرّك جسماً 5م. الشغل المبذول يساوي:',opts:['8 جول','45 جول','200 جول','200 نيوتن'],correct:2,explain:'ش = ق × م = 40 × 5 = 200 جول'},
-        {q:'جسم كتلته 4كغ يتحرك بسرعة 3م/ث. طاقته الحركية:',opts:['12 جول','18 جول','36 جول','6 جول'],correct:1,explain:'ط.ح = ½ × 4 × 3² = ½ × 4 × 9 = 18 جول'}
-      ]
-    }
-  ],
-  quiz:[
-    {q:'ما وحدة قياس السرعة في النظام الدولي؟',opts:['كم/ساعة','م/ث','نيوتن','جول'],correct:1,explain:'وحدة السرعة في النظام الدولي هي المتر في الثانية (م/ث).'},
-    {q:'جسم يقطع 300م في 60 ثانية. سرعته المتوسطة:',opts:['5 م/ث','18 م/ث','0.2 م/ث','300 م/ث'],correct:0,explain:'ع = م÷ز = 300÷60 = 5 م/ث'},
-    {q:'ما صيغة قانون نيوتن الثاني؟',opts:['ع=م÷ز','F=ma','ت=(ع٢-ع١)÷ز','P=mv'],correct:1,explain:'قانون نيوتن الثاني: القوة = الكتلة × التسارع (F=ma)'},
-    {q:'قوة 30N تؤثر على جسم كتلته 6 كغ. التسارع يساوي:',opts:['5 م/ث²','180 م/ث²','0.2 م/ث²','24 م/ث²'],correct:0,explain:'ت = F÷m = 30÷6 = 5 م/ث²'},
-    {q:'ما الذي يصفه قانون نيوتن الأول؟',opts:['العلاقة بين القوة والكتلة','القصور الذاتي','الفعل وردّ الفعل','التسارع المنتظم'],correct:1,explain:'القانون الأول يصف القصور الذاتي: الجسم يقاوم أي تغيير في حالته.'},
-    {q:'سيارة تسارعت من 0 إلى 20 م/ث في 5 ثوانٍ. تسارعها:',opts:['100 م/ث²','4 م/ث²','25 م/ث²','0.25 م/ث²'],correct:1,explain:'ت = (20-0)÷5 = 4 م/ث²'},
-    {q:'ما وحدة قياس القوة؟',opts:['كيلوغرام','متر','نيوتن','جول'],correct:2,explain:'وحدة القوة في النظام الدولي هي النيوتن (N).'},
-    {q:'حسب قانون نيوتن الثالث، ردّ الفعل:',opts:['أكبر من الفعل','مساوٍ ومعاكس الاتجاه','أصغر من الفعل','بنفس الاتجاه'],correct:1,explain:'ردّ الفعل مساوٍ للفعل في المقدار ومعاكس له في الاتجاه.'},
-    {q:'إذا بقي جسم ساكناً رغم تأثير قوتين عليه، فالمحصلة:',opts:['موجبة','سالبة','صفر','لا يمكن تحديدها'],correct:2,explain:'إذا كان الجسم ساكناً (لا يتسارع) فمحصلة القوى = صفر حسب نيوتن الثاني.'},
-    {q:'ما وصف الحركة التي رسمها خط مستقيم على مخطط المسافة-الزمن؟',opts:['حركة متسارعة','حركة منتظمة (سرعة ثابتة)','جسم ساكن','حركة متباطئة'],correct:1,explain:'الخط المستقيم على مخطط م-ز يعني مسافة متساوية في أزمنة متساوية = سرعة ثابتة.'}
-  ]
-};
-
-/* محتوى مبسّط لباقي المواد (يستكمل لاحقاً بالمكثفات) */
-['english','science','history','islamic','civic','chemistry'].forEach(function(id){
-  var names={english:'اللغة الإنجليزية',science:'العلوم العامة',history:'التاريخ والجغرافيا',islamic:'التربية الإسلامية',civic:'التربية الوطنية',chemistry:'الكيمياء'};
-  var icons={english:'🌍',science:'🔬',history:'🏛️',islamic:'🕌',civic:'🇸🇾',chemistry:'🧪'};
-  CONTENT[id]={
-    tabs:['الدروس','الاختبار الشامل'],
-    lessons:[{
-      num:'📌 قريباً',
-      title:'المكثّف الشامل قيد الإعداد',
-      content:'يتم الآن إعداد المكثّف الشامل لمادة <strong>'+names[id]+'</strong> '+icons[id]+' بكل دروسها وقواعدها وتمارينها. ستجد هنا قريباً كل ما يُغني عن الكتاب المدرسي!',
-      rules:[{title:'⏳ ماذا يتضمن المكثّف القادم؟',body:'• جميع الدروس الأساسية مشروحة بأسلوب مبسّط\n• قواعد مرتبة بشكل واضح مع أمثلة تطبيقية\n• تمارين تفاعلية لكل درس\n• مخططات بصرية توضيحية\n• اختبار شامل بـ 10 أسئلة'}],
-      examples:[{title:'📅 موعد الإضافة',body:'سيُضاف المكثّف الكامل خلال أيام قليلة جداً!\nتابع المنصة للحصول على أحدث التحديثات.'}],
-      diagram:null,
-      tips:['راجع مادتك من الكتاب المدرسي مؤقتاً','ستجد المكثّف جاهزاً قريباً جداً في هذا المكان','يمكنك حل الاختبار التجريبي في الأثناء'],
-      summary:'المكثّف الشامل لهذه المادة قيد الإعداد ويُنشر قريباً. ترقّب التحديث!',
-      exercises:[]
-    }],
-    quiz:[
-      {q:'هل أنت مستعد لبدء دراسة هذه المادة؟',opts:['نعم، أنا مستعد تماماً! 💪','سأتابع حين يُنشر المكثّف'],correct:0,explain:'الاستعداد هو أول خطوة نحو التفوق! المكثّف قيد الإعداد ويُضاف قريباً.'},
-      {q:'ما الأسلوب الأمثل للمراجعة قبل الامتحان؟',opts:['الحفظ دون فهم','فهم المفاهيم ثم التطبيق','قراءة الكتاب مرة واحدة','تجاهل المادة الصعبة'],correct:1,explain:'الفهم قبل الحفظ هو المفتاح الذهبي للنجاح والتفوق في الامتحانات.'}
-    ]
-  };
-});
-
-/* ============================================================
-   SCREEN NAVIGATION
-   ============================================================ */
-var currentScreen='auth';
-function showScreen(name){
-  document.querySelectorAll('.screen').forEach(function(s){
-    s.classList.remove('active');
-    s.style.display='none';
-  });
-  var s=document.getElementById(name+'-screen');
-  s.classList.add('active');
-  s.style.display=(name==='auth')?'flex':'block';
-  currentScreen=name;
-  var nav=document.getElementById('bottom-nav');
-  nav.style.display=(name==='auth')?'none':'flex';
-  // Update nav active state
-  document.querySelectorAll('.nav-i').forEach(function(n){n.classList.remove('active');});
-  if(name==='dash'){
-    document.querySelectorAll('.nav-i')[0].classList.add('active');
-    document.querySelectorAll('.nav-i')[1].classList.add('active');
-  } else if(name==='detail'){
-    document.querySelectorAll('.nav-i')[2].classList.add('active');
-  }
-}
-
-function logout(){
-  showScreen('auth');
-  document.getElementById('auth-screen').style.display='flex';
-  document.getElementById('auth-screen').classList.add('active');
-}
-
-function navToExam(){
-  if(currentScreen==='detail'){
-    // Switch to quiz tab
-    var tabs=document.querySelectorAll('.tab-btn');
-    var panes=document.querySelectorAll('.tab-pane');
-    tabs.forEach(function(b){b.classList.remove('active');});
-    panes.forEach(function(p){p.classList.remove('active');});
-    if(tabs[1])tabs[1].classList.add('active');
-    var qPane=document.getElementById('tab-pane-1');
-    if(qPane)qPane.classList.add('active');
-    window.scrollTo(0,0);
-  } else {
-    showScreen('dash');
-  }
-}
-
-/* ============================================================
-   SUBJECTS GRID BUILD
-   ============================================================ */
 function buildGrid(){
-  var g=document.getElementById('subjects-grid');
-  g.innerHTML='';
-  SUBJECTS.forEach(function(s){
-    var tags=s.pills.map(function(p){
-      return '<span class="card-tag" style="color:'+s.color+';border-color:'+s.color+'30">'+p+'</span>';
-    }).join('');
-    var card=document.createElement('div');
-    card.className='sub-card '+s.theme;
-    card.onclick=function(){openSubject(s.id);};
-    card.innerHTML=
-      '<div class="card-bar"></div>'+
-      '<div class="watermark">NOUR EDDIN</div>'+
-      '<div class="card-thumb">'+
-        '<div class="thumb-bg"></div>'+
-        '<div class="card-shine"></div>'+
-        '<span class="thumb-icon">'+s.icon+'</span>'+
-        '<span class="thumb-label">'+s.id.toUpperCase()+'</span>'+
-      '</div>'+
-      '<div class="card-body">'+
-        '<div class="card-title">'+s.name+'</div>'+
-        '<div class="card-sub">'+s.desc+'</div>'+
-        '<div class="card-meta">'+tags+'</div>'+
-        '<button class="card-cta">📚 ابدأ المكثّف</button>'+
-      '</div>';
-    g.appendChild(card);
-  });
+  const g = document.getElementById('subjects-grid');
+  g.innerHTML = SUBJECTS_LIST.map(s => `
+    <div class="sub-card" onclick="openSubject('${s.id}')">
+      <div class="card-bar" style="background:${s.bg}"></div>
+      <div class="card-thumb"><span class="thumb-icon">${s.icon}</span></div>
+      <div class="card-body">
+        <div class="card-title">${s.name}</div>
+        <button class="card-cta" style="background:${s.bg}">📚 ابدأ المكثّف</button>
+      </div>
+    </div>
+  `).join('');
 }
 
-/* ============================================================
-   OPEN SUBJECT DETAIL
-   ============================================================ */
-function openSubject(id){
-  var s=SUBJECTS.find(function(x){return x.id===id;});
-  var c=CONTENT[id];
-  if(!s||!c)return;
+function openSubject(id) {
+  const data = DB[id];
+  if(!data) return;
 
-  // Header
-  document.getElementById('d-icon').textContent=s.icon;
-  document.getElementById('d-title').textContent=s.name;
-  document.getElementById('d-desc').textContent=s.desc;
+  // Change Theme to Light
+  document.body.classList.add('light-mode');
+  document.getElementById('stars').style.display = 'none';
 
-  var pillsEl=document.getElementById('d-pills');
-  pillsEl.innerHTML=s.pills.map(function(p){return '<span class="detail-pill">'+p+'</span>';}).join('');
+  // Toggle Screens
+  document.getElementById('dash-screen').style.display = 'none';
+  document.getElementById('detail-screen').style.display = 'block';
 
-  var hdr=document.getElementById('detail-header');
-  hdr.style.background='radial-gradient(ellipse at center,'+s.color+'22,transparent 70%), linear-gradient(180deg,rgba(4,6,18,0) 0%,#040610 100%)';
-  hdr.querySelector('.detail-bg-glow').style.color=s.color; // الآن هذا السطر لن يسبب مشكلة بفضل إضافة العنصر
+  // Set CSS Variables for Theme
+  document.documentElement.style.setProperty('--subj-primary', data.theme.primary);
+  document.documentElement.style.setProperty('--subj-light', data.theme.light);
 
-  // Build tabs
-  var tabsEl=document.getElementById('detail-tabs');
-  tabsEl.innerHTML='';
-  var contentEl=document.getElementById('detail-content');
-  contentEl.innerHTML='';
+  // Populate Header
+  document.getElementById('det-emoji').textContent = data.emoji;
+  document.getElementById('det-title').textContent = data.name;
+  document.getElementById('det-sub').textContent = data.subtitle;
+  document.getElementById('det-badges').innerHTML = data.badges.map(b => `<span class="badge">${b}</span>`).join('');
 
-  c.tabs.forEach(function(tab,i){
-    var btn=document.createElement('button');
-    btn.className='tab-btn'+(i===0?' active':'');
-    btn.textContent=tab;
-    btn.onclick=function(){
-      document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');
-      document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
-      document.getElementById('tab-pane-'+i).classList.add('active');
-    };
-    tabsEl.appendChild(btn);
-  });
+  // Populate Home Intro
+  document.getElementById('det-intro').innerHTML = `<h2>🎓 مرحباً بك في ملخص ${data.name}</h2><p style="font-size:0.95rem; line-height:1.8; color:#444;">${data.intro}</p>`;
 
-  // Pane 0: Lessons
-  var lessonsPane=document.createElement('div');
-  lessonsPane.className='tab-pane active';
-  lessonsPane.id='tab-pane-0';
-  c.lessons.forEach(function(lesson,li){
-    var rules=lesson.rules.map(function(r){
-      return '<div class="lesson-rule"><h4>'+r.title+'</h4><p>'+r.body.replace(/\n/g,'<br>')+'</p></div>';
-    }).join('');
-    var examples=lesson.examples.map(function(e){
-      return '<div class="lesson-example"><h4>'+e.title+'</h4><p>'+e.body.replace(/\n/g,'<br>')+'</p></div>';
-    }).join('');
-    var diagram=lesson.diagram?
-      '<div class="diagram"><div style="font-size:.8rem;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:8px">'+lesson.diagram.title+'</div><pre>'+lesson.diagram.content+'</pre></div>':'';
-    var tips=lesson.tips.length?
-      '<div class="tips-box"><h4>💡 نصائح للحفظ والفهم</h4><ul>'+
-      lesson.tips.map(function(t){return '<li>'+t+'</li>';}).join('')+
-      '</ul></div>':'';
-    var summary=
-      '<div class="lesson-summary"><h4>📋 نبذة عن الدرس</h4><p>'+lesson.summary+'</p></div>';
-
-    var exHtml='';
-    if(lesson.exercises&&lesson.exercises.length){
-      var miniQs=lesson.exercises.map(function(ex,ei){
-        var opts=ex.opts.map(function(opt,oi){
-          var letters=['أ','ب','ج','د'];
-          return '<div class="mini-opt" onclick="answerMini(this,'+oi+','+ex.correct+',\'mini-fb-'+li+'-'+ei+'\',\''+ex.explain.replace(/'/g,"\\'")+'\')">'
-            +'<span class="mini-opt-letter">'+letters[oi]+'</span>'+opt+'</div>';
-        }).join('');
-        return '<div class="mini-q"><p>'+ex.q+'</p><div class="mini-opts">'+opts+'</div>'
-          +'<div class="mini-feedback" id="mini-fb-'+li+'-'+ei+'"></div></div>';
-      }).join('');
-      exHtml='<div class="mini-exercises"><h4>✏️ تمارين الدرس</h4>'+miniQs+'</div>';
-    }
-
-    var lCard=document.createElement('div');
-    lCard.className='lesson-card';
-    lCard.innerHTML=
-      '<div class="lesson-num">'+lesson.num+'</div>'+
-      '<div class="lesson-title">'+lesson.title+'</div>'+
-      '<div class="lesson-content">'+lesson.content+'</div>'+
-      rules+examples+diagram+summary+tips+exHtml;
-    lessonsPane.appendChild(lCard);
-  });
-  contentEl.appendChild(lessonsPane);
-
-  // Pane 1: Quiz
-  var quizPane=document.createElement('div');
-  quizPane.className='tab-pane quiz-section';
-  quizPane.id='tab-pane-1';
-  quizPane.innerHTML=buildQuizHTML(c.quiz,s.name);
-  contentEl.appendChild(quizPane);
-
-  showScreen('detail');
+  // Build Units
+  const unitsHTML = data.units.map((u, i) => `
+    <div class="unit-card-l" id="u${i}">
+      <div class="unit-header" onclick="document.getElementById('u${i}').classList.toggle('open')">
+        <div class="unit-num-l">${u.num}</div>
+        <div class="unit-info">
+          <h2>${u.title}</h2>
+          <div class="unit-meta"><span>${u.meta}</span></div>
+        </div>
+        <div style="position:absolute; left:20px; color:var(--subj-primary); font-size:0.8rem;">▼</div>
+      </div>
+      <div class="unit-body">
+        ${u.lessons.map(l => `
+          <div class="lesson">
+            <h3>${l.title}</h3>
+            <div class="lesson-content">${l.html}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('units-container').innerHTML = unitsHTML;
+  
+  // Default to home tab
+  document.querySelector('.sub-nav .nav-btn').click();
   window.scrollTo(0,0);
-
-  // Init quiz
-  window._currentQuiz=c.quiz;
-  window._currentQuizIdx=0;
-  window._currentQuizScore=0;
 }
 
-/* ============================================================
-   MINI EXERCISE ANSWER
-   ============================================================ */
-function answerMini(el,selected,correct,fbId,explain){
-  var parent=el.parentElement;
-  var opts=parent.querySelectorAll('.mini-opt');
-  opts.forEach(function(o){o.style.pointerEvents='none';});
-  el.classList.add(selected===correct?'correct':'wrong');
-  opts[correct].classList.add('correct');
-  var fb=document.getElementById(fbId);
-  fb.classList.add('show');
-  if(selected===correct){
-    fb.className='mini-feedback show ok';
-    fb.textContent='✅ أحسنت! '+explain;
-  } else {
-    fb.className='mini-feedback show no';
-    fb.textContent='❌ الإجابة الصحيحة: '+explain;
-  }
+function showDash() {
+  document.body.classList.remove('light-mode');
+  document.getElementById('stars').style.display = 'block';
+  document.getElementById('detail-screen').style.display = 'none';
+  document.getElementById('dash-screen').style.display = 'block';
 }
 
-/* ============================================================
-   QUIZ HTML BUILDER
-   ============================================================ */
-function buildQuizHTML(questions,subName){
-  return '<div class="quiz-intro">'+
-    '<h3>🏆 الاختبار الشامل — '+subName+'</h3>'+
-    '<p>'+questions.length+' سؤالاً متنوعاً يغطي جميع المحاور. اختر الإجابة الصحيحة واضغط التالي.</p>'+
-    '<button class="quiz-start-btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>'+
-  '</div>'+
-  '<div class="quiz-container" id="quiz-container">'+
-    '<div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpfill" style="width:0%"></div></div>'+
-    '<div class="quiz-q-label" id="q-label">السؤال 1 / '+questions.length+'</div>'+
-    '<div class="quiz-q-text" id="q-text"></div>'+
-    '<div class="quiz-opts" id="q-opts"></div>'+
-    '<div class="quiz-explain" id="q-explain"></div>'+
-    '<button class="quiz-next-btn" id="q-next" onclick="nextQuestion()">التالي ←</button>'+
-  '</div>'+
-  '<div class="quiz-result" id="quiz-result">'+
-    '<span class="result-emoji" id="res-emoji">🎉</span>'+
-    '<div class="result-score" id="res-score"></div>'+
-    '<div class="result-msg" id="res-msg"></div>'+
-    '<button class="result-retry" onclick="retryQuiz()">🔄 إعادة الاختبار</button>'+
-  '</div>';
+function showSubSection(id, btn) {
+  document.querySelectorAll('#detail-screen .section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sub-nav .nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
 }
 
-function startQuiz(){
-  document.querySelector('.quiz-intro').style.display='none';
-  document.getElementById('quiz-container').style.display='block';
-  window._currentQuizIdx=0;
-  window._currentQuizScore=0;
-  renderQuestion();
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.innerHTML = box.classList.contains('visible') ? '❌ إخفاء الإجابة ▲' : '📋 إظهار الإجابة ▼';
 }
 
-function renderQuestion(){
-  var q=window._currentQuiz;
-  var i=window._currentQuizIdx;
-  var total=q.length;
-  var cur=q[i];
-  document.getElementById('q-label').textContent='السؤال '+(i+1)+' / '+total;
-  document.getElementById('qpfill').style.width=(i/total*100)+'%';
-  document.getElementById('q-text').textContent=cur.q;
-  document.getElementById('q-explain').className='quiz-explain';
-  document.getElementById('q-next').className='quiz-next-btn';
-  var letters=['أ','ب','ج','د'];
-  var optsEl=document.getElementById('q-opts');
-  optsEl.innerHTML='';
-  cur.opts.forEach(function(opt,oi){
-    var d=document.createElement('div');
-    d.className='quiz-opt';
-    d.innerHTML='<div class="quiz-opt-letter">'+letters[oi]+'</div><div class="quiz-opt-text">'+opt+'</div>';
-    d.onclick=function(){selectQuizOpt(oi,cur.correct,cur.explain);};
-    optsEl.appendChild(d);
-  });
-}
-
-function selectQuizOpt(selected,correct,explain){
-  var opts=document.querySelectorAll('.quiz-opt');
-  opts.forEach(function(o){o.style.pointerEvents='none';});
-  opts[selected].classList.add(selected===correct?'sel-correct':'sel-wrong');
-  if(selected!==correct)opts[correct].classList.add('show-correct');
-  if(selected===correct)window._currentQuizScore++;
-  var expEl=document.getElementById('q-explain');
-  expEl.textContent=(selected===correct?'✅ ':'❌ ')+explain;
-  expEl.classList.add('show');
-  document.getElementById('q-next').classList.add('show');
-}
-
-function nextQuestion(){
-  window._currentQuizIdx++;
-  var q=window._currentQuiz;
-  if(window._currentQuizIdx>=q.length){
-    showResult();
-  } else {
-    renderQuestion();
-  }
-}
-
-function showResult(){
-  document.getElementById('quiz-container').style.display='none';
-  var res=document.getElementById('quiz-result');
-  res.style.display='block';
-  var score=window._currentQuizScore;
-  var total=window._currentQuiz.length;
-  var pct=Math.round(score/total*100);
-  document.getElementById('res-score').textContent=score+' / '+total+' ('+pct+'%)';
-  var emoji,msg;
-  if(pct>=90){emoji='🏆';msg='ممتاز جداً! أنت في القمة. أداء استثنائي يليق بطالب متفوق!';}
-  else if(pct>=75){emoji='🎉';msg='جيد جداً! مستوى رائع. راجع الأسئلة التي أخطأتها لتصل للإتقان.';}
-  else if(pct>=60){emoji='💪';msg='جيد! أنت على الطريق الصحيح. راجع الدروس وأعد الاختبار.';}
-  else{emoji='📚';msg='تحتاج لمراجعة أكثر. لا تستسلم! راجع المكثّف من البداية وأعد المحاولة.';}
-  document.getElementById('res-emoji').textContent=emoji;
-  document.getElementById('res-msg').textContent=msg;
-}
-
-function retryQuiz(){
-  document.getElementById('quiz-result').style.display='none';
-  document.getElementById('quiz-container').style.display='none';
-  document.querySelector('.quiz-intro').style.display='block';
-  document.querySelector('.quiz-intro').style.display='';
-}
-
-/* ============================================================
-   AUTH — كلمة المرور: 9999
-   ============================================================ */
-var PASS='9999';
+/* =================== INIT & AUTH =================== */
 function doAuth(){
-  var val=document.getElementById('pass-field').value.trim();
-  if(!val){shakeInput();return;}
-  if(val===PASS){onAuthSuccess();}
-  else{showAuthErr();}
+  const val = document.getElementById('pass-field').value.trim();
+  if(val === '9999'){
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('loader').style.opacity = '0';
+    setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
+    buildGrid();
+    document.getElementById('dash-screen').style.display = 'block';
+    document.getElementById('bottom-nav').style.display = 'flex';
+  } else {
+    document.getElementById('auth-err').style.display = 'block';
+    setTimeout(() => document.getElementById('auth-err').style.display = 'none', 2000);
+  }
 }
-function onAuthSuccess(){
-  var authScreen=document.getElementById('auth-screen');
-  authScreen.style.opacity='0';
-  authScreen.style.transition='opacity .4s ease';
-  var loader=document.getElementById('loader');
-  loader.style.display='flex';
-  loader.style.opacity='1';
-  setTimeout(function(){
-    authScreen.style.display='none';
-    authScreen.classList.remove('active');
-    authScreen.style.opacity='';
-    authScreen.style.transition='';
-  },400);
-  setTimeout(function(){
-    loader.style.opacity='0';
-    loader.style.transition='opacity .5s';
-    setTimeout(function(){
-      loader.style.display='none';
-      buildGrid();
-      showScreen('dash');
-    },500);
-  },1500);
-}
-function showAuthErr(){
-  var err=document.getElementById('auth-err');
-  err.style.display='block';
-  document.getElementById('pass-field').style.borderColor='rgba(255,92,138,.6)';
-  setTimeout(function(){
-    document.getElementById('pass-field').style.borderColor='';
-    err.style.display='none';
-  },2500);
-}
-function shakeInput(){
-  var f=document.getElementById('pass-field');
-  f.style.animation='none';
-  setTimeout(function(){f.style.animation='shake .4s';},10);
-  setTimeout(function(){f.style.animation='';},500);
-}
+document.getElementById('submit-btn').addEventListener('click', doAuth);
+document.getElementById('pass-field').addEventListener('keypress', e => { if(e.key === 'Enter') doAuth(); });
 
-document.getElementById('submit-btn').addEventListener('click',doAuth);
-document.getElementById('pass-field').addEventListener('keypress',function(e){if(e.key==='Enter')doAuth();});
-
-document.getElementById('back-btn').addEventListener('click',function(){
-  showScreen('dash');
-});
-
-// Hide loader on first load
-window.addEventListener('load',function(){
-  var l=document.getElementById('loader');
-  setTimeout(function(){
-    l.style.opacity='0';
-    l.style.transition='opacity .5s';
-    setTimeout(function(){l.style.display='none';},500);
-  },800);
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').style.opacity = '0';
+    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+  }, 800);
 });
 </script>
 </body>
