@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 ملخص الجبر - الصف التاسع | المنهج السوري 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --green: #1a6b3a;
+    --green-light: #2d9455;
+    --green-pale: #e8f5ee;
+    --red: #c0392b;
+    --blue: #1565c0;
+    --blue-light: #1976d2;
+    --blue-pale: #e3f2fd;
+    --dark: #1a1a2e;
+    --text: #2c3e50;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.12);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 40%, #1565c0 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(212,160,23,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .main-header .emoji-row { font-size: 2.5rem; margin-bottom: 10px; position: relative; }
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    letter-spacing: 1px;
+  }
+  .main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(5px);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+  }
+
+  /* MAIN CONTENT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARD */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+
+  .unit-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 20px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  }
+  .unit-info h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-info .unit-meta {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .unit-info .unit-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .unit-body { display: none; padding: 0 24px 24px; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON */
+  .lesson {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-right: 4px solid var(--blue);
+  }
+  .lesson h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-content ul {
+    padding-right: 20px;
+    margin: 8px 0;
+  }
+  .lesson-content li {
+    margin-bottom: 6px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+  .lesson-content li::marker { color: var(--blue); }
+
+  .key-term {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    color: white;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 2px 4px;
+  }
+
+  /* GOLD TIP */
+  .gold-tip {
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .gold-tip .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .gold-tip .tip-text { font-size: 0.9rem; font-weight: 600; color: #7a5c00; line-height: 1.7; }
+  .gold-tip strong { color: var(--red); }
+
+  /* SHOW ANSWER BTN */
+  .show-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin: 10px 4px 4px;
+    box-shadow: 0 3px 10px rgba(45,148,85,0.3);
+  }
+  .show-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45,148,85,0.4);
+  }
+  .answer-box {
+    display: none;
+    background: var(--green-pale);
+    border: 2px solid var(--green-light);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.visible { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .answer-box ul { padding-right: 18px; }
+  .answer-box li { margin-bottom: 4px; }
+
+  /* QUIZ */
+  .quiz-question {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--blue);
+  }
+  .quiz-question .q-text {
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: var(--dark);
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: var(--bg);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    text-align: right;
+    transition: all 0.25s;
+    font-weight: 600;
+  }
+  .quiz-opt:hover { border-color: var(--blue-light); background: var(--blue-pale); }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+  .quiz-opt.wrong { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+  .quiz-opt.disabled { cursor: not-allowed; }
+  .q-result {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .q-result.show { display: block; }
+  .q-result.ok { background: #e8f5e9; color: #2e7d32; }
+  .q-result.no { background: #ffebee; color: #c62828; }
+
+  /* SCORE */
+  .score-bar {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+  }
+  .score-bar.show { display: block; }
+  .score-num { font-size: 2.5rem; font-weight: 900; color: var(--blue); }
+  .score-msg { font-size: 1rem; margin-top: 6px; font-weight: 700; }
+  .retry-btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-top: 12px;
+    transition: all 0.3s;
+  }
+  .retry-btn:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+  /* EXAM */
+  .exam-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+  }
+  .exam-header {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .exam-body { padding: 24px; }
+  .tf-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-text { font-size: 0.93rem; font-weight: 700; flex: 1; }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 6px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn.true-btn:hover { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.false-btn:hover { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+  .tf-btn.selected-true { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.selected-false { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+  .tf-result { font-size: 1rem; }
+
+  /* TIME CALC */
+  .calc-box {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .calc-box h4 { font-size: 1.05rem; margin-bottom: 16px; color: var(--gold-light); font-weight: 800; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .calc-field { display: flex; flex-direction: column; gap: 6px; }
+  .calc-field label { font-size: 0.82rem; opacity: 0.85; font-weight: 600; }
+  .calc-field input, .calc-field select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    width: 140px;
+  }
+  .calc-field input::placeholder { color: rgba(255,255,255,0.5); }
+  .calc-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    align-self: flex-end;
+  }
+  .calc-btn:hover { background: var(--gold-light); }
+  .calc-result {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: none;
+    color: var(--gold-light);
+  }
+  .calc-result.show { display: block; }
+
+  /* SUMMARY TABLES */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .summary-table th {
+    background: var(--blue);
+    color: white;
+    padding: 10px 14px;
+    font-weight: 800;
+    text-align: center;
+  }
+  .summary-table td {
+    padding: 9px 14px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+  }
+  .summary-table tr:nth-child(even) td { background: var(--blue-pale); }
+  .summary-table tr:hover td { background: #bbdefb; }
+
+  /* PROGRESS */
+  .progress-tracker {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .progress-tracker h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 18px; color: var(--dark); }
+  .progress-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .progress-label { font-weight: 700; font-size: 0.9rem; width: 160px; flex-shrink: 0; }
+  .progress-bar-wrap { flex: 1; background: #eee; border-radius: 20px; height: 12px; }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    transition: width 1s ease;
+  }
+  .progress-pct { font-weight: 800; font-size: 0.85rem; color: var(--blue); width: 40px; text-align: center; }
+  .check-box {
+    width: 26px;
+    height: 26px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .check-box.done { background: var(--blue); border-color: var(--blue); color: white; }
+
+  /* DIVIDER */
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 24px 0;
+  }
+
+  /* COLORS FOR UNITS */
+  .c1 { background: linear-gradient(135deg, #1565c0, #1976d2); }
+  .c2 { background: linear-gradient(135deg, #2e7d32, #388e3c); }
+  .c3 { background: linear-gradient(135deg, #6a1b9a, #7b1fa2); }
+  .c4 { background: linear-gradient(135deg, #c62828, #d32f2f); }
+  .c5 { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .c6 { background: linear-gradient(135deg, #00838f, #00acc1); }
+  .c7 { background: linear-gradient(135deg, #4527a0, #512da8); }
+  .c8 { background: linear-gradient(135deg, #558b2f, #689f38); }
+
+  .b1 { border-right-color: #1565c0; }
+  .b2 { border-right-color: #2e7d32; }
+  .b3 { border-right-color: #6a1b9a; }
+  .b4 { border-right-color: #c62828; }
+  .b5 { border-right-color: #e65100; }
+  .b6 { border-right-color: #00838f; }
+  .b7 { border-right-color: #4527a0; }
+  .b8 { border-right-color: #558b2f; }
+
+  .h1 { color: #1565c0; }
+  .h2 { color: #2e7d32; }
+  .h3 { color: #6a1b9a; }
+  .h4 { color: #c62828; }
+  .h5 { color: #e65100; }
+  .h6 { color: #00838f; }
+  .h7 { color: #4527a0; }
+  .h8 { color: #558b2f; }
+
+  .hd1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-right: 5px solid #1565c0; }
+  .hd2 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 5px solid #2e7d32; }
+  .hd3 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-right: 5px solid #6a1b9a; }
+  .hd4 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-right: 5px solid #c62828; }
+  .hd5 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-right: 5px solid #e65100; }
+  .hd6 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-right: 5px solid #00838f; }
+  .hd7 { background: linear-gradient(135deg, #ede7f6, #d1c4e9); border-right: 5px solid #4527a0; }
+  .hd8 { background: linear-gradient(135deg, #f1f8e9, #dcedc8); border-right: 5px solid #558b2f; }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .unit-header { flex-wrap: wrap; }
+    .calc-row { flex-direction: column; }
+    .calc-field input, .calc-field select { width: 100%; }
+    .tf-question { flex-direction: column; }
+  }
+
+  .welcome-box {
+    background: linear-gradient(135deg, var(--blue-pale), #fff);
+    border: 2px solid var(--blue-light);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .welcome-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+  .welcome-box p { font-size: 0.95rem; color: #444; line-height: 1.8; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-top: 3px solid var(--gold);
+  }
+  .stat-card .stat-num { font-size: 2rem; font-weight: 900; color: var(--blue); }
+  .stat-card .stat-lbl { font-size: 0.82rem; color: #666; margin-top: 4px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <div class="emoji-row">📐 ➕ 📊</div>
+  <h1>ملخص الجبر التفاعلي</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهج السوري 2025 – 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 8 وحدات</span>
+    <span class="badge">📝 نماذج وزارية</span>
+    <span class="badge">💡 نصائح ذهبية</span>
+    <span class="badge">🧮 أدوات حسابية</span>
+    <span class="badge">✅ اختبارات تفاعلية</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 الوحدات</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ اختبارات</button>
+  <button class="nav-btn" onclick="showSection('exam')">📝 نماذج وزارية</button>
+  <button class="nav-btn" onclick="showSection('calc')">🧮 محاكيات وأدوات</button>
+  <button class="nav-btn" onclick="showSection('tips')">💡 نصائح ذهبية</button>
+  <button class="nav-btn" onclick="showSection('progress')">📊 متابعة الدراسة</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div class="welcome-box">
+    <h2>🎓 مرحباً بك في ملخص الجبر التفاعلي</h2>
+    <p>هذا الملخص يغطي كامل منهج الرياضيات (قسم الجبر) للصف التاسع الأساسي وفق منهاج وزارة التربية السورية 2025-2026. يحتوي على شرح للوحدات الثماني، وأدوات حسابية للتحقق من إجاباتك، واختبارات تفاعلية.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">8</div><div class="stat-lbl">وحدات دراسية</div></div>
+      <div class="stat-card"><div class="stat-num">20+</div><div class="stat-lbl">درساً شاملاً</div></div>
+      <div class="stat-card"><div class="stat-num">60+</div><div class="stat-lbl">سؤالاً تفاعلياً</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">فصلان دراسيان</div></div>
+    </div>
+  </div>
+
+  <div class="gold-tip">
+    <div class="tip-icon">🌟</div>
+    <div class="tip-text">
+      <strong>كيف تستخدم هذا الملخص؟</strong><br>
+      📚 ابدأ بالوحدات → راجع المتطابقات وخواص الجذور والقوى ← استخدم قسم الأدوات للتحقق من نواتج المعادلات والقاسم المشترك ← جرّب النماذج الوزارية!
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--blue);">
+    <div style="padding:20px 24px;">
+      <h3 style="font-size:1.1rem; color:var(--blue); font-weight:800; margin-bottom:14px;">🗂️ خريطة الكتاب - الوحدات الثماني</h3>
+      <table class="summary-table">
+        <tr><th>الوحدة</th><th>العنوان</th><th>الفصل</th><th>المحاور الرئيسية</th></tr>
+        <tr><td>1️⃣</td><td>الأعداد والكسور</td><td>الأول</td><td>طبيعة الأعداد، القاسم المشترك الأكبر</td></tr>
+        <tr><td>2️⃣</td><td>القوى والجذور</td><td>الأول</td><td>الكتابة العلمية، خواص الجذور التربيعية</td></tr>
+        <tr><td>3️⃣</td><td>العبارات الجبرية</td><td>الأول</td><td>النشر والتحليل، المتطابقات الشهيرة</td></tr>
+        <tr><td>4️⃣</td><td>المعادلات والمتراجحات</td><td>الأول</td><td>حل المعادلات، متراجحات الدرجة الأولى</td></tr>
+        <tr><td>5️⃣</td><td>جملة معادلتين خطيتين</td><td>الثاني</td><td>طريقة التعويض، طريقة الجمع، المسائل</td></tr>
+        <tr><td>6️⃣</td><td>التابع</td><td>الثاني</td><td>مفهوم التابع، التابع الخطي، التآلفي</td></tr>
+        <tr><td>7️⃣</td><td>الإحصاء</td><td>الثاني</td><td>المتوسط، الوسيط، المنوال، المدى</td></tr>
+        <tr><td>8️⃣</td><td>الاحتمالات</td><td>الثاني</td><td>التجربة العشوائية، احتمال وقوع حدث</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header hd1" onclick="toggleUnit('u1')">
+      <div class="unit-num c1">1</div>
+      <div class="unit-info">
+        <h2 class="h1">الأعداد والكسور</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الأول</span>
+          <span>📖 طبيعة الأعداد والعمليات</span>
+          <span>⭐ أساسيات هامة</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 1: طبيعة الأعداد</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">N (الأعداد الطبيعية)</span>: 0, 1, 2, 3... (موجبة فقط وبدون فواصل).</li>
+            <li><span class="key-term">Z (الأعداد الصحيحة)</span>: تشمل الطبيعية وسوالبها (... , -2, -1, 0, 1, 2, ...).</li>
+            <li><span class="key-term">Q (الأعداد العادية)</span>: كل عدد يكتب بشكل كسر (بسطه ومقامه أعداد صحيحة)، مثل 1/2 أو 0.5.</li>
+            <li><span class="key-term">R (الأعداد الحقيقية)</span>: تشمل جميع الأعداد السابقة بالإضافة للأعداد غير العادية (الصماء) مثل الجذر التربيعي لـ 2 والعدد باي &pi;.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 2: القاسم المشترك الأكبر (GCD)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>نستخدم خوارزمية <strong>الطرح المتتالي</strong> أو <strong>القسمة الإقليدية</strong> لإيجاده.</li>
+            <li>العددان الأوليان فيما بينهما هما عددان قاسمهما المشترك الأكبر يساوي 1.</li>
+            <li>لتبسيط كسر لجعله غير قابل للاختزال، نقسم بسطه ومقامه على قاسمهما المشترك الأكبر.</li>
+          </ul>
+          <div class="gold-tip">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text">خوارزمية القسمة الإقليدية (المقسوم = المقسوم عليه &times; الناتج + الباقي) أسرع بكثير من الطرح المتتالي في الامتحان!</div>
+          </div>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 سؤال امتحاني ▼</button>
+          <div class="answer-box">
+            <ul>
+              <li>❓ <strong>أوجد القاسم المشترك الأكبر للعددين 60 و 48؟</strong><br>→ باستخدام الطرح: 60 - 48 = 12، ثم 48 - 12 = 36، ثم 36 - 12 = 24، ثم 24 - 12 = 12، ثم 12 - 12 = 0.<br>الناتج هو آخر باقي غير معدوم، أي <strong>12</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header hd2" onclick="toggleUnit('u2')">
+      <div class="unit-num c2">2</div>
+      <div class="unit-info">
+        <h2 class="h2">القوى والجذور</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الأول</span>
+          <span>📖 الأسس والجذور التربيعية</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b2">
+        <h3 class="h2">📌 الدرس 1: خواص القوى والكتابة العلمية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>ضرب القوى ذات الأساس المشترك هو جمع أسسها: <strong>a<sup>m</sup> &times; a<sup>n</sup> = a<sup>m+n</sup></strong></li>
+            <li>قسمة القوى: <strong>a<sup>m</sup> &divide; a<sup>n</sup> = a<sup>m-n</sup></strong></li>
+            <li><span class="key-term">الكتابة العلمية</span>: أن يكتب العدد بالشكل <strong>a &times; 10<sup>n</sup></strong> بحيث يكون <strong>1 &le; a &lt; 10</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b2">
+        <h3 class="h2">📌 الدرس 2: الجذور التربيعية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>الجذر يوزع على الضرب: <strong>&radic;(a &times; b) = &radic;a &times; &radic;b</strong></li>
+            <li>الجذر يوزع على القسمة: <strong>&radic;(a / b) = &radic;a / &radic;b</strong></li>
+            <li>⚠️ <strong>ملاحظة هامة جداً</strong>: الجذر <strong>لا يُوزع</strong> على الجمع والطرح!</li>
+            <li>لإزالة الجذر من المقام، نضرب البسط والمقام بنفس الجذر.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header hd3" onclick="toggleUnit('u3')">
+      <div class="unit-num c3">3</div>
+      <div class="unit-info">
+        <h2 class="h3">العبارات الجبرية</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الأول</span>
+          <span>📖 النشر والتحليل</span>
+          <span>⭐ تأتي في كل فحص!</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 1: النشر والتحليل</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>النشر:</strong> تحويل الجداء إلى مجموع أو فرق (توزيع الضرب على الجمع).</li>
+            <li><strong>التحليل:</strong> تحويل المجموع أو الفرق إلى جداء عوامل، غالباً عبر إخراج العامل المشترك.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 2: المتطابقات الشهيرة</h3>
+        <div class="lesson-content">
+          <table class="summary-table">
+            <tr><th>المتطابقة</th><th>الشكل المنشور</th></tr>
+            <tr><td>(a + b)<sup>2</sup></td><td>a<sup>2</sup> + 2ab + b<sup>2</sup></td></tr>
+            <tr><td>(a - b)<sup>2</sup></td><td>a<sup>2</sup> - 2ab + b<sup>2</sup></td></tr>
+            <tr><td>(a - b)(a + b)</td><td>a<sup>2</sup> - b<sup>2</sup></td></tr>
+          </table>
+          <div class="gold-tip">
+            <div class="tip-icon">⭐</div>
+            <div class="tip-text">متطابقة الفرق بين مربعين <strong>(a<sup>2</sup> - b<sup>2</sup>)</strong> تُستخدم بكثرة في تبسيط الكسور الجبرية وحل المعادلات.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header hd4" onclick="toggleUnit('u4')">
+      <div class="unit-num c4">4</div>
+      <div class="unit-info">
+        <h2 class="h4">المعادلات والمتراجحات</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الأول</span>
+          <span>📖 مجاهيل وتمثيل هندسي</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b4">
+        <h3 class="h4">📌 الدرس 1: حل معادلة من الدرجة الأولى</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>شكلها الأساسي: <strong>ax + b = 0</strong></li>
+            <li>خطوات الحل: نقل المعاليم إلى طرف والمجاهيل إلى طرف (مع تغيير الإشارة للنقل)، ثم القسمة على أمثال المجهول.</li>
+            <li>حل المعادلة يعطى بالعلاقة: <strong>x = -b / a</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b4">
+        <h3 class="h4">📌 الدرس 2: المتراجحات</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تُحل المتراجحة بنفس خطوات حل المعادلة تقريباً.</li>
+            <li>⚠️ <strong>قاعدة ذهبية:</strong> عند الضرب أو القسمة على عدد <strong>سالب</strong>، يجب قلب جهة المتراجحة (من > إلى < والعكس).</li>
+            <li>تمثيل الحل على مستقيم الأعداد: تلوين منطقة الحلول وشطب المنطقة المرفوضة. القوس يعطي ظهره للمنطقة المرفوضة.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header hd5" onclick="toggleUnit('u5')">
+      <div class="unit-num c5">5</div>
+      <div class="unit-info">
+        <h2 class="h5">جملة معادلتين خطيتين</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الثاني</span>
+          <span>📖 طرق الحل الجبري</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b5">
+        <h3 class="h5">📌 الدرس 1: طرق الحل الجبري</h3>
+        <div class="lesson-content">
+          <table class="summary-table">
+            <tr><th>الطريقة</th><th>شرح المبدأ</th></tr>
+            <tr><td>التعويض</td><td>عزل مجهول (مثل x) من المعادلة الأولى، وتعويضه في المعادلة الثانية.</td></tr>
+            <tr><td>الجمع (الحذف)</td><td>ضرب إحدى المعادلتين أو كلتيهما بأرقام مناسبة لجعل أمثال مجهول متعاكسة، ثم نجمع.</td></tr>
+          </table>
+          <div class="gold-tip">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text">بعد إيجاد قيمة أحد المجهولين، لا تنسَ تعويض قيمته في إحدى المعادلات الأصلية لإيجاد المجهول الآخر.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u6">
+    <div class="unit-header hd6" onclick="toggleUnit('u6')">
+      <div class="unit-num c6">6</div>
+      <div class="unit-info">
+        <h2 class="h6">التابع</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الثاني</span>
+          <span>📖 الخطي والتآلفي</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b6">
+        <h3 class="h6">📌 الدرس 1: التابع الخطي والتآلفي</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">التابع الخطي</span>: معادلته <strong>f(x) = ax</strong>. رسمه البياني عبارة عن مستقيم <strong>يمر من المبدأ</strong> (0,0).</li>
+            <li><span class="key-term">التابع التآلفي</span>: معادلته <strong>f(x) = ax + b</strong>. رسمه البياني مستقيم <strong>لا يمر من المبدأ</strong> (إلا إذا كانت b=0).</li>
+            <li>لرسم التابع: نختار قيمتين افتراضيتين لـ x ونحسب قيم y الموافقة لتشكيل نقطتين، ثم نصل بينهما بمستقيم.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u7">
+    <div class="unit-header hd7" onclick="toggleUnit('u7')">
+      <div class="unit-num c7">7</div>
+      <div class="unit-info">
+        <h2 class="h7">الإحصاء</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الثاني</span>
+          <span>📖 النزعة المركزية والتشتت</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b7">
+        <h3 class="h7">📌 الدرس 1: المؤشرات الإحصائية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>المتوسط الحسابي:</strong> مجموع المفردات تقسيم عددها.</li>
+            <li><strong>الوسيط:</strong> بعد الترتيب التصاعدي، هو القيمة التي تقع في المنتصف. إذا كان العدد زوجياً، نجمع القيمتين في المنتصف ونقسم على 2.</li>
+            <li><strong>المنوال:</strong> المفردة الأكثر تكراراً في العينة.</li>
+            <li><strong>المدى (مقياس تشتت):</strong> الفرق بين أكبر مفردة وأصغر مفردة.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u8">
+    <div class="unit-header hd8" onclick="toggleUnit('u8')">
+      <div class="unit-num c8">8</div>
+      <div class="unit-info">
+        <h2 class="h8">الاحتمالات</h2>
+        <div class="unit-meta">
+          <span>📍 الفصل الثاني</span>
+          <span>📖 حساب احتمالات الأحداث</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b8">
+        <h3 class="h8">📌 الدرس 1: قوانين الاحتمال</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>احتمال وقوع الحدث = عدد النتائج الموافقة للحدث / عدد كل النتائج الممكنة.</li>
+            <li>الاحتمال دائماً محصور بين العددين <strong>0</strong> و <strong>1</strong>.</li>
+            <li><span class="key-term">الحدث المستحيل</span>: احتماله = 0.</li>
+            <li><span class="key-term">الحدث الأكيد</span>: احتماله = 1.</li>
+            <li>مجموع احتمال الحدث مع احتمال الحدث المعاكس له يساوي دائماً 1.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><div id="quiz" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--blue); margin-bottom:6px;">✅ اختبر معلوماتك في الجبر</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">اختر الإجابة الصحيحة – سيُحسب درجتك تلقائياً</p>
+
+    <div id="quiz-container"></div>
+
+    <div class="score-bar" id="scoreBar">
+      <div class="score-num" id="scoreNum">0/0</div>
+      <div class="score-msg" id="scoreMsg">-</div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+</div>
+
+<div id="exam" class="section">
+
+  <div class="exam-section">
+    <div class="exam-header">📝 نموذج وزاري – الجبر تاسع 2025-2026</div>
+    <div class="exam-body">
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">أولاً: اختر الإجابة الصحيحة</h3>
+
+      <div id="mcq-container"></div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">ثانياً: صحيح أم خطأ</h3>
+
+      <div id="tf-container"></div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">ثالثاً: أسئلة مقالية (اظهر الإجابة)</h3>
+
+      <div id="essay-container"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<div id="calc" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--blue); margin-bottom:6px;">🧮 محاكيات وأدوات الجبر</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">أدخل القيم لتتحقق من حلك قبل الامتحان!</p>
+
+    <div class="calc-box">
+      <h4>🔢 حساب القاسم المشترك الأكبر (GCD)</h4>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>العدد الأول</label>
+          <input type="number" id="gcdA" placeholder="مثال: 48">
+        </div>
+        <div class="calc-field">
+          <label>العدد الثاني</label>
+          <input type="number" id="gcdB" placeholder="مثال: 60">
+        </div>
+        <button class="calc-btn" onclick="calcGCD()">⚡ احسب القاسم</button>
+      </div>
+      <div class="calc-result" id="gcdResult"></div>
+    </div>
+
+    <div class="calc-box" style="margin-top:20px;">
+      <h4>📐 حل معادلة من الدرجة الأولى (ax + b = c)</h4>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>أمـثـال x (قيمة a)</label>
+          <input type="number" id="eqA" placeholder="مثال: 2">
+        </div>
+        <div class="calc-field">
+          <label>الثابت المجموع (قيمة b)</label>
+          <input type="number" id="eqB" placeholder="مثال: 5">
+        </div>
+        <div class="calc-field">
+          <label>الناتج (قيمة c)</label>
+          <input type="number" id="eqC" placeholder="مثال: 15">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcEq()">⚡ احسب قيمة x</button>
+      <div class="calc-result" id="eqResult"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tips" class="section">
+  <div style="background:white; border-radius:16px; padding:28px; box-shadow:var(--shadow);">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--gold); margin-bottom:20px;">💛 النصائح الذهبية للامتحان</h2>
+
+    <div class="gold-tip">
+      <div class="tip-icon">➖</div>
+      <div class="tip-text"><strong>نصيحة #1 – الإشارات:</strong> انتبه جداً لإشارات السالب والموجب. عند فك الأقواس المسبوقة بإشارة ناقص، تُقلب إشارات ما داخل القوس بالكامل.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">📐</div>
+      <div class="tip-text"><strong>نصيحة #2 – المتراجحات:</strong> عند الضرب أو القسمة على عدد <strong>سالب</strong> في طرفي المتراجحة، لا تنسَ قلب جهة التراجع.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">🧮</div>
+      <div class="tip-text"><strong>نصيحة #3 – المتطابقات الشهيرة:</strong> احفظ المتطابقات الثلاث تماماً، فهي توفر عليك الكثير من الوقت في أسئلة النشر والتحليل، خصوصاً (a-b)(a+b) = a²-b².</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">✔</div>
+      <div class="tip-text"><strong>نصيحة #4 – التحقق:</strong> في أسئلة جملة المعادلتين، بعد أن تجد قيمتي x و y، عوّضهما في المعادلة الأخرى ذهنياً لتتأكد أن إجابتك صحيحة قبل الانتقال للسؤال التالي.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">📈</div>
+      <div class="tip-text"><strong>نصيحة #5 – التابع:</strong> تذكر دائماً أن التابع الخطي f(x) = ax مستقيمه يمر حتماً من مبدأ الإحداثيات (0,0)، بينما التآلفي يقطعه بمكان آخر يعتمد على قيمة b.</div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, var(--dark), #2c3e50); border-radius:14px; padding:20px; margin-top:20px; color:white; text-align:center;">
+      <div style="font-size:1.8rem; margin-bottom:8px;">🌟</div>
+      <div style="font-size:1.1rem; font-weight:800; color:var(--gold-light);">المفاهيم الجبرية الهامة</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:14px;">
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">العدد غير العادي (الأصم)</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">المتطابقات الشهيرة</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">الصيغة العلمية</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">قاسم مشترك أكبر GCD</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">النشر والتحليل</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">المنوال والوسيط</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">التابع الخطي</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="progress" class="section">
+  <div class="progress-tracker">
+    <h3>📊 تتبّع دراستك – الوحدات الثماني</h3>
+    <p style="font-size:0.85rem; color:#666; margin-bottom:20px;">ضع علامة ✓ على الوحدات التي أتممت دراستها</p>
+
+    <div id="progress-list"></div>
+
+    <div style="margin-top:20px; background:var(--blue-pale); border-radius:12px; padding:16px; text-align:center;">
+      <div style="font-size:1.5rem; font-weight:900; color:var(--blue);" id="totalProgress">0%</div>
+      <div style="font-size:0.9rem; color:#555; margin-top:4px;">إجمالي التقدم</div>
+      <div style="background:#ddd; border-radius:20px; height:14px; margin-top:10px; overflow:hidden;">
+        <div id="totalBar" style="height:100%; width:0%; background:linear-gradient(90deg, var(--blue), var(--blue-light)); border-radius:20px; transition:width 0.5s;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><script>
+// ===================== NAV =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== UNITS =====================
+function toggleUnit(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ===================== ANSWERS =====================
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '❌ إخفاء الإجابة ▲' : '📋 اظهر الإجابة ▼';
+}
+
+// ===================== QUIZ =====================
+const quizData = [
+  { q: "قيمة المقدار المنشور للمتطابقة (x + 2) مربّع هي:", opts: ["x² + 4", "x² + 4x + 4", "x² + 2x + 4", "x² - 4x + 4"], ans: 1, exp: "مربع الأول + ضعفي الأول في الثاني + مربع الثاني." },
+  { q: "احتمال وقوع الحدث المستحيل يساوي:", opts: ["1", "0.5", "-1", "0"], ans: 3, exp: "احتمال أي حدث مستحيل هو صفر تماماً." },
+  { q: "جذر الـ 16 مجموعة مع جذر الـ 9 تساوي:", opts: ["7", "5", "25", "12"], ans: 0, exp: "جذر 16 هو 4 وجذر 9 هو 3. نجمع 4+3 = 7." },
+  { q: "المنوال للعينة (2, 3, 3, 4, 5) هو:", opts: ["2", "4", "3", "3.5"], ans: 2, exp: "المنوال هو المفردة الأكثر تكراراً في العينة، وهنا الرقم 3 هو الأكثر تكراراً." },
+  { q: "العدد باي (π) يُصنف ضمن الأعداد:", opts: ["الطبيعية N", "العادية Q", "غير العادية (الصماء)", "الصحيحة Z"], ans: 2, exp: "العدد π غير منتهٍ ولا يمتلك دوراً، لذلك هو غير عادي (أصم)." },
+  { q: "التابع ذو الصيغة f(x) = 2x هو تابع:", opts: ["تآلفي", "خطي", "ثابت", "تربيعي"], ans: 1, exp: "لأنه من الشكل ax ولا يوجد ثابت b معه، ويمر من المبدأ." },
+  { q: "القاسم المشترك الأكبر للعددين 15 و 20 هو:", opts: ["60", "2", "10", "5"], ans: 3, exp: "أكبر عدد يقسم كلا العددين معاً هو 5." },
+  { q: "عند القسمة على عدد سالب في متراجحة، ماذا نفعل؟", opts: ["نغير جهة التراجع", "نتركها كما هي", "نضيف صفراً", "يصبح الحل مستحيلاً"], ans: 0, exp: "هذه قاعدة أساسية في المتراجحات." },
+  { q: "ناتج ضرب القوى (10 أُس 3) في (10 أُس 2) هو:", opts: ["10 أُس 6", "10 أُس 5", "100 أُس 5", "20 أُس 5"], ans: 1, exp: "في حالة ضرب القوى ذات الأساس المشترك، نجمع الأسس (3+2=5)." },
+  { q: "الخط البياني لمعادلة من الدرجة الأولى يُمثل هندسياً بـ:", opts: ["منحني", "دائرة", "مستقيم", "نقطة"], ans: 2, exp: "المعادلات الخطية تمثل دائماً بمستقيم." },
+];
+
+let userAnswers = {};
+let quizDone = false;
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `
+      <div class="q-text">س${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="opts-${i}">
+        ${q.opts.map((o,j) => `<button class="quiz-opt" onclick="selectOpt(${i},${j},this)">${String.fromCharCode(0x0627+j>0x062F?0x062F:0x0627+j)} ${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+      </div>
+      <div class="q-result" id="res-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+  const submitDiv = document.createElement('div');
+  submitDiv.style.textAlign = 'center';
+  submitDiv.innerHTML = `<button class="retry-btn" onclick="submitQuiz()" style="margin-top:16px;">📊 عرض النتيجة</button>`;
+  c.appendChild(submitDiv);
+}
+
+function selectOpt(qi, oi, btn) {
+  if(quizDone) return;
+  const opts = document.querySelectorAll(`#opts-${qi} .quiz-opt`);
+  opts.forEach(b => { b.classList.remove('correct','wrong'); });
+  userAnswers[qi] = oi;
+  opts.forEach((b,j) => b.classList.toggle('correct', j===oi));
+}
+
+function submitQuiz() {
+  quizDone = true;
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const opts = document.querySelectorAll(`#opts-${i} .quiz-opt`);
+    opts.forEach(b => b.classList.add('disabled'));
+    const userA = userAnswers[i];
+    if(userA !== undefined) {
+      opts[userA].classList.remove('correct');
+      if(userA === q.ans) {
+        opts[userA].classList.add('correct');
+        score++;
+      } else {
+        opts[userA].classList.add('wrong');
+        opts[q.ans].classList.add('correct');
+      }
+    } else {
+      opts[q.ans].classList.add('correct');
+    }
+    const res = document.getElementById(`res-${i}`);
+    res.classList.add('show', userA===q.ans ? 'ok' : 'no');
+    res.textContent = (userA===q.ans ? '✅ صحيح! ' : '❌ خطأ. الصحيح: ' + q.opts[q.ans] + ' | ') + '💡 ' + q.exp;
+  });
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  const pct = Math.round(score/quizData.length*100);
+  document.getElementById('scoreNum').textContent = `${score}/${quizData.length}`;
+  const msgs = ['حاول مرة أخرى 💪','أداء جيد، راجع القوانين 📚','ممتاز! أنت على الطريق الصحيح 🌟','رائع جداً! شبه مكتمل 🎯','مثالي! أنت نجم الجبر 🏆'];
+  document.getElementById('scoreMsg').textContent = msgs[Math.min(Math.floor(pct/20), 4)];
+  bar.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz() {
+  quizDone = false;
+  userAnswers = {};
+  document.getElementById('scoreBar').classList.remove('show');
+  buildQuiz();
+}
+
+// ===================== EXAM =====================
+const mcqExam = [
+  { q: "1. قيمة التعبير (الجذر التربيعي لـ 16) + (الجذر التربيعي لـ 9) تساوي:", opts: ["7", "25", "5", "12"], ans: 0 },
+  { q: "2. احتمال الحدث الأكيد هو:", opts: ["0", "1", "0.5", "-1"], ans: 1 },
+  { q: "3. أي التوابع التالية يمر خطه البياني من المبدأ؟", opts: ["y = x + 1", "y = 2x - 2", "y = 3", "y = 2x"], ans: 3 },
+  { q: "4. الجداء (x - 3)(x + 3) منشور للمتطابقة:", opts: ["x² + 9", "x² - 9", "x² - 6x + 9", "x² + 6x + 9"], ans: 1 },
+  { q: "5. المدى للعينة (10, 5, 8, 12, 3) هو:", opts: ["8", "7", "9", "12"], ans: 2 },
+];
+
+const tfExam = [
+  { q: "العددان الأوليان فيما بينهما هما عددان قاسمهما المشترك الأكبر يساوي 1.", ans: true },
+  { q: "عند القسمة على عدد سالب في المتراجحة، لا تتغير جهة التراجع.", ans: false },
+  { q: "التابع التآلفي يمر دائماً من نقطة المبدأ (0,0).", ans: false },
+  { q: "مجموع احتمال وقوع الحدث مع احتمال الحدث المعاكس له يساوي دائماً 1.", ans: true },
+  { q: "الجذر التربيعي يوزع على عمليتي الجمع والطرح.", ans: false },
+];
+
+const essayExam = [
+  { q: "أوجد القاسم المشترك الأكبر (GCD) للعددين 60 و 48، ثم اكتب الكسر 48/60 بأبسط صورة.", ans: "باعتماد القسمة المتتالية:\n60 ÷ 48 = 1 والباقي 12\n48 ÷ 12 = 4 والباقي 0\nالـ GCD هو آخر باقي غير معدوم أي 12.\nلتبسيط الكسر نقسم البسط والمقام على 12:\n48 ÷ 12 = 4\n60 ÷ 12 = 5\nالكسر المختزل هو 4/5." },
+  { q: "انشر وبسّط العبارة الآتية: (x + 3)² - 9", ans: "نطبق المتطابقة الشهيرة (مربع مجموع حدين):\n= (x² + 6x + 9) - 9\nنحذف 9 مع -9\n= x² + 6x" },
+  { q: "حل جملة المعادلتين التاليتين بطريقة الجمع:\n x + y = 5\n x - y = 1", ans: "بجمع المعادلتين طرفاً لطرف للتخلص من y:\n(x + x) + (y - y) = 5 + 1\n2x = 6\nx = 3\nنعوض قيمة x في المعادلة الأولى لإيجاد y:\n3 + y = 5  =>  y = 2\nالحل المشترك هو: x=3, y=2" },
+];
+
+function buildExam() {
+  // MCQ
+  const mc = document.getElementById('mcq-container');
+  mcqExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-question';
+    d.innerHTML = `<div class="q-text">${q.q}</div>
+    <div class="quiz-options" id="em-${i}">
+      ${q.opts.map((o,j)=>`<button class="quiz-opt" onclick="selectExam(${i},${j},this)">${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+    </div>
+    <div class="q-result" id="eres-${i}"></div>`;
+    mc.appendChild(d);
+  });
+
+  // TF
+  const tf = document.getElementById('tf-container');
+  tfExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'tf-question';
+    d.innerHTML = `<div class="tf-text">${i+1}. ${q.q}</div>
+    <div class="tf-btns">
+      <button class="tf-btn true-btn" onclick="answerTF(${i},true,this)">✅ صحيح</button>
+      <button class="tf-btn false-btn" onclick="answerTF(${i},false,this)">❌ خطأ</button>
+    </div>
+    <div class="tf-result" id="tfr-${i}"></div>`;
+    tf.appendChild(d);
+  });
+
+  // Essay
+  const es = document.getElementById('essay-container');
+  essayExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-question';
+    d.style.borderTop = '4px solid var(--red)';
+    d.innerHTML = `<div class="q-text">س${i+1}: ${q.q}</div>
+    <button class="show-btn" onclick="toggleAnswer(this)">📋 اظهر الإجابة النموذجية ▼</button>
+    <div class="answer-box"><p style="white-space:pre-line; font-size:0.9rem; font-weight:600;">${q.ans}</p></div>`;
+    es.appendChild(d);
+  });
+}
+
+function selectExam(qi, oi, btn) {
+  const opts = document.querySelectorAll(`#em-${qi} .quiz-opt`);
+  opts.forEach(b => b.classList.remove('correct','wrong'));
+  opts.forEach(b => b.classList.add('disabled'));
+  const correct = mcqExam[qi].ans === oi;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct) opts[mcqExam[qi].ans].classList.add('correct');
+  const res = document.getElementById(`eres-${qi}`);
+  res.classList.add('show', correct ? 'ok' : 'no');
+  res.textContent = correct ? '✅ إجابة صحيحة!' : '❌ الإجابة الصحيحة: ' + mcqExam[qi].opts[mcqExam[qi].ans];
+}
+
+function answerTF(i, answer, btn) {
+  const correct = answer === tfExam[i].ans;
+  btn.parentElement.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  btn.classList.add(answer ? 'selected-true' : 'selected-false');
+  const res = document.getElementById(`tfr-${i}`);
+  res.textContent = correct ? '✅ صحيح!' : `❌ خطأ! الصحيح: ${tfExam[i].ans ? 'صحيح ✅' : 'خطأ ❌'}`;
+  res.style.color = correct ? '#2e7d32' : '#c62828';
+  res.style.fontWeight = '800';
+  res.style.display = 'block';
+}
+
+// ===================== CALC (MATH TOOLS) =====================
+function calcGCD() {
+  let a = parseInt(document.getElementById('gcdA').value);
+  let b = parseInt(document.getElementById('gcdB').value);
+  let res = document.getElementById('gcdResult');
+
+  if(isNaN(a) || isNaN(b) || a===0 || b===0) {
+    res.textContent = '⚠️ الرجاء إدخال أرقام صحيحة غير معدومة';
+    res.classList.add('show');
+    return;
+  }
+  
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while(y) {
+    let t = y;
+    y = x % y;
+    x = t;
+  }
+  
+  res.innerHTML = `✅ القاسم المشترك الأكبر للعددين هو: <strong style="font-size:1.2rem;">${x}</strong>`;
+  res.classList.add('show');
+}
+
+function calcEq() {
+  let a = parseFloat(document.getElementById('eqA').value);
+  let b = parseFloat(document.getElementById('eqB').value);
+  let c = parseFloat(document.getElementById('eqC').value);
+  let res = document.getElementById('eqResult');
+
+  if(isNaN(a) || isNaN(b) || isNaN(c)) {
+    res.textContent = '⚠️ الرجاء تعبئة الحقول بأرقام صحيحة';
+    res.classList.add('show');
+    return;
+  }
+  
+  if(a === 0) {
+    if(b === c) {
+       res.innerHTML = '⚠️ المعادلة غير محددة (لها عدد لا نهائي من الحلول)';
+    } else {
+       res.innerHTML = '⚠️ المعادلة مستحيلة الحل!';
+    }
+  } else {
+    let x = (c - b) / a;
+    res.innerHTML = `✅ حل المعادلة هو: <strong style="font-size:1.2rem; direction:ltr; display:inline-block;">x = ${x}</strong>`;
+  }
+  res.classList.add('show');
+}
+
+// ===================== PROGRESS =====================
+const units = [
+  { name: 'الوحدة 1 – الأعداد والكسور', color: '#1565c0' },
+  { name: 'الوحدة 2 – القوى والجذور', color: '#2e7d32' },
+  { name: 'الوحدة 3 – العبارات الجبرية', color: '#6a1b9a' },
+  { name: 'الوحدة 4 – المعادلات والمتراجحات', color: '#c62828' },
+  { name: 'الوحدة 5 – جملة معادلتين خطيتين', color: '#e65100' },
+  { name: 'الوحدة 6 – التابع', color: '#00838f' },
+  { name: 'الوحدة 7 – الإحصاء', color: '#4527a0' },
+  { name: 'الوحدة 8 – الاحتمالات', color: '#558b2f' },
+];
+
+let doneUnits = {};
+
+function buildProgress() {
+  const c = document.getElementById('progress-list');
+  units.forEach((u,i) => {
+    const d = document.createElement('div');
+    d.className = 'progress-item';
+    d.innerHTML = `
+      <div class="check-box ${doneUnits[i]?'done':''}" id="chk-${i}" onclick="toggleDone(${i})">
+        ${doneUnits[i]?'✓':''}
+      </div>
+      <div class="progress-label" style="color:${u.color}; font-size:0.85rem;">${u.name}</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:${doneUnits[i]?100:0}%; background:linear-gradient(90deg, ${u.color}, ${u.color}aa);"></div>
+      </div>
+      <div class="progress-pct" style="color:${u.color};">${doneUnits[i]?'100%':'0%'}</div>
+    `;
+    c.appendChild(d);
+  });
+}
+
+function toggleDone(i) {
+  doneUnits[i] = !doneUnits[i];
+  document.getElementById('progress-list').innerHTML = '';
+  buildProgress();
+  updateTotal();
+}
+
+function updateTotal() {
+  const done = Object.values(doneUnits).filter(Boolean).length;
+  const pct = Math.round(done/units.length*100);
+  document.getElementById('totalProgress').textContent = pct + '%';
+  document.getElementById('totalBar').style.width = pct + '%';
+}
+
+// ===================== INIT =====================
+window.onload = function() {
+  buildQuiz();
+  buildExam();
+  buildProgress();
+};
+</script>
+</body>
+</html>
