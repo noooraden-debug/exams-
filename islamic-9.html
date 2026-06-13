@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕌 ملخص التربية الإسلامية - الصف التاسع | المنهج السوري 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F3E5AB;
+    --green: #1b5e20;
+    --green-light: #2e7d32;
+    --green-pale: #e8f5e9;
+    --red: #c62828;
+    --blue: #0277bd;
+    --blue-pale: #e1f5fe;
+    --dark: #1a1a1a;
+    --text: #2e3131;
+    --bg: #f9fbf9;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 32px rgba(27,94,32,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #004d40 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(212,175,55,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .main-header .emoji-row { font-size: 2.5rem; margin-bottom: 10px; position: relative; }
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    letter-spacing: 1px;
+    font-family: 'Amiri', serif;
+  }
+  .main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(5px);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* MAIN CONTENT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARD */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+
+  .unit-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 20px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  }
+  .unit-info h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-info .unit-meta {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .unit-info .unit-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .unit-body { display: none; padding: 0 24px 24px; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON */
+  .lesson {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-right: 4px solid var(--green);
+  }
+  .lesson h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-content ul {
+    padding-right: 20px;
+    margin: 8px 0;
+  }
+  .lesson-content li {
+    margin-bottom: 6px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+  .lesson-content li::marker { color: var(--green-light); }
+  .lesson-content strong { color: #004d40; }
+
+  .key-term {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--green-light), var(--green));
+    color: white;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 2px 4px;
+  }
+
+  /* AYAH STYLE */
+  .ayah-box {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-family: 'Amiri', serif;
+    font-size: 1.2rem;
+    line-height: 2;
+    text-align: center;
+    color: #4a3b00;
+    position: relative;
+  }
+  .ayah-box::before { content: '«'; margin-left: 5px; color: var(--gold); }
+  .ayah-box::after { content: '»'; margin-right: 5px; color: var(--gold); }
+
+  /* SHOW ANSWER BTN */
+  .show-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--blue), #01579b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin: 10px 4px 4px;
+    box-shadow: 0 3px 10px rgba(2,119,189,0.3);
+  }
+  .show-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(2,119,189,0.4);
+  }
+  .answer-box {
+    display: none;
+    background: var(--blue-pale);
+    border: 2px solid #81d4fa;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.visible { display: block; }
+
+  /* QUIZ */
+  .quiz-question {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--green);
+  }
+  .quiz-question .q-text {
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: var(--dark);
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: var(--bg);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    text-align: right;
+    transition: all 0.25s;
+    font-weight: 600;
+  }
+  .quiz-opt:hover { border-color: var(--green-light); background: var(--green-pale); }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+  .quiz-opt.wrong { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+  .quiz-opt.disabled { cursor: not-allowed; }
+  .q-result {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .q-result.show { display: block; }
+  .q-result.ok { background: #e8f5e9; color: #2e7d32; }
+  .q-result.no { background: #ffebee; color: #c62828; }
+
+  /* SCORE */
+  .score-bar {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+  }
+  .score-bar.show { display: block; }
+  .score-num { font-size: 2.5rem; font-weight: 900; color: var(--green); }
+  .score-msg { font-size: 1rem; margin-top: 6px; font-weight: 700; }
+  .retry-btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-top: 12px;
+    transition: all 0.3s;
+  }
+  .retry-btn:hover { background: var(--green-light); transform: translateY(-2px); }
+
+  /* EXAM */
+  .exam-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+  }
+  .exam-header {
+    background: linear-gradient(135deg, #004d40, #00695c);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .exam-body { padding: 24px; }
+  .tf-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-text { font-size: 0.93rem; font-weight: 700; flex: 1; }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 6px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn.true-btn:hover, .tf-btn.selected-true { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.false-btn:hover, .tf-btn.selected-false { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+
+  /* TOOLS */
+  .calc-box {
+    background: linear-gradient(135deg, #1b5e20, #004d40);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .calc-box h4 { font-size: 1.05rem; margin-bottom: 16px; color: var(--gold-light); font-weight: 800; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .calc-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .calc-field label { font-size: 0.85rem; opacity: 0.9; font-weight: 600; }
+  .calc-field select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    width: 100%;
+  }
+  .calc-field select option { background: #1b5e20; color: white; }
+  .calc-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .calc-btn:hover { background: var(--gold-light); }
+  .calc-result {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: none;
+    color: var(--gold-light);
+    border-right: 4px solid var(--gold-light);
+  }
+  .calc-result.show { display: block; }
+
+  /* SUMMARY TABLES */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .summary-table th { background: var(--green); color: white; padding: 10px 14px; font-weight: 800; text-align: right; }
+  .summary-table td { padding: 9px 14px; text-align: right; border-bottom: 1px solid #eee; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--green-pale); }
+
+  /* COLORS FOR UNITS */
+  .c1 { background: linear-gradient(135deg, #1b5e20, #388e3c); }
+  .c2 { background: linear-gradient(135deg, #0277bd, #039be5); }
+  .c3 { background: linear-gradient(135deg, #f57f17, #fbc02d); }
+  .c4 { background: linear-gradient(135deg, #6a1b9a, #8e24aa); }
+  .c5 { background: linear-gradient(135deg, #c62828, #e53935); }
+  .c6 { background: linear-gradient(135deg, #00695c, #00897b); }
+
+  .b1 { border-right-color: #1b5e20; }
+  .b2 { border-right-color: #0277bd; }
+  .b3 { border-right-color: #f57f17; }
+  .b4 { border-right-color: #6a1b9a; }
+  .b5 { border-right-color: #c62828; }
+  .b6 { border-right-color: #00695c; }
+
+  .h1 { color: #1b5e20; }
+  .h2 { color: #0277bd; }
+  .h3 { color: #f57f17; }
+  .h4 { color: #6a1b9a; }
+  .h5 { color: #c62828; }
+  .h6 { color: #00695c; }
+
+  .hd1 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 5px solid #1b5e20; }
+  .hd2 { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); border-right: 5px solid #0277bd; }
+  .hd3 { background: linear-gradient(135deg, #fffde7, #fff9c4); border-right: 5px solid #f57f17; }
+  .hd4 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-right: 5px solid #6a1b9a; }
+  .hd5 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-right: 5px solid #c62828; }
+  .hd6 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-right: 5px solid #00695c; }
+
+  .welcome-box {
+    background: linear-gradient(135deg, var(--green-pale), #fff);
+    border: 2px solid var(--green-light); border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 28px;
+  }
+  .welcome-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--green); margin-bottom: 10px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-top: 20px; }
+  .stat-card { background: white; border-radius: 12px; padding: 18px 12px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 3px solid var(--gold); }
+  .stat-card .stat-num { font-size: 2rem; font-weight: 900; color: var(--green); }
+  .stat-card .stat-lbl { font-size: 0.82rem; color: #666; margin-top: 4px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <div class="emoji-row">🕌 📖 🕋</div>
+  <h1>ملخص التربية الإسلامية التفاعلي</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري المطور 2025 – 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 شامل للكتاب</span>
+    <span class="badge">📝 نماذج امتحانية</span>
+    <span class="badge">💡 أسرار التجويد</span>
+    <span class="badge">✅ اختبارات مؤتمتة</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 وحدات الكتاب</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ اختبر نفسك</button>
+  <button class="nav-btn" onclick="showSection('exam')">📝 نموذج وزاري</button>
+  <button class="nav-btn" onclick="showSection('calc')">⚙️ محاكي التجويد</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div class="welcome-box">
+    <h2>🎓 مرحباً بك في ملخص التربية الإسلامية التفاعلي</h2>
+    <p>هذا الملخص يغنيك عن الكتاب المدرسي، يجمع لك التلاوة، العقيدة، التفسير، الحديث، السيرة والأخلاق للصف التاسع بطريقة مبسطة تضمن لك التفوق التام في الامتحان النهائي.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">أقسام رئيسية</div></div>
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-lbl">جاهزية للامتحان</div></div>
+      <div class="stat-card"><div class="stat-num">50+</div><div class="stat-lbl">سؤالاً تدريبياً</div></div>
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--green);">
+    <div style="padding:20px 24px;">
+      <h3 style="font-size:1.1rem; color:var(--green); font-weight:800; margin-bottom:14px;">🗂️ التوزيع الامتحاني للمادة</h3>
+      <table class="summary-table">
+        <tr><th>القسم</th><th>المحاور الرئيسية</th><th>نمط الأسئلة الامتحانية</th></tr>
+        <tr><td>1️⃣ التلاوة والتجويد</td><td>أحكام النون الساكنة والتنوين والميم الساكنة</td><td>استخراج حكم تجويدي وتحديد نوعه.</td></tr>
+        <tr><td>2️⃣ القرآن (التفسير)</td><td>شرح المفردات، المعاني العامة للآيات (إبراهيم، البقرة)</td><td>اشرح المفردة، اذكر دلالة الآية.</td></tr>
+        <tr><td>3️⃣ الحديث الشريف</td><td>حفظ الأحاديث، فضل الشهيد، مكارم الأخلاق</td><td>أكمل الحديث، اذكر الفوائد المستنبطة.</td></tr>
+        <tr><td>4️⃣ العقيدة</td><td>الرسالات السماوية، القضاء والقدر</td><td>علل، اذكر الأثر الإيجابي.</td></tr>
+        <tr><td>5️⃣ السيرة النبوية</td><td>الهجرة، دور الإمام علي، بناء المسجد، المؤاخاة</td><td>اذكر دوراً، استنتج درساً من الهجرة.</td></tr>
+        <tr><td>6️⃣ الأخلاق والمجتمع</td><td>التقليد الأعمى، التسامح، العفة</td><td>صح/خطأ، اذكر مجالات التقليد.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header hd1" onclick="toggleUnit('u1')">
+      <div class="unit-num c1">1</div>
+      <div class="unit-info">
+        <h2 class="h1">التلاوة والتجويد</h2>
+        <div class="unit-meta">
+          <span>📍 أساس التلاوة</span>
+          <span>📖 النون الساكنة والتنوين</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b1">
+        <h3 class="h1">📌 أحكام النون الساكنة والتنوين</h3>
+        <div class="lesson-content">
+          <p>للنون الساكنة والتنوين أربعة أحكام أساسية يجب حفظ حروفها:</p>
+          <table class="summary-table">
+            <tr><th>الحكم</th><th>حروفه</th><th>طريقة النطق</th><th>مثال</th></tr>
+            <tr><td><strong>الإظهار الحلقي</strong></td><td>ء، هـ، ع، ح، غ، خ (أخي هاك علماً...)</td><td>نطق النون واضحة بلا غنة</td><td>مِنْ خَوف، عَليمٌ حَكيم</td></tr>
+            <tr><td><strong>الإدغام بغنة</strong></td><td>ي، ن، م، و (ينمو)</td><td>إدراج النون بالحرف مع غنة</td><td>مَن يَعْمَل</td></tr>
+            <tr><td><strong>الإدغام بلا غنة</strong></td><td>ل، ر</td><td>إدراج النون بالحرف بدون غنة</td><td>مِن رَّبهم</td></tr>
+            <tr><td><strong>الإقلاب</strong></td><td>ب</td><td>قلب النون ميماً مخفاة مع غنة</td><td>مِن بَعد، سَميعٌ بَصير</td></tr>
+            <tr><td><strong>الإخفاء الحقيقي</strong></td><td>باقي الحروف (15 حرفاً)</td><td>حالة بين الإظهار والإدغام مع غنة</td><td>مِن شَر، كُنتُم</td></tr>
+          </table>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 سؤال امتحاني ▼</button>
+          <div class="answer-box">
+            <ul>
+              <li>❓ <strong>استخرج من (وَمَن يَعْتَصِم بِاللَّهِ) حكمين تجويديين:</strong><br>
+              1. <strong>مَن يَعْتَصِم:</strong> إدغام بغنة (نون ساكنة بعدها ياء).<br>
+              2. <strong>يَعْتَصِم بِاللَّهِ:</strong> إخفاء شفوي (ميم ساكنة بعدها باء).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header hd2" onclick="toggleUnit('u2')">
+      <div class="unit-num c2">2</div>
+      <div class="unit-info">
+        <h2 class="h2">القرآن الكريم والتفسير</h2>
+        <div class="unit-meta">
+          <span>📍 حفظ الآيات والمعاني</span>
+          <span>📖 خلق الإنسان، صفات إبراهيم، البقرة</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b2">
+        <h3 class="h2">📌 مراحل خلق الإنسان (سورة الحج)</h3>
+        <div class="lesson-content">
+          <div class="ayah-box">يَا أَيُّهَا النَّاسُ إِن كُنتُمْ فِي رَيْبٍ مِّنَ الْبَعْثِ فَإِنَّا خَلَقْنَاكُم مِّن تُرَابٍ...</div>
+          <ul>
+            <li><span class="key-term">ريب:</span> شك.</li>
+            <li><span class="key-term">مضغة:</span> قطعة لحم صغيرة بمقدار ما يُمضغ.</li>
+            <li><strong>الدلالة:</strong> الاستدلال بالنشأة الأولى للإنسان (من تراب ثم نطفة...) على قدرة الله على البعث والنشأة الآخرة.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b2">
+        <h3 class="h2">📌 صفات سيدنا إبراهيم (سورة النحل)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>أمة:</strong> إماماً قدوة يُعلم الخير.</li>
+            <li><strong>قَانِتاً لِلّهِ:</strong> مطيعاً خاضعاً لله.</li>
+            <li><strong>حَنِيفاً:</strong> مائلاً عن الشرك إلى التوحيد.</li>
+            <li><strong>شاكراً لأنعمه:</strong> يعترف بنعم الله ويشكرها.</li>
+            <li><strong>النتيجة:</strong> اجتباه الله (اصطفاه) وهداه إلى صراط مستقيم، وآتاه في الدنيا حسنة.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b2">
+        <h3 class="h2">📌 خواتيم سورة البقرة (آمن الرسول...)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>المعنى العام:</strong> تؤكد الآيات على وحدة الرسالات السماوية، وأن جميع الرسل جاؤوا بهداية البشر وتوحيد الله (لا نفرق بين أحد من رسله).</li>
+            <li><strong>الدعاء في الآية:</strong> (غفرانك ربنا وإليك المصير)، (لا يكلف الله نفساً إلا وسعها) أي لا يُحملها فوق طاقتها.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header hd3" onclick="toggleUnit('u3')">
+      <div class="unit-num c3">3</div>
+      <div class="unit-info">
+        <h2 class="h3">العقيدة الإسلامية</h2>
+        <div class="unit-meta">
+          <span>📍 ترسيخ الإيمان</span>
+          <span>📖 الرسل، القضاء والقدر</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b3">
+        <h3 class="h3">📌 الإيمان بالرسل والرسالات السماوية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>الرسالات السماوية مصدرها واحد وهو <strong>الله عز وجل</strong>.</li>
+            <li><strong>غايتها:</strong> هداية البشر، الدعوة لتوحيد الله، وتقويم سلوك الناس.</li>
+            <li>الإسلام يحترم جميع الرسل السابقين ولا يفرق بينهم في أصل الرسالة.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b3">
+        <h3 class="h3">📌 الإيمان بالقضاء والقدر</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>القضاء:</strong> علم الله الأزلي بما سيكون عليه الكون. <strong>القدر:</strong> إيجاد الأشياء على قدر مخصوص ووجه مقدر وفق علم الله.</li>
+            <li><strong>آثار الإيمان به:</strong> 
+              1. الشعور بالرضا والطمأنينة. 
+              2. التوكل على الله مع <strong>الأخذ بالأسباب</strong>.
+              3. الإيجابية والابتعاد عن اليأس والتواكل.
+            </li>
+            <li><em>ملاحظة امتحانية هامة:</em> التوكل لا يعني ترك العمل، بل يجب الأخذ بالأسباب مع الاعتماد على الله (اعقلها وتوكل).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header hd4" onclick="toggleUnit('u4')">
+      <div class="unit-num c4">4</div>
+      <div class="unit-info">
+        <h2 class="h4">الحديث الشريف</h2>
+        <div class="unit-meta">
+          <span>📍 القول النبوي</span>
+          <span>📖 فضل الشهيد، مكارم الأخلاق</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b4">
+        <h3 class="h4">📌 إنما بعثت لأتمم مكارم الأخلاق</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>المعنى:</strong> جاء النبي ﷺ ليتمم ويكمل البناء الأخلاقي الذي جاء به الأنبياء من قبله.</li>
+            <li><strong>الأخلاق المطلوبة:</strong> الصدق، الأمانة، الشهامة، العفة، الكرم.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b4">
+        <h3 class="h4">📌 فضل الشهيد</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>كرامة الشهيد:</strong> يغفر له عند أول قطرة من دمه، يرى مقعده من الجنة، يجار من عذاب القبر، يأمن الفزع الأكبر، ويشفع في سبعين من أقاربه.</li>
+            <li>الشهادة هي أعلى درجات التضحية في سبيل حماية الوطن والعِرض والدين.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header hd5" onclick="toggleUnit('u5')">
+      <div class="unit-num c5">5</div>
+      <div class="unit-info">
+        <h2 class="h5">السيرة النبوية</h2>
+        <div class="unit-meta">
+          <span>📍 سيرة المصطفى</span>
+          <span>📖 الهجرة وتأسيس المجتمع</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b5">
+        <h3 class="h5">📌 الهجرة إلى المدينة المنورة</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>دور علي بن أبي طالب:</strong> نام في فراش النبي ﷺ ليلة الهجرة للتمويه على المشركين، ولرد الأمانات إلى أهل مكة.</li>
+            <li><strong>دروس مستفادة من الهجرة:</strong> التخطيط السليم، السرية والكتمان، اختيار الصحبة الصالحة (أبو بكر الصديق)، الاستعانة بأهل الخبرة الدليل (عبدالله بن أريقط).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b5">
+        <h3 class="h5">📌 بناء مجتمع المدينة</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>بناء المسجد:</strong> ليكون مركزاً للعبادة، ومقراً للشورى، ومدرسة للتعليم.</li>
+            <li><strong>المؤاخاة:</strong> آخى النبي ﷺ بين المهاجرين والأنصار لحل المشكلة الاقتصادية والاجتماعية للمهاجرين، وبناء مجتمع متماسك.</li>
+            <li><strong>وثيقة المدينة:</strong> أول دستور مدني يضمن حقوق المواطنة، حرية الاعتقاد (لليهود وغيرهم)، والدفاع المشترك عن المدينة ضد أي عدوان.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u6">
+    <div class="unit-header hd6" onclick="toggleUnit('u6')">
+      <div class="unit-num c6">6</div>
+      <div class="unit-info">
+        <h2 class="h6">الأخلاق والمجتمع</h2>
+        <div class="unit-meta">
+          <span>📍 بناء الفرد</span>
+          <span>📖 التقليد الأعمى والعفة</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b6">
+        <h3 class="h6">📌 التقليد الأعمى</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>تعريفه:</strong> محاكاة الآخرين في أفعالهم أو أقوالهم أو عاداتهم دون وعي أو تفكير.</li>
+            <li><strong>مجالاته:</strong> العقيدة، العادات والتقاليد (كالموضة الدخيلة)، الأقوال والأفعال السيئة.</li>
+            <li><strong>علاجه:</strong> إعمال العقل والتفكير، التمسك بالقيم الإسلامية الأصيلة، تعزيز الثقة بالنفس والاعتزاز بالهوية.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="quiz" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--green); margin-bottom:6px;">✅ اختبر معلوماتك الشاملة</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">اختر الإجابة الصحيحة – سيُحسب درجتك تلقائياً</p>
+
+    <div id="quiz-container"></div>
+
+    <div class="score-bar" id="scoreBar">
+      <div class="score-num" id="scoreNum">0/0</div>
+      <div class="score-msg" id="scoreMsg">-</div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+</div>
+
+<div id="exam" class="section">
+
+  <div class="exam-section">
+    <div class="exam-header">📝 نموذج وزاري محاكي – تربية إسلامية تاسع 2026</div>
+    <div class="exam-body">
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">أولاً: القرآن الكريم والتجويد (اختر الإجابة)</h3>
+      <div id="mcq-container"></div>
+
+      <div class="divider" style="margin:20px 0; border-bottom:1px solid #ddd;"></div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">ثانياً: صح أم خطأ</h3>
+      <div id="tf-container"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<div id="calc" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--green); margin-bottom:6px;">⚙️ محاكي أحكام التجويد</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">اختر الحرف الذي جاء بعد (النون الساكنة أو التنوين) وسيعطيك النظام الحكم التجويدي مباشرة.</p>
+
+    <div class="calc-box">
+      <h4>🔍 كاشف حكم النون الساكنة والتنوين</h4>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>الحرف الذي يلي النون/التنوين</label>
+          <select id="tajweedLetter">
+            <option value="ithar">ء، هـ، ع، ح، غ، خ</option>
+            <option value="idgham_ghona">ي، ن، م، و (ينمو)</option>
+            <option value="idgham_no">ل، ر</option>
+            <option value="iqlab">ب (الباء)</option>
+            <option value="ikhfaa">باقي الحروف (ص، ذ، ث، ك، ج، ش، ق، س، د، ط، ز، ف، ت، ض، ظ)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calcTajweed()">⚡ استخرج الحكم</button>
+      </div>
+      <div class="calc-result" id="tajweedResult"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===================== NAV =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== UNITS =====================
+function toggleUnit(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ===================== ANSWERS =====================
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '❌ إخفاء الإجابة ▲' : '📋 اظهر الإجابة ▼';
+}
+
+// ===================== QUIZ =====================
+const quizData = [
+  { q: "ما هو الحكم التجويدي في قوله تعالى (مِنْ خَوف)؟", opts: ["إخفاء حقيقي", "إدغام بغنة", "إظهار حلقي", "إقلاب"], ans: 2, exp: "نون ساكنة جاء بعدها حرف الخاء، والخاء من حروف الإظهار." },
+  { q: "الصحابي الذي نام في فراش النبي ﷺ ليلة الهجرة هو:", opts: ["أبو بكر الصديق", "علي بن أبي طالب", "عمر بن الخطاب", "عثمان بن عفان"], ans: 1, exp: "نام علي رضي الله عنه للتمويه ورد الأمانات لأهل مكة." },
+  { q: "معنى كلمة (حنيفاً) في صفات سيدنا إبراهيم:", opts: ["الشاكر للنعم", "المطيع الخاضع", "المائل عن الشرك إلى التوحيد", "القدوة للناس"], ans: 2, exp: "حنيفاً تعني المائل عن الشرك الباحث عن التوحيد." },
+  { q: "من آثار الإيمان بالقضاء والقدر:", opts: ["التواكل وترك العمل", "الشعور باليأس عند المصيبة", "الشعور بالرضا والطمأنينة", "الخوف الدائم من المستقبل"], ans: 2, exp: "المؤمن يعلم أن كل شيء مقدر من الله، فيشعر بالرضا والطمأنينة." },
+  { q: "أول عمل قام به النبي ﷺ عند وصوله للمدينة:", opts: ["كتابة وثيقة المدينة", "المؤاخاة", "تجهيز الجيش", "بناء المسجد النبوي"], ans: 3, exp: "بناء المسجد ليكون مركزاً للعبادة وإدارة شؤون الدولة." }
+];
+
+let userAnswers = {};
+let quizDone = false;
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `
+      <div class="q-text">س${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="opts-${i}">
+        ${q.opts.map((o,j) => `<button class="quiz-opt" onclick="selectOpt(${i},${j},this)">${String.fromCharCode(0x0627+j>0x062F?0x062F:0x0627+j)} ${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+      </div>
+      <div class="q-result" id="res-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+  const submitDiv = document.createElement('div');
+  submitDiv.style.textAlign = 'center';
+  submitDiv.innerHTML = `<button class="retry-btn" onclick="submitQuiz()" style="margin-top:16px;">📊 عرض النتيجة</button>`;
+  c.appendChild(submitDiv);
+}
+
+function selectOpt(qi, oi, btn) {
+  if(quizDone) return;
+  const opts = document.querySelectorAll(`#opts-${qi} .quiz-opt`);
+  opts.forEach(b => { b.classList.remove('correct','wrong'); });
+  userAnswers[qi] = oi;
+  opts.forEach((b,j) => b.classList.toggle('correct', j===oi));
+}
+
+function submitQuiz() {
+  quizDone = true;
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const opts = document.querySelectorAll(`#opts-${i} .quiz-opt`);
+    opts.forEach(b => b.classList.add('disabled'));
+    const userA = userAnswers[i];
+    if(userA !== undefined) {
+      opts[userA].classList.remove('correct');
+      if(userA === q.ans) {
+        opts[userA].classList.add('correct');
+        score++;
+      } else {
+        opts[userA].classList.add('wrong');
+        opts[q.ans].classList.add('correct');
+      }
+    } else {
+      opts[q.ans].classList.add('correct');
+    }
+    const res = document.getElementById(`res-${i}`);
+    res.classList.add('show', userA===q.ans ? 'ok' : 'no');
+    res.textContent = (userA===q.ans ? '✅ صحيح! ' : '❌ خطأ. الصحيح: ' + q.opts[q.ans] + ' | ') + '💡 ' + q.exp;
+  });
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  document.getElementById('scoreNum').textContent = `${score}/${quizData.length}`;
+  bar.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz() {
+  quizDone = false;
+  userAnswers = {};
+  document.getElementById('scoreBar').classList.remove('show');
+  buildQuiz();
+}
+
+// ===================== EXAM =====================
+const mcqExam = [
+  { q: "الغاية الأساسية من إرسال الرسل عليهم السلام هي:", opts: ["تقسيم الناس إلى طبقات", "هداية البشر وتوحيد الله", "نشر الحروب", "تأسيس دول اقتصادية فقط"], ans: 1 },
+  { q: "حكم التجويد في قوله تعالى (مِن بَعدِ):", opts: ["إظهار حلقي", "إدغام بلا غنة", "إقلاب", "إخفاء"], ans: 2 }
+];
+
+const tfExam = [
+  { q: "وثيقة المدينة المنورة كفلت حرية الاعتقاد وممارسة الشعائر لغير المسلمين.", ans: true },
+  { q: "التقليد الأعمى للآخرين يعتبر من علامات التطور والثقة بالنفس.", ans: false },
+  { q: "المؤاخاة التي قام بها النبي ﷺ كانت بين المهاجرين والأنصار لحل المشاكل الاقتصادية والاجتماعية.", ans: true }
+];
+
+function buildExam() {
+  const mc = document.getElementById('mcq-container');
+  mcqExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-question';
+    d.innerHTML = `<div class="q-text">${q.q}</div>
+    <div class="quiz-options" id="em-${i}">
+      ${q.opts.map((o,j)=>`<button class="quiz-opt" onclick="selectExam(${i},${j},this)">${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+    </div>
+    <div class="q-result" id="eres-${i}"></div>`;
+    mc.appendChild(d);
+  });
+
+  const tf = document.getElementById('tf-container');
+  tfExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'tf-question';
+    d.innerHTML = `<div class="tf-text">${i+1}. ${q.q}</div>
+    <div class="tf-btns">
+      <button class="tf-btn true-btn" onclick="answerTF(${i},true,this)">✅ صحيح</button>
+      <button class="tf-btn false-btn" onclick="answerTF(${i},false,this)">❌ خطأ</button>
+    </div>
+    <div class="tf-result" id="tfr-${i}"></div>`;
+    tf.appendChild(d);
+  });
+}
+
+function selectExam(qi, oi, btn) {
+  const opts = document.querySelectorAll(`#em-${qi} .quiz-opt`);
+  opts.forEach(b => b.classList.remove('correct','wrong'));
+  opts.forEach(b => b.classList.add('disabled'));
+  const correct = mcqExam[qi].ans === oi;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct) opts[mcqExam[qi].ans].classList.add('correct');
+  const res = document.getElementById(`eres-${qi}`);
+  res.classList.add('show', correct ? 'ok' : 'no');
+  res.textContent = correct ? '✅ إجابة صحيحة!' : '❌ الإجابة الصحيحة: ' + mcqExam[qi].opts[mcqExam[qi].ans];
+}
+
+function answerTF(i, answer, btn) {
+  const correct = answer === tfExam[i].ans;
+  btn.parentElement.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  btn.classList.add(answer ? 'selected-true' : 'selected-false');
+  const res = document.getElementById(`tfr-${i}`);
+  res.textContent = correct ? '✅ إجابة موفقة!' : `❌ الصحيح: ${tfExam[i].ans ? 'صحيح ✅' : 'خطأ ❌'}`;
+  res.style.color = correct ? '#2e7d32' : '#c62828';
+  res.style.fontWeight = '800';
+  res.style.display = 'block';
+}
+
+// ===================== CALC (TAJWEED TOOL) =====================
+function calcTajweed() {
+  const val = document.getElementById('tajweedLetter').value;
+  const res = document.getElementById('tajweedResult');
+  
+  let hokm = ""; let desc = "";
+  
+  if(val === 'ithar') {
+    hokm = "إظهار حلقي"; desc = "تُنطق النون الساكنة أو التنوين بوضوح من غير غنة.";
+  } else if(val === 'idgham_ghona') {
+    hokm = "إدغام بغنة"; desc = "تُدغم النون بالحرف الذي يليها مع بقاء الغنة بمقدار حركتين.";
+  } else if(val === 'idgham_no') {
+    hokm = "إدغام بلا غنة"; desc = "تُدغم النون بالحرف الذي يليها إدغاماً كاملاً بدون غنة نهائياً.";
+  } else if(val === 'iqlab') {
+    hokm = "إقلاب"; desc = "تُقلب النون الساكنة أو التنوين إلى (ميم مخفاة) مع وجود غنة بمقدار حركتين.";
+  } else if(val === 'ikhfaa') {
+    hokm = "إخفاء حقيقي"; desc = "تُنطق النون بحالة وسط بين الإظهار والإدغام مع بقاء الغنة بمقدار حركتين.";
+  }
+  
+  res.innerHTML = `✅ الحكم التجويدي: <strong style="font-size:1.2rem; color:white; background:var(--green); padding:2px 8px; border-radius:6px; margin-right:5px;">${hokm}</strong><br><br>💡 طريقة النطق: ${desc}`;
+  res.classList.add('show');
+}
+
+// ===================== INIT =====================
+window.onload = function() {
+  buildQuiz();
+  buildExam();
+};
+</script>
+</body>
+</html>
