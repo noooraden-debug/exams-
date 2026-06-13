@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📜 ملخص اللغة العربية - الصف التاسع | المنهج السوري 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --green: #1a6b3a;
+    --green-light: #2d9455;
+    --green-pale: #e8f5ee;
+    --red: #c0392b;
+    --blue: #1565c0;
+    --blue-light: #1976d2;
+    --blue-pale: #e3f2fd;
+    --dark: #1a1a2e;
+    --text: #2c3e50;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.12);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 40%, #1565c0 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(212,160,23,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .main-header .emoji-row { font-size: 2.5rem; margin-bottom: 10px; position: relative; }
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    letter-spacing: 1px;
+    font-family: 'Amiri', serif;
+  }
+  .main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(5px);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+  }
+
+  /* MAIN CONTENT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARD */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+
+  .unit-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 20px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  }
+  .unit-info h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-info .unit-meta {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .unit-info .unit-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .unit-body { display: none; padding: 0 24px 24px; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON */
+  .lesson {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-right: 4px solid var(--blue);
+  }
+  .lesson h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-content ul {
+    padding-right: 20px;
+    margin: 8px 0;
+  }
+  .lesson-content li {
+    margin-bottom: 6px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+  .lesson-content li::marker { color: var(--blue); }
+
+  .key-term {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    color: white;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 2px 4px;
+  }
+
+  /* GOLD TIP */
+  .gold-tip {
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .gold-tip .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .gold-tip .tip-text { font-size: 0.9rem; font-weight: 600; color: #7a5c00; line-height: 1.7; }
+  .gold-tip strong { color: var(--red); }
+
+  /* SHOW ANSWER BTN */
+  .show-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin: 10px 4px 4px;
+    box-shadow: 0 3px 10px rgba(45,148,85,0.3);
+  }
+  .show-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45,148,85,0.4);
+  }
+  .answer-box {
+    display: none;
+    background: var(--green-pale);
+    border: 2px solid var(--green-light);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.visible { display: block; }
+
+  /* QUIZ */
+  .quiz-question {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--blue);
+  }
+  .quiz-question .q-text {
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: var(--dark);
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: var(--bg);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    text-align: right;
+    transition: all 0.25s;
+    font-weight: 600;
+  }
+  .quiz-opt:hover { border-color: var(--blue-light); background: var(--blue-pale); }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #43a047; color: #1b5e20; }
+  .quiz-opt.wrong { background: #ffebee; border-color: #e53935; color: #b71c1c; }
+  .quiz-opt.disabled { cursor: not-allowed; }
+  .q-result {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .q-result.show { display: block; }
+  .q-result.ok { background: #e8f5e9; color: #2e7d32; }
+  .q-result.no { background: #ffebee; color: #c62828; }
+
+  /* SCORE */
+  .score-bar {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+  }
+  .score-bar.show { display: block; }
+  .score-num { font-size: 2.5rem; font-weight: 900; color: var(--blue); }
+  .score-msg { font-size: 1rem; margin-top: 6px; font-weight: 700; }
+  .retry-btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-top: 12px;
+    transition: all 0.3s;
+  }
+  .retry-btn:hover { background: var(--blue-light); transform: translateY(-2px); }
+
+  /* EXAM */
+  .exam-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+  }
+  .exam-header {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .exam-body { padding: 24px; }
+  .tf-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-text { font-size: 0.93rem; font-weight: 700; flex: 1; }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 6px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn.true-btn:hover, .tf-btn.selected-true { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.false-btn:hover, .tf-btn.selected-false { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+  .tf-result { font-size: 1rem; }
+
+  /* TIME CALC & TOOLS */
+  .calc-box {
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .calc-box h4 { font-size: 1.05rem; margin-bottom: 16px; color: var(--gold-light); font-weight: 800; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .calc-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .calc-field label { font-size: 0.85rem; opacity: 0.9; font-weight: 600; }
+  .calc-field select, .calc-field input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    width: 100%;
+  }
+  .calc-field select option { background: #2c3e50; color: white; }
+  .calc-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .calc-btn:hover { background: var(--gold-light); }
+  .calc-result {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: none;
+    color: var(--gold-light);
+    border-right: 4px solid var(--gold-light);
+  }
+  .calc-result.show { display: block; }
+
+  /* SUMMARY TABLES */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .summary-table th { background: var(--blue); color: white; padding: 10px 14px; font-weight: 800; text-align: right; }
+  .summary-table td { padding: 9px 14px; text-align: right; border-bottom: 1px solid #eee; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--blue-pale); }
+  .summary-table tr:hover td { background: #bbdefb; }
+
+  /* PROGRESS */
+  .progress-tracker { background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow); margin-bottom: 24px; }
+  .progress-tracker h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 18px; color: var(--dark); }
+  .progress-item { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .progress-label { font-weight: 700; font-size: 0.9rem; width: 180px; flex-shrink: 0; }
+  .progress-bar-wrap { flex: 1; background: #eee; border-radius: 20px; height: 12px; }
+  .progress-bar-fill { height: 100%; border-radius: 20px; transition: width 1s ease; }
+  .progress-pct { font-weight: 800; font-size: 0.85rem; width: 40px; text-align: center; }
+  .check-box {
+    width: 26px; height: 26px; border: 2px solid #ddd; border-radius: 6px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s; flex-shrink: 0;
+  }
+  .check-box.done { background: var(--blue); border-color: var(--blue); color: white; }
+
+  /* COLORS FOR UNITS */
+  .c1 { background: linear-gradient(135deg, #1565c0, #1976d2); }
+  .c2 { background: linear-gradient(135deg, #2e7d32, #388e3c); }
+  .c3 { background: linear-gradient(135deg, #6a1b9a, #7b1fa2); }
+  .c4 { background: linear-gradient(135deg, #c62828, #d32f2f); }
+  .c5 { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .c6 { background: linear-gradient(135deg, #00838f, #00acc1); }
+
+  .b1 { border-right-color: #1565c0; }
+  .b2 { border-right-color: #2e7d32; }
+  .b3 { border-right-color: #6a1b9a; }
+  .b4 { border-right-color: #c62828; }
+  .b5 { border-right-color: #e65100; }
+  .b6 { border-right-color: #00838f; }
+
+  .h1 { color: #1565c0; }
+  .h2 { color: #2e7d32; }
+  .h3 { color: #6a1b9a; }
+  .h4 { color: #c62828; }
+  .h5 { color: #e65100; }
+  .h6 { color: #00838f; }
+
+  .hd1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-right: 5px solid #1565c0; }
+  .hd2 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 5px solid #2e7d32; }
+  .hd3 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-right: 5px solid #6a1b9a; }
+  .hd4 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-right: 5px solid #c62828; }
+  .hd5 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-right: 5px solid #e65100; }
+  .hd6 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-right: 5px solid #00838f; }
+
+  .welcome-box {
+    background: linear-gradient(135deg, var(--blue-pale), #fff);
+    border: 2px solid var(--blue-light); border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 28px;
+  }
+  .welcome-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+  .welcome-box p { font-size: 0.95rem; color: #444; line-height: 1.8; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-top: 20px; }
+  .stat-card { background: white; border-radius: 12px; padding: 18px 12px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 3px solid var(--gold); }
+  .stat-card .stat-num { font-size: 2rem; font-weight: 900; color: var(--blue); }
+  .stat-card .stat-lbl { font-size: 0.82rem; color: #666; margin-top: 4px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <div class="emoji-row">📜 🖋️ 📖</div>
+  <h1>ملخص اللغة العربية التفاعلي</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهج السوري 2025 – 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 شامل للكتابين</span>
+    <span class="badge">📝 نماذج امتحانية</span>
+    <span class="badge">💡 أسرار التعبير</span>
+    <span class="badge">🧮 أدوات لغوية</span>
+    <span class="badge">✅ اختبارات مؤتمتة</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 الأقسام التعليمية</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ اختبر نفسك</button>
+  <button class="nav-btn" onclick="showSection('exam')">📝 نموذج وزاري</button>
+  <button class="nav-btn" onclick="showSection('calc')">⚙️ محاكيات لغوية</button>
+  <button class="nav-btn" onclick="showSection('tips')">💡 أسرار التفوّق</button>
+  <button class="nav-btn" onclick="showSection('progress')">📊 تتبّع الدراسة</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div class="welcome-box">
+    <h2>🎓 مرحباً بك في ملخص اللغة العربية التفاعلي</h2>
+    <p>هذا الملخص مصمم ليغنيك عن تشتت الكتاب المدرسي، حيث يجمع لك مقررات النحو، الصرف، الإملاء، البلاغة، والقراءة والتعبير للصف التاسع (شهادة التعليم الأساسي السورية) بطريقة ذكية، مبسطة، وتفاعلية.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">أقسام رئيسية</div></div>
+      <div class="stat-card"><div class="stat-num">30+</div><div class="stat-lbl">قاعدة لغوية</div></div>
+      <div class="stat-card"><div class="stat-num">50+</div><div class="stat-lbl">سؤالاً تدريبياً</div></div>
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-lbl">جاهزية للامتحان</div></div>
+    </div>
+  </div>
+
+  <div class="gold-tip">
+    <div class="tip-icon">🌟</div>
+    <div class="tip-text">
+      <strong>كيف تضمن العلامة التامة؟</strong><br>
+      ابنِ أساسك في <strong>قواعد النحو والصرف</strong> ← احفظ الشواهد الشعرية لـ <strong>الموضوع الإجباري</strong> ← استخدم أدواتنا التفاعلية للتدرب على الإعراب والإملاء ← اختبر نفسك بالنموذج الوزاري المرفق!
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--blue);">
+    <div style="padding:20px 24px;">
+      <h3 style="font-size:1.1rem; color:var(--blue); font-weight:800; margin-bottom:14px;">🗂️ خريطة الملخص المعتمدة</h3>
+      <table class="summary-table">
+        <tr><th>القسم</th><th>المحاور الرئيسية</th><th>الأهمية الامتحانية</th></tr>
+        <tr><td>1️⃣ قواعد النحو</td><td>المفاعيل، التوابع، المنادى، العدد والمعدود، المستثنى، الحال والتمييز</td><td>أساسية جداً (إعراب وتشكيل)</td></tr>
+        <tr><td>2️⃣ قواعد الصرف</td><td>المشتقات بأنواعها، الجامد (ذات ومعنى)، المجرد والمزيد، الميزان الصرفي</td><td>استخراج من النص ووزن</td></tr>
+        <tr><td>3️⃣ الإملاء</td><td>الهمزات (أولية، متوسطة، متطرفة)، التاء (مربوطة، مبسوطة)، الألف اللينة</td><td>أسئلة التعليل المباشرة</td></tr>
+        <tr><td>4️⃣ البلاغة</td><td>التشبيه (أركانه وأنواعه)، الاستعارة، المحسنات البديعية، الشعور العاطفي</td><td>تحليل الصور الجمالية</td></tr>
+        <tr><td>5️⃣ النصوص والقصائد</td><td>روعة البيان، يا قلب، الغاب، في مواجهة المحن... (شرح المفردات والفِكر)</td><td>فهم المقروء وحفظ الشواهد</td></tr>
+        <tr><td>6️⃣ التعبير</td><td>الإجباري (الربط بين الفكر والشواهد)، الاختياري (سيرة، قصة، وصف، رسالة)</td><td>أكبر كتلة من العلامات (60+40)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header hd1" onclick="toggleUnit('u1')">
+      <div class="unit-num c1">1</div>
+      <div class="unit-info">
+        <h2 class="h1">قواعد النحو (الإعراب)</h2>
+        <div class="unit-meta">
+          <span>📍 أساس بناء الجملة</span>
+          <span>📖 المفاعيل، التوابع، المنادى</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b1">
+        <h3 class="h1">📌 المنادى</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>المنادى المضاف:</strong> منصوب (يا طالبَ العلمِ). يليه مضاف إليه.</li>
+            <li><strong>الشبيه بالمضاف:</strong> منصوب ومنون (يا طالباً العلمَ). يليه ما يتمم معناه.</li>
+            <li><strong>النكرة غير المقصودة:</strong> منصوب ومنون (يا غافلاً، انتبه).</li>
+            <li><strong>المفرد العَلَم:</strong> مبني على ما يرفع به (يا دمشقُ).</li>
+            <li><strong>النكرة المقصودة:</strong> مبني على ما يرفع به (يا رجلُ).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b1">
+        <h3 class="h1">📌 التوابع (النعت، العطف، التوكيد، البدل)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">النعت (الصفة):</span> يتبع المنعوت في (الإعراب، التذكير/التأنيث، الإفراد/التثنية/الجمع، التعريف/التنكير).</li>
+            <li><span class="key-term">التوكيد:</span> لفظي (تكرار الكلمة)، ومعنوي (نفس، عين، كُلّ، جميع... متصلة بضمير).</li>
+            <li><span class="key-term">البدل:</span> مطابق (كل من كل)، جزء من كل، اشتمال.</li>
+          </ul>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 سؤال امتحاني ▼</button>
+          <div class="answer-box">
+            <ul>
+              <li>❓ <strong>أعرب: جاءَ الطالبُ نفسُهُ</strong><br>نفسُهُ: توكيد معنوي مرفوع وعلامة رفعه الضمة الظاهرة، والهاء ضمير متصل مبني في محل جر بالإضافة.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="lesson b1">
+        <h3 class="h1">📌 المفاعيل والحال والتمييز</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>المفعول المطلق:</strong> مصدر منصوب من لفظ الفعل (درستُ <u>دراسةً</u>).</li>
+            <li><strong>المفعول لأجله:</strong> مصدر قلبي منصوب يبين سبب الفعل (وقفتُ <u>احتراماً</u> للمعلم).</li>
+            <li><strong>المفعول فيه (ظرف الزمان/المكان):</strong> اسم منصوب يدل على زمان أو مكان حدوث الفعل (سافرتُ <u>صباحاً</u>).</li>
+            <li><strong>الحال:</strong> اسم نكرة منصوب يبين هيئة صاحبه المعرفة (جاء الطفلُ <u>باكياً</u>). <em>نسأل عنه بـ "كيف".</em></li>
+            <li><strong>التمييز:</strong> اسم نكرة منصوب يزيل الإبهام عما قبله (تطورت سورية <u>صناعةً</u>).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header hd2" onclick="toggleUnit('u2')">
+      <div class="unit-num c2">2</div>
+      <div class="unit-info">
+        <h2 class="h2">قواعد الصرف</h2>
+        <div class="unit-meta">
+          <span>📍 بنية الكلمة</span>
+          <span>📖 المشتقات والجامد والميزان</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b2">
+        <h3 class="h2">📌 المشتقات</h3>
+        <div class="lesson-content">
+          <table class="summary-table">
+            <tr><th>المشتق</th><th>صياغته (من الثلاثي)</th><th>مثال</th></tr>
+            <tr><td>اسم الفاعل</td><td>على وزن "فَاعِل"</td><td>كَاتِب، عَالِم</td></tr>
+            <tr><td>اسم المفعول</td><td>على وزن "مَفْعُول"</td><td>مَكْتُوب، مَعْلُوم</td></tr>
+            <tr><td>مبالغة اسم الفاعل</td><td>أوزان (فَعّال، فَعُول، فَعِيل، مِفْعَال، فَعِل)</td><td>عَلّام، غَفُور، حَذِر</td></tr>
+            <tr><td>الصفة المشبهة</td><td>أوزان (فَعِيل، فَعْل، فَعَل، أَفْعَل/فَعْلاء، فَعْلان/فَعْلَى)</td><td>كَرِيم، شَهْم، بَطَل، أحمر</td></tr>
+            <tr><td>اسم المكان/الزمان</td><td>مَفْعَل، مَفْعِل</td><td>مَلْعَب، مَجْلِس</td></tr>
+            <tr><td>اسم الآلة</td><td>مِفْعَل، مِفْعَال، مِفْعَلَة</td><td>مِشْرَط، مِفْتَاح، مِطْرَقَة</td></tr>
+          </table>
+          <div class="gold-tip">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text">لصياغة اسم الفاعل أو المفعول من <strong>فوق الثلاثي</strong>: نأخذ المضارع، نبدل حرف المضارعة ميماً مضمومة، ونكسر ما قبل الآخر (اسم فاعل: مُعَلِّم) أو نفتح ما قبل الآخر (اسم مفعول: مُعَلَّم).</div>
+          </div>
+        </div>
+      </div>
+      <div class="lesson b2">
+        <h3 class="h2">📌 الاسم الجامد</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">جامد ذات</span>: ما يُدرك بالحواس وله حيز في الفراغ (رجل، شجرة، شمس، ماء).</li>
+            <li><span class="key-term">جامد معنى</span>: ما يُدرك بالعقل (المصادر) (عِلْم، شجاعة، حب، دراسة).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header hd3" onclick="toggleUnit('u3')">
+      <div class="unit-num c3">3</div>
+      <div class="unit-info">
+        <h2 class="h3">قواعد الإملاء</h2>
+        <div class="unit-meta">
+          <span>📍 التعليل الإملائي</span>
+          <span>📖 الهمزات والتاء والألف</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b3">
+        <h3 class="h3">📌 تعليل الهمزة</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>الهمزة الأولية (وصل/قطع):</strong> تُعلل حسب نوع الكلمة (أمر ثلاثي، ماضي رباعي، مصدر خماسي، اسم من الأسماء العشرة... إلخ).
+              <br><em>مثال: (استخرجَ) همزة وصل لأنها ماضي فعل سداسي. (إكرام) همزة قطع لأنها مصدر فعل رباعي.</em></li>
+            <li><strong>الهمزة المتوسطة:</strong> تُعلل بمقارنة حركتها بحركة الحرف الذي قبلها، وتُكتب على ما يناسب أقوى الحركتين. (الكسرة > الضمة > الفتحة > السكون).
+              <br><em>مثال: (مُؤْمن) همزة متوسطة، حركتها السكون وحركة ما قبلها الضمة، والضمة أقوى، ويناسبها الواو.</em></li>
+            <li><strong>الهمزة المتطرفة:</strong> تُعلل بحركة الحرف الذي قبلها <strong>فقط</strong>.
+              <br><em>مثال: (شاطِئ) همزة متطرفة سبقت بحرف مكسور فكتبت على ياء غير منقوطة.</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b3">
+        <h3 class="h3">📌 التاء المبسوطة والمربوطة</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>التاء المبسوطة:</strong> تاء الرفع المتحركة (درستُ)، تاء التأنيث الساكنة (درستْ)، تاء الفعل الأصلية (بات)، جمع المؤنث السالم (طالبات)، اسم ثلاثي ساكن الوسط (بيت).</li>
+            <li><strong>التاء المربوطة:</strong> اسم مفرد مؤنث (طالبة)، جمع تكسير لا ينتهي مفرده بتاء (قضاة - مفردها قاضي).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header hd4" onclick="toggleUnit('u4')">
+      <div class="unit-num c4">4</div>
+      <div class="unit-info">
+        <h2 class="h4">البلاغة والصور الجمالية</h2>
+        <div class="unit-meta">
+          <span>📍 التذوق الفني</span>
+          <span>📖 التشبيه، الاستعارة، المحسنات</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b4">
+        <h3 class="h4">📌 الصور البيانية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>التشبيه التام الأركان:</strong> يذكر فيه المشبه، المشبه به، أداة التشبيه، وجه الشبه. (العلم كالنور في الهداية).</li>
+            <li><strong>التشبيه البليغ:</strong> حُذفت منه الأداة ووجه الشبه (العلمُ نورٌ).</li>
+            <li><strong>الاستعارة المكنية:</strong> تشبيه بليغ حُذف منه المشبه به ورُمز له بشيء من لوازمه. (طارت الأخبار -> شبه الأخبار بطائر، حذف الطائر وأبقى صفة الطيران).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b4">
+        <h3 class="h4">📌 المحسنات البديعية</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>الطباق:</strong> جمع الكلمة وضدها (طباق إيجاب: ليل/نهار) (طباق سلب: يعلمون/لا يعلمون).</li>
+            <li><strong>المقابلة:</strong> جملة عكس جملة (يحل لهم الطيبات ويحرم عليهم الخبائث).</li>
+            <li><strong>الجناس:</strong> تشابه اللفظين (جناس تام: صليت المغرب في بلاد المغرب) (جناس ناقص: عبرة / عَبرة).</li>
+            <li><strong>التصريع:</strong> توافق نهاية الشطر الأول مع نهاية الشطر الثاني في البيت الأول للقصيدة.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header hd5" onclick="toggleUnit('u5')">
+      <div class="unit-num c5">5</div>
+      <div class="unit-info">
+        <h2 class="h5">النصوص والقصائد</h2>
+        <div class="unit-meta">
+          <span>📍 حفظ وفهم</span>
+          <span>📖 الأفكار الرئيسية والشواهد</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b5">
+        <h3 class="h5">📌 مفاتيح دراسة القصائد</h3>
+        <div class="lesson-content">
+          <p>للاجابة عن أسئلة الفهم والتحليل والموضوع الإجباري، يجب أن تحفظ لكل قصيدة:</p>
+          <ol>
+            <li><strong>اسم الشاعر وجنسيته.</strong></li>
+            <li><strong>الفكرة العامة للقصيدة.</strong></li>
+            <li><strong>الفكرة الرئيسية لكل مقطع.</strong></li>
+            <li><strong>الشعور العاطفي السائد</strong> (اعتزاز، حزن، أمل، غضب...) وأدوات التعبير عنه (ألفاظ، تراكيب، صور).</li>
+          </ol>
+          <div class="gold-tip">
+            <div class="tip-icon">⭐</div>
+            <div class="tip-text">احفظ بيتاً واحداً على الأقل كـ "شاهد" لكل فكرة فرعية لاستخدامه في موضوع التعبير الإجباري.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u6">
+    <div class="unit-header hd6" onclick="toggleUnit('u6')">
+      <div class="unit-num c6">6</div>
+      <div class="unit-info">
+        <h2 class="h6">التعبير (الإجباري والاختياري)</h2>
+        <div class="unit-meta">
+          <span>📍 حجر الأساس للعلامة</span>
+          <span>📖 كتابة المواضيع</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b6">
+        <h3 class="h6">📌 الموضوع الإجباري (ربط الفِكَر بالشواهد)</h3>
+        <div class="lesson-content">
+          <p>يأتي السؤال بطلب كتابة موضوع يعالج 3 أو 4 فكر منسوخة من قصائد الكتاب. الهيكلية المطلوبة:</p>
+          <ul>
+            <li><strong>المقدمة:</strong> تمهيد عام عن الموضوع (الوطن، الطبيعة، قضايا المجتمع) خالي من الشواهد (نصف سطر إلى سطرين).</li>
+            <li><strong>العرض (صلب الموضوع):</strong> نأخذ الفكرة الأولى المطروحة في السؤال، نمهد لها بأسلوبنا، ثم نضع الشاهد الشعري (البيت). ثم ننتقل للفكرة الثانية بـ "أداة ربط مناسبة" (ومن جهة أخرى، وقد صوّر الشاعر أيضاً، ولم يقتصر الأمر على...).</li>
+            <li><strong>الخاتمة:</strong> خلاصة قصيرة لما سبق.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b6">
+        <h3 class="h6">📌 الموضوع الاختياري</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>السيرة (ذاتية/غيرية):</strong> كتابة أحداث مرتبة زمنياً، ذكر مكان وتاريخ الولادة، الصفات، الإنجازات، الوفاة أو الوضع الحالي.</li>
+            <li><strong>القصة:</strong> بناء الحبكة (مقدمة، عقدة/ذروة، حل)، استخدام عناصر القصة (الزمان، المكان، الشخصيات).</li>
+            <li><strong>الرسالة:</strong> الالتزام بالشكل (المرسل إليه، التحية، المقدمة، الغرض الأساسي، الخاتمة، التوقيع والتاريخ).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="quiz" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--blue); margin-bottom:6px;">✅ اختبر معلوماتك النحوية والإملائية</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">اختر الإجابة الصحيحة – سيُحسب درجتك تلقائياً</p>
+
+    <div id="quiz-container"></div>
+
+    <div class="score-bar" id="scoreBar">
+      <div class="score-num" id="scoreNum">0/0</div>
+      <div class="score-msg" id="scoreMsg">-</div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+</div>
+
+<div id="exam" class="section">
+
+  <div class="exam-section">
+    <div class="exam-header">📝 نموذج وزاري محاكي – عربي تاسع 2026</div>
+    <div class="exam-body">
+
+      <div style="background:var(--blue-pale); border-radius:10px; padding:16px; margin-bottom:20px; font-weight:bold; font-family:'Amiri',serif; font-size:1.1rem; line-height:2; text-align:center;">
+        قال الشاعر في حب الوطن:<br>
+        وطني لو شُغِلتُ بالخُلدِ عنهُ ... نازعَتني إليهِ في الخُلدِ نَفْسي<br>
+        شَهِدَ اللهُ لَم يَغِبْ عن جُفوني ... شَخْصُهُ ساعةً ولَم يَخْلُ حِسّي
+      </div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">أولاً: فهم المقروء والبلاغة (اختر الإجابة)</h3>
+      <div id="mcq-container"></div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">ثانياً: صح أم خطأ (نحو وصرف)</h3>
+      <div id="tf-container"></div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">ثالثاً: أسئلة مقالية ومهارات (اظهر الإجابة)</h3>
+      <div id="essay-container"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<div id="calc" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--blue); margin-bottom:6px;">⚙️ أدوات ومحاكيات لغوية</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">استخدم هذه الأدوات الذكية لفهم القواعد وتطبيقها بدقة.</p>
+
+    <div class="calc-box">
+      <h4>🔍 أداة تعليل وكتابة الهمزة المتوسطة</h4>
+      <p style="font-size:0.85rem; margin-bottom:12px; color:#ddd;">العب دور المصحح: حدد الحركات وسيقوم النظام بتطبيق قاعدة أقوى الحركتين وإخبارك بمكان جلوس الهمزة.</p>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>حركة الهمزة نفسها</label>
+          <select id="hamzaH">
+            <option value="kasra">الكسرة</option>
+            <option value="damma">الضمة</option>
+            <option value="fatha">الفتحة</option>
+            <option value="sokoun">السكون</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>حركة الحرف الذي قبلها</label>
+          <select id="beforeH">
+            <option value="kasra">الكسرة</option>
+            <option value="damma">الضمة</option>
+            <option value="fatha">الفتحة</option>
+            <option value="sokoun">السكون</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calcHamza()">⚡ اكتشف المقعد</button>
+      </div>
+      <div class="calc-result" id="hamzaResult"></div>
+    </div>
+
+    <div class="calc-box" style="margin-top:20px; background: linear-gradient(135deg, #1565c0, #0d47a1);">
+      <h4>📢 كاشف نوع وحكم المنادى</h4>
+      <p style="font-size:0.85rem; margin-bottom:12px; color:#ddd;">اختر حالة المنادى في الجملة لتعرف نوعه وحكمه الإعرابي مباشرة.</p>
+      <div class="calc-row">
+        <div class="calc-field" style="flex:2;">
+          <label>شكل المنادى في الجملة</label>
+          <select id="monadaType">
+            <option value="modaf">نكرة منصوبة + مضاف إليه مجرور (يا طالبَ العلمِ)</option>
+            <option value="shabih">نكرة منصوبة منونة + ما يتمم المعنى (يا طالباً العلمَ)</option>
+            <option value="nakera_ghayr">نكرة منصوبة منونة فقط (يا غافلاً، انتبه)</option>
+            <option value="alam">اسم علم إنسان أو مكان (يا دمشقُ، يا خالدُ)</option>
+            <option value="nakera_maks">نكرة مرفوعة (يا رجلُ، خذ بيدي)</option>
+          </select>
+        </div>
+        <button class="calc-btn" onclick="calcMonada()">⚡ حدد النوع والإعراب</button>
+      </div>
+      <div class="calc-result" id="monadaResult"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tips" class="section">
+  <div style="background:white; border-radius:16px; padding:28px; box-shadow:var(--shadow);">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--gold); margin-bottom:20px;">💛 النصائح الذهبية لامتحان العربي</h2>
+
+    <div class="gold-tip">
+      <div class="tip-icon">📝</div>
+      <div class="tip-text"><strong>نصيحة #1 – التعبير الإجباري:</strong> إياك أن تبدأ الموضوع مباشرة بالشواهد! اكتب تمهيداً بسيطاً، واربط بين الفكرة والشاهد بعبارات ربط سلسة. خلو الموضوع من الشواهد يعني خسارة معظم العلامة.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">🔎</div>
+      <div class="tip-text"><strong>نصيحة #2 – إعراب المفردات:</strong> قبل أن تعرب أي كلمة، انظر للكلمة التي <strong>قبلها</strong>. هل سبقها فعل؟ حرف جر؟ اسم نكرة؟ السياق هو نصف الإعراب.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">📖</div>
+      <div class="tip-text"><strong>نصيحة #3 – الاستخراج الصرفي:</strong> إذا طلب منك استخراج "اسم مفعول"، فابحث أولاً عن كلمة تبدأ بميم مفتوحة على وزن (مَفْعول)، وإذا لم تجد، ابحث عن كلمة تبدأ بميم مضمومة ومفتوح ما قبل آخرها (مُعَلَّم).</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="tip-icon">✔</div>
+      <div class="tip-text"><strong>نصيحة #4 – سؤال التعليل:</strong> لا تكتفِ بقول (همزة متوسطة). الإجابة الكاملة: "همزة متوسطة، حركتها كذا، وحركة ما قبلها كذا، و(الحركة الأقوى) أقوى من (الحركة الأضعف) ويناسبها (الحرف المناسب)".</div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, var(--dark), #2c3e50); border-radius:14px; padding:20px; margin-top:20px; color:white; text-align:center;">
+      <div style="font-size:1.8rem; margin-bottom:8px;">🌟</div>
+      <div style="font-size:1.1rem; font-weight:800; color:var(--gold-light);">كلمات مفتاحية لا تفارق ورقة الامتحان</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:14px;">
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">مفعول مطلق</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">توكيد معنوي</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">جامد معنى</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">اسم آلة</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">استعارة مكنية</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">شعور وطني</span>
+        <span style="background:rgba(255,255,255,0.1); border-radius:8px; padding:5px 12px; font-size:0.85rem;">همزة قطع</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="progress" class="section">
+  <div class="progress-tracker">
+    <h3>📊 تتبّع دراستك – الأقسام الستة</h3>
+    <p style="font-size:0.85rem; color:#666; margin-bottom:20px;">ضع علامة ✓ على الأقسام التي أتقنتها تماماً</p>
+
+    <div id="progress-list"></div>
+
+    <div style="margin-top:20px; background:var(--blue-pale); border-radius:12px; padding:16px; text-align:center;">
+      <div style="font-size:1.5rem; font-weight:900; color:var(--blue);" id="totalProgress">0%</div>
+      <div style="font-size:0.9rem; color:#555; margin-top:4px;">إجمالي جاهزيتك للامتحان</div>
+      <div style="background:#ddd; border-radius:20px; height:14px; margin-top:10px; overflow:hidden;">
+        <div id="totalBar" style="height:100%; width:0%; background:linear-gradient(90deg, var(--blue), var(--blue-light)); border-radius:20px; transition:width 0.5s;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===================== NAV =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== UNITS =====================
+function toggleUnit(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ===================== ANSWERS =====================
+function toggleAnswer(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '❌ إخفاء الإجابة ▲' : '📋 اظهر الإجابة ▼';
+}
+
+// ===================== QUIZ =====================
+const quizData = [
+  { q: "ما نوع المشتق في كلمة (مَكْتَب)؟", opts: ["اسم فاعل", "اسم آلة", "اسم مكان", "مبالغة اسم فاعل"], ans: 2, exp: "لأنها على وزن مَفْعَل وتدل على مكان حدوث الفعل." },
+  { q: "إعراب كلمة (طالباً) في جملة: يا طالباً العلمَ اجتهد:", opts: ["منادى مضاف", "منادى شبيه بالمضاف", "منادى نكرة غير مقصودة", "مفعول به"], ans: 1, exp: "جاء منصوباً ومنوناً وبعده كلمة (العلمَ) تتمم معناه وتتعلق به." },
+  { q: "نوع الصورة البيانية في قولنا (العلمُ نورٌ):", opts: ["تشبيه تام الأركان", "تشبيه بليغ", "استعارة مكنية", "استعارة تصريحية"], ans: 1, exp: "حُذفت الأداة ووجه الشبه، وبقي المشبه والمشبه به فقط." },
+  { q: "سبب كتابة الهمزة على نبرة في كلمة (بِئْر):", opts: ["لأنها متطرفة", "لأنها ساكنة وما قبلها مكسور", "لأنها مكسورة", "لأنها مفتوحة وما قبلها مكسور"], ans: 1, exp: "همزة متوسطة حركتها السكون وحركة ما قبلها الكسرة، والكسرة أقوى وتناسبها النبرة." },
+  { q: "كلمة (شجاعة) تُصنف من الأسماء الجامدة كـ:", opts: ["جامد ذات", "جامد معنى", "اسم مشتق", "اسم آلة"], ans: 1, exp: "لأنها مصدر يُدرك بالعقل ولا حيز له في الفراغ." },
+  { q: "الكلمة التي تمثل (توكيداً معنوياً) في الجملة:", opts: ["كلاً من", "جميعاً", "نفسُهُ", "أكيد"], ans: 2, exp: "ألفاظ التوكيد المعنوي (نفس، عين، كل، جميع) بشرط اتصالها بضمير يعود على المؤكَّد." },
+  { q: "التاء في كلمة (أصوات) كُتبت مبسوطة لأنها:", opts: ["جمع مؤنث سالم", "تاء أصلية", "جمع تكسير ينتهي مفرده بتاء مبسوطة", "اسم ثلاثي ساكن الوسط"], ans: 2, exp: "مفرد أصوات هو (صوت)، وهو ينتهي بتاء مبسوطة، لذا يجمع جمع تكسير بتاء مبسوطة." },
+  { q: "المحسن البديعي بين (الليل) و (النهار) يسمى:", opts: ["جناس تام", "مقابلة", "طباق إيجاب", "طباق سلب"], ans: 2, exp: "الجمع بين الكلمة وضدها المعاكس لها مباشرة يسمى طباق إيجاب." }
+];
+
+let userAnswers = {};
+let quizDone = false;
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `
+      <div class="q-text">س${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="opts-${i}">
+        ${q.opts.map((o,j) => `<button class="quiz-opt" onclick="selectOpt(${i},${j},this)">${String.fromCharCode(0x0627+j>0x062F?0x062F:0x0627+j)} ${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+      </div>
+      <div class="q-result" id="res-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+  const submitDiv = document.createElement('div');
+  submitDiv.style.textAlign = 'center';
+  submitDiv.innerHTML = `<button class="retry-btn" onclick="submitQuiz()" style="margin-top:16px;">📊 عرض النتيجة</button>`;
+  c.appendChild(submitDiv);
+}
+
+function selectOpt(qi, oi, btn) {
+  if(quizDone) return;
+  const opts = document.querySelectorAll(`#opts-${qi} .quiz-opt`);
+  opts.forEach(b => { b.classList.remove('correct','wrong'); });
+  userAnswers[qi] = oi;
+  opts.forEach((b,j) => b.classList.toggle('correct', j===oi));
+}
+
+function submitQuiz() {
+  quizDone = true;
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const opts = document.querySelectorAll(`#opts-${i} .quiz-opt`);
+    opts.forEach(b => b.classList.add('disabled'));
+    const userA = userAnswers[i];
+    if(userA !== undefined) {
+      opts[userA].classList.remove('correct');
+      if(userA === q.ans) {
+        opts[userA].classList.add('correct');
+        score++;
+      } else {
+        opts[userA].classList.add('wrong');
+        opts[q.ans].classList.add('correct');
+      }
+    } else {
+      opts[q.ans].classList.add('correct');
+    }
+    const res = document.getElementById(`res-${i}`);
+    res.classList.add('show', userA===q.ans ? 'ok' : 'no');
+    res.textContent = (userA===q.ans ? '✅ صحيح! ' : '❌ خطأ. الصحيح: ' + q.opts[q.ans] + ' | ') + '💡 ' + q.exp;
+  });
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  const pct = Math.round(score/quizData.length*100);
+  document.getElementById('scoreNum').textContent = `${score}/${quizData.length}`;
+  const msgs = ['حاول مرة أخرى 💪','أداء جيد، راجع القواعد 📚','ممتاز! أنت على الطريق الصحيح 🌟','رائع جداً! شبه مكتمل 🎯','سيبويه الصغير! أداء مثالي 🏆'];
+  document.getElementById('scoreMsg').textContent = msgs[Math.min(Math.floor(pct/20), 4)];
+  bar.scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz() {
+  quizDone = false;
+  userAnswers = {};
+  document.getElementById('scoreBar').classList.remove('show');
+  buildQuiz();
+}
+
+// ===================== EXAM =====================
+const mcqExam = [
+  { q: "1. الفكرة الرئيسة التي يعبر عنها البيتان السابقان هي:", opts: ["التغني بجمال الطبيعة", "التعلق بالوطن واستحالة نسيانه", "الحزن على فراق الأحبة", "وصف المعارك الوطنية"], ans: 1 },
+  { q: "2. الشعور العاطفي البارز في البيت الأول:", opts: ["حزن وأسى", "غضب واستنكار", "حب واعتزاز", "يأس وتشاؤم"], ans: 2 },
+  { q: "3. استخرج من البيت الثاني (مفعولاً فيه ظرف زمان):", opts: ["حسّي", "شخصه", "ساعةً", "جفوني"], ans: 2 }
+];
+
+const tfExam = [
+  { q: "كلمة (الخُلدِ) تُعرب: اسم مجرور وعلامة جره الكسرة الظاهرة على آخره.", ans: true },
+  { q: "في جملة (لَم يَغِبْ)، الفعل المضارع مبني على السكون.", ans: false }, // مجزوم وليس مبني
+  { q: "المشتق في كلمة (مُؤمِن) هو اسم فاعل.", ans: true }
+];
+
+const essayExam = [
+  { q: "أعرب ما تحته خط إعراب مفردات: (شَهِدَ) اللهُ.", ans: "شهدَ: فعل ماضٍ مبني على الفتحة الظاهرة على آخره." },
+  { q: "علل كتابة الهمزة في كلمة (شُغِلتُ) إذا افترضنا وجود همزة وصل في (اشتغلتُ).", ans: "اشتغلتُ: همزة أولية، همزة وصل لأنها ماضي فعل خماسي." },
+  { q: "اكتب مقدمة مناسبة لموضوع تعبير يتحدث عن (أهمية الوطن والتضحية من أجله).", ans: "المقدمة المقترحة: الوطن ليس مجرد بقعة جغرافية نعيش عليها، بل هو الهوية التي تسري في عروقنا، والمهد الذي تترعرع فيه أحلامنا، ولأجله ترخص الدماء وتهون الصعاب..." }
+];
+
+function buildExam() {
+  // MCQ
+  const mc = document.getElementById('mcq-container');
+  mcqExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-question';
+    d.innerHTML = `<div class="q-text">${q.q}</div>
+    <div class="quiz-options" id="em-${i}">
+      ${q.opts.map((o,j)=>`<button class="quiz-opt" onclick="selectExam(${i},${j},this)">${['أ','ب','ج','د'][j]}) ${o}</button>`).join('')}
+    </div>
+    <div class="q-result" id="eres-${i}"></div>`;
+    mc.appendChild(d);
+  });
+
+  // TF
+  const tf = document.getElementById('tf-container');
+  tfExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'tf-question';
+    d.innerHTML = `<div class="tf-text">${i+1}. ${q.q}</div>
+    <div class="tf-btns">
+      <button class="tf-btn true-btn" onclick="answerTF(${i},true,this)">✅ صحيح</button>
+      <button class="tf-btn false-btn" onclick="answerTF(${i},false,this)">❌ خطأ</button>
+    </div>
+    <div class="tf-result" id="tfr-${i}"></div>`;
+    tf.appendChild(d);
+  });
+
+  // Essay
+  const es = document.getElementById('essay-container');
+  essayExam.forEach((q,i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-question';
+    d.style.borderTop = '4px solid var(--red)';
+    d.innerHTML = `<div class="q-text">س${i+1}: ${q.q}</div>
+    <button class="show-btn" onclick="toggleAnswer(this)">📋 اظهر الإجابة النموذجية ▼</button>
+    <div class="answer-box"><p style="white-space:pre-line; font-size:0.95rem; font-weight:600;">${q.ans}</p></div>`;
+    es.appendChild(d);
+  });
+}
+
+function selectExam(qi, oi, btn) {
+  const opts = document.querySelectorAll(`#em-${qi} .quiz-opt`);
+  opts.forEach(b => b.classList.remove('correct','wrong'));
+  opts.forEach(b => b.classList.add('disabled'));
+  const correct = mcqExam[qi].ans === oi;
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct) opts[mcqExam[qi].ans].classList.add('correct');
+  const res = document.getElementById(`eres-${qi}`);
+  res.classList.add('show', correct ? 'ok' : 'no');
+  res.textContent = correct ? '✅ إجابة صحيحة!' : '❌ الإجابة الصحيحة: ' + mcqExam[qi].opts[mcqExam[qi].ans];
+}
+
+function answerTF(i, answer, btn) {
+  const correct = answer === tfExam[i].ans;
+  btn.parentElement.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+  btn.classList.add(answer ? 'selected-true' : 'selected-false');
+  const res = document.getElementById(`tfr-${i}`);
+  res.textContent = correct ? '✅ إجابة موفقة!' : `❌ راجع القاعدة! الصحيح: ${tfExam[i].ans ? 'صحيح ✅' : 'خطأ ❌'}`;
+  res.style.color = correct ? '#2e7d32' : '#c62828';
+  res.style.fontWeight = '800';
+  res.style.display = 'block';
+}
+
+// ===================== CALC (ARABIC TOOLS) =====================
+const strengths = { 'kasra': 4, 'damma': 3, 'fatha': 2, 'sokoun': 1 };
+const seats = { 4: 'على نبرة (ئـ)', 3: 'على واو (ؤ)', 2: 'على ألف (أ)' };
+
+function calcHamza() {
+  const h = document.getElementById('hamzaH').value;
+  const b = document.getElementById('beforeH').value;
+  const res = document.getElementById('hamzaResult');
+  
+  const valH = strengths[h];
+  const valB = strengths[b];
+  
+  if (valH === 1 && valB === 1) {
+    res.innerHTML = "⚠️ لا يمكن أن يلتقي ساكنان في اللغة العربية!";
+    res.classList.add('show');
+    return;
+  }
+  
+  const maxVal = Math.max(valH, valB);
+  const seat = seats[maxVal];
+  
+  const names = {'kasra':'الكسرة', 'damma':'الضمة', 'fatha':'الفتحة', 'sokoun':'السكون'};
+  
+  res.innerHTML = `✅ القاعدة: الهمزة حركتها <strong>${names[h]}</strong> وحركة ما قبلها <strong>${names[b]}</strong>.<br>
+  الحركة الأقوى هي التي تنتصر، وبالتالي تُكتب الهمزة: <strong style="font-size:1.2rem; color:white; background:var(--blue); padding:2px 8px; border-radius:6px; margin-right:5px;">${seat}</strong>`;
+  res.classList.add('show');
+}
+
+function calcMonada() {
+  const t = document.getElementById('monadaType').value;
+  const res = document.getElementById('monadaResult');
+  
+  let typeName = "";
+  let hokm = "";
+  let example = "";
+  
+  switch(t) {
+    case 'modaf': 
+      typeName = "منادى مضاف"; hokm = "معرب (منصوب بالفتحة)"; example = "يا طالبَ العلمِ"; break;
+    case 'shabih': 
+      typeName = "منادى شبيه بالمضاف"; hokm = "معرب (منصوب بالفتحة)"; example = "يا طالباً العلمَ"; break;
+    case 'nakera_ghayr': 
+      typeName = "نكرة غير مقصودة"; hokm = "معرب (منصوب بالفتحة)"; example = "يا غافلاً، انتبه"; break;
+    case 'alam': 
+      typeName = "مفرد عَلَم"; hokm = "مبني على الضم في محل نصب"; example = "يا دمشقُ"; break;
+    case 'nakera_maks': 
+      typeName = "نكرة مقصودة"; hokm = "مبني على الضم في محل نصب"; example = "يا رجلُ"; break;
+  }
+  
+  res.innerHTML = `
+    نوع المنادى: <strong style="color:var(--gold-light);">${typeName}</strong><br>
+    حكمه الإعرابي: <strong>${hokm}</strong><br>
+    مثال تطبيقي: <span style="background:rgba(0,0,0,0.2); padding:2px 6px; border-radius:4px;">${example}</span>
+  `;
+  res.classList.add('show');
+}
+
+// ===================== PROGRESS =====================
+const units = [
+  { name: 'قسم قواعد النحو والإعراب', color: '#1565c0' },
+  { name: 'قسم قواعد الصرف', color: '#2e7d32' },
+  { name: 'قسم الإملاء', color: '#6a1b9a' },
+  { name: 'قسم البلاغة', color: '#c62828' },
+  { name: 'قسم النصوص (حفظ الشواهد)', color: '#e65100' },
+  { name: 'قسم التعبير (الأساليب)', color: '#00838f' },
+];
+
+let doneUnits = {};
+
+function buildProgress() {
+  const c = document.getElementById('progress-list');
+  units.forEach((u,i) => {
+    const d = document.createElement('div');
+    d.className = 'progress-item';
+    d.innerHTML = `
+      <div class="check-box ${doneUnits[i]?'done':''}" id="chk-${i}" onclick="toggleDone(${i})">
+        ${doneUnits[i]?'✓':''}
+      </div>
+      <div class="progress-label" style="color:${u.color}; font-size:0.85rem;">${u.name}</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:${doneUnits[i]?100:0}%; background:linear-gradient(90deg, ${u.color}, ${u.color}aa);"></div>
+      </div>
+      <div class="progress-pct" style="color:${u.color};">${doneUnits[i]?'100%':'0%'}</div>
+    `;
+    c.appendChild(d);
+  });
+}
+
+function toggleDone(i) {
+  doneUnits[i] = !doneUnits[i];
+  document.getElementById('progress-list').innerHTML = '';
+  buildProgress();
+  updateTotal();
+}
+
+function updateTotal() {
+  const done = Object.values(doneUnits).filter(Boolean).length;
+  const pct = Math.round(done/units.length*100);
+  document.getElementById('totalProgress').textContent = pct + '%';
+  document.getElementById('totalBar').style.width = pct + '%';
+}
+
+// ===================== INIT =====================
+window.onload = function() {
+  buildQuiz();
+  buildExam();
+  buildProgress();
+};
+</script>
+</body>
+</html>
