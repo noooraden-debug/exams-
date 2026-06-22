@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇬🇧 دليلك التفاعلي الشامل في اللغة الإنجليزية - الصف التاسع | المنهاج السوري المطور 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --navy: #1a2a6c;
+    --navy-light: #275d8c;
+    --navy-pale: #eef5fc;
+    --red: #b22222;
+    --green: #27ae60;
+    --green-pale: #ebf7ee;
+    --dark: #111b33;
+    --text: #2c3e50;
+    --bg: #f4f7f6;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+    color: white;
+    padding: 45px 20px 35px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 10px;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.88rem;
+    color: white;
+    backdrop-filter: blur(5px);
+    font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 15px;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75);
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 4px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER */
+  .container { max-width: 1050px; margin: 0 auto; padding: 25px 15px; }
+
+  /* SECTION MANAGEMENT */
+  .section { display: none; animation: slideUp 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MODULE / UNIT CARDS */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    cursor: pointer;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 25px;
+    font-size: 0.85rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+  .unit-info h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+  .unit-info .unit-meta {
+    font-size: 0.85rem; opacity: 0.8; display: flex; gap: 15px; flex-wrap: wrap;
+  }
+
+  .unit-body { display: none; padding: 25px; background: #fafbfc; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSONS STRUCTURE */
+  .lesson-block {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-right: 5px solid var(--navy);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .lesson-block h3 {
+    font-size: 1.15rem; font-weight: 800; color: var(--navy);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+
+  /* TEXT & ENGLISH SPECIFIC TYPOGRAPHY */
+  .en-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    color: #1a252f;
+    line-height: 1.7;
+    direction: ltr;
+    text-align: left;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid var(--navy-light);
+    margin: 10px 0;
+  }
+  
+  .grammar-rule {
+    background: #fffdf3;
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 12px 0;
+  }
+
+  .key-vocab {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    color: white;
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 3px 5px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* BUTTONS & HIDDEN INTERACTIVE BOXES */
+  .interactive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--navy-light), var(--navy));
+    color: white;
+    border: none; border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    transition: all 0.3s; margin: 10px 2px;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+  
+  .translation-box {
+    display: none;
+    background: var(--navy-pale);
+    border: 2px solid var(--navy-light);
+    border-radius: 10px; padding: 15px; margin: 10px 0;
+    font-size: 0.95rem; animation: fadeIn 0.3s ease;
+  }
+  .translation-box.visible { display: block; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0;
+    font-size: 0.92rem; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .summary-table th { background: var(--navy); color: white; padding: 12px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--navy-pale); }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06); border-top: 4px solid var(--navy);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.05rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e0e0e0; border-radius: 8px;
+    padding: 12px 18px; cursor: pointer; font-family: 'Poppins', 'Cairo', sans-serif;
+    font-size: 0.95rem; text-align: left; direction: ltr; transition: all 0.2s; font-weight: 600;
+  }
+  .quiz-opt:hover { border-color: var(--navy-light); background: var(--navy-pale); }
+  .quiz-opt.correct { background: #e8f5e9; border-color: #2ecc71; color: #155724; }
+  .quiz-opt.wrong { background: #fce8e6; border-color: #e74c3c; color: #721c24; }
+
+  /* EXAM STYLE SETUP */
+  .exam-container { background: white; border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+  .exam-header { background: linear-gradient(135deg, #b22222, #e74c3c); color: white; padding: 18px 25px; font-size: 1.2rem; font-weight: 800; }
+  .exam-body { padding: 30px; }
+  .exam-section-title { font-size: 1.1rem; font-weight: 900; color: var(--red); margin: 20px 0 12px; border-bottom: 2px dashed #ddd; padding-bottom: 5px; }
+
+  /* SIMULATOR (VERB CONJUGATION & QUESTION BUILDER) */
+  .sim-box { background: linear-gradient(135deg, #111b33, #1f3668); color: white; border-radius: 14px; padding: 25px; margin: 15px 0; }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; }
+  .sim-field label { font-size: 0.85rem; color: var(--gold-light); font-weight: bold; }
+  .sim-field select, .sim-field input { padding: 10px; border-radius: 8px; border: none; font-size: 0.95rem; background: rgba(255,255,255,0.15); color: white; min-width: 160px; font-family: 'Poppins', 'Cairo', sans-serif; }
+  .sim-field option { color: #333; }
+
+  /* WELCOME & PROGRESS TRACKER */
+  .welcome-card { background: linear-gradient(135deg, #eef5fc, #fff); border: 2px solid var(--navy-light); border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 30px; }
+  .welcome-card h2 { color: var(--navy); font-weight: 900; margin-bottom: 12px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 25px; }
+  .stat-card { background: white; border-radius: 12px; padding: 20px 15px; text-shadow: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid var(--gold); }
+  .stat-card .stat-num { font-size: 2rem; font-weight: 900; color: var(--navy); }
+
+  .progress-bar-wrap { background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; margin-top: 8px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), #2ecc71); width: 0%; transition: width 0.5s ease; }
+  .check-box { width: 28px; height: 28px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.2s; }
+  .check-box.done { background: var(--green); border-color: var(--green); color: white; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf0, #fff9d0); border: 2px solid var(--gold); border-radius: 12px; padding: 15px 20px; margin: 15px 0; display: flex; gap: 12px; }
+  .gold-tip .icon { font-size: 1.5rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #614d03; font-weight: 600; }
+
+  /* UTILITY STYLE COLORING FOR UNITS */
+  .uc1 { background: linear-gradient(135deg, #1a2a6c, #275d8c); }
+  .uc2 { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .uc3 { background: linear-gradient(135deg, #8e44ad, #9b59b6); }
+  .uc4 { background: linear-gradient(135deg, #d35400, #e67e22); }
+  .uc5 { background: linear-gradient(135deg, #2980b9, #3498db); }
+  .uc6 { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+
+  .ub1 { border-right-color: #1a2a6c; }
+  .ub2 { border-right-color: #27ae60; }
+  .ub3 { border-right-color: #8e44ad; }
+  .ub4 { border-right-color: #d35400; }
+  .ub5 { border-right-color: #2980b9; }
+  .ub6 { border-right-color: #c0392b; }
+
+  .uhd1 { background: #eef5fc; border-right: 5px solid #1a2a6c; color: #1a2a6c; }
+  .uhd2 { background: #ebf7ee; border-right: 5px solid #27ae60; color: #27ae60; }
+  .uhd3 { background: #f6ebfa; border-right: 5px solid #8e44ad; color: #8e44ad; }
+  .uhd4 { background: #fdf2e9; border-right: 5px solid #d35400; color: #d35400; }
+  .uhd5 { background: #eef7fc; border-right: 5px solid #2980b9; color: #2980b9; }
+  .uhd6 { background: #fdf1f0; border-right: 5px solid #c0392b; color: #c0392b; }
+
+  @media(max-width: 600px) {
+    .sim-row { flex-direction: column; align-items: stretch; }
+    .sim-field select, .sim-field input { width: 100%; }
+    .unit-header { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MAIN HEADER -->
+<div class="main-header">
+  <h1>🇬🇧 المنصة التفاعلية للغة الإنجليزية</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري المطوّر 2026</div>
+  <div class="badge-row">
+    <span class="badge">📘 6 وحدات متكاملة</span>
+    <span class="badge">✍️ إعداد: المبرمج M. Nour Eddin</span>
+    <span class="badge">⚙️ محاكي أزمنة تفاعلي</span>
+    <span class="badge">📝 نموذج امتحاني وزاري مؤتمت</span>
+    <span class="badge">💡 ترجمة تفاعلية مدمجة</span>
+  </div>
+</div>
+
+<!-- NAVIGATION BAR -->
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 شرح الوحدات والترجمة</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ كويزات سريعة</button>
+  <button class="nav-btn" onclick="showSection('exam')">📝 الاختبار الوزاري التجريبي</button>
+  <button class="nav-btn" onclick="showSection('simulator')">⚙️ محاكي بناء الجمل والأزمنة</button>
+  <button class="nav-btn" onclick="showSection('tips')">💡 استراتيجيات تفوق</button>
+  <button class="nav-btn" onclick="showSection('tracker')">📊 خطة المتابعة والتتبع</button>
+</nav>
+
+<div class="container">
+
+<!-- ========== HOME SECTION ========== -->
+<div id="home" class="section active">
+  <div class="welcome-card">
+    <h2>🎓 رفيقك الرقمي للامتحان النهائي 2026</h2>
+    <p>تم بناء هذا الملف التفاعلي بأسلوب برمجي متقدم ليلبي حاجة الطالب في المراجعة الذاتية والعميقة للمنهاج السوري الجديد بدون تشتت. يتضمن الملف شرحاً شاملاً مدمجاً بآليات اختبار ذكية لمنع الحفظ البصمّي وتنشيط الاستيعاب الفعلي للقواعد والترجمة الحرفية والسياقية.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">وحدات رئيسية</div></div>
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-lbl">مطابق لمعايير 2026</div></div>
+      <div class="stat-card"><div class="stat-num">Interactive</div><div class="stat-lbl">تفاعلي بالكامل ومناسب للموبايل</div></div>
+    </div>
+  </div>
+
+  <div class="gold-tip">
+    <div class="icon">💡</div>
+    <div class="text">
+      <strong>ملاحظة هامة جداً لطلاب التاسع:</strong> يعتمد الفحص النهائي في سورية حالياً على أسئلة الاختيار من متعدد (الأتمتة) والتركيز على الفهم الصحيح لروابط النصوص ومفاتيح الأزمنة الجراماتيكية. استخدم أزرار إظهار الترجمة لاختبار حصيلتك اللغوية بشكل دائم!
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--navy);">
+    <div style="padding: 25px;">
+      <h3 style="margin-bottom:15px; color:var(--navy); font-weight:800;">🗂️ فهرس وخارطة توزيع المنهاج (Emar Ninth Grade)</h3>
+      <table class="summary-table">
+        <thead>
+          <tr><th>رقم الوحدة</th><th>عنوان الوحدة بالإنجليزية</th><th>المحور الرئيسي للدرس</th><th>القاعدة النحوية الملازمة (Grammar)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Module 1</td><td>Lifestyles & Health</td><td>العادات الصحية واليومية ومقارنة أنماط الحياة</td><td>Present Simple & Present Continuous</td></tr>
+          <tr><td>Module 2</td><td>Technology & Communication</td><td>تأثير التكنولوجيا المعاصرة ووسائل التواصل</td><td>Past Simple & Past Continuous</td></tr>
+          <tr><td>Module 3</td><td>Media & News</td><td>قراءة الصحف ونقل الأخبار والتحليل الإخباري</td><td>Present Perfect Simple & Present Perfect Continuous</td></tr>
+          <tr><td>Module 4</td><td>The Environment & Nature</td><td>حماية الكوكب، التلوث، والمشكلات البيئية</td><td>Future Forms (Will / Going to) & Conditionals (0 & 1)</td></tr>
+          <tr><td>Module 5</td><td>Places & Festivals</td><td>المهرجانات الثقافية، السياحة، والمعالم التاريخية</td><td>Passive Voice (المبني للمجهول)</td></tr>
+          <tr><td>Module 6</td><td>Sports & Choices</td><td>الأنشطة الرياضية، اتخاذ القرارات والخيارات الذكية</td><td>Modals of Obligation / Advice & Revision</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNITS SECTION ========== -->
+<div id="units" class="section">
+
+  <!-- MODULE 1 -->
+  <div class="unit-card" id="m1">
+    <div class="unit-header uhd1" onclick="toggleUnit('m1')">
+      <div class="unit-num uc1">1</div>
+      <div class="unit-info">
+        <h2>Module 1: Lifestyles & Health (أنماط الحياة والصحة)</h2>
+        <div class="unit-meta"><span>📖 القواعد: الحاضر البسيط والمستمر</span><span>🔑 كلمات مفتاحية غنية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub1">
+        <h3>📌 النص الرئيسي والترجمة التفاعلية: Healthy Habits</h3>
+        <p class="en-text">Healthy lifespans depend largely on daily routines. People who exercise regularly and avoid junk food tend to live longer and feel more energetic. Currently, local health organizations are launching projects to raise awareness among teenagers about the danger of processed sugar.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          <strong>الترجمة الحرفية والسياقية:</strong><br>
+          "تعتمد فترات الحياة الصحية بشكل كبير على الروتين اليومي. الأشخاص الذين يمارسون الرياضة بانتظام ويتجنبون الأطعمة السريعة يميلون إلى العيش لفترة أطول والشعور بمزيد من النشاط. في الوقت الحالي، تطلق المنظمات الصحية المحلية مشاريع لرفع الوعي بين المراهقين حول مخاطر السكر المعالج."
+        </div>
+      </div>
+
+      <div class="lesson-block ub1">
+        <h3>⚡ التركيز النحوي (Grammar): Present Simple vs. Present Continuous</h3>
+        <div class="grammar-rule">
+          <strong>1. الحاضر البسيط (Present Simple):</strong> نستخدمه للحقائق والعادات المتكررة.<br>
+          • <em>Form:</em> Subject + V1 (s/es مع المفرد)<br>
+          • <em>Keywords:</em> always, usually, often, regularly, every day.<br><br>
+          <strong>2. الحاضر المستمر (Present Continuous):</strong> نستخدمه لأحداث تقع الآن في لحظة التحدث.<br>
+          • <em>Form:</em> Subject + (am/is/are) + V-ing<br>
+          • <em>Keywords:</em> now, at the moment, currently, look!, listen!
+        </div>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 مثال امتحاني مع الحل المفسر ▼</button>
+        <div class="translation-box">
+          ❓ السؤال: She usually .......... (drink) tea, but today she .......... (drink) coffee.<br>
+          💡 الحل الصحيح: usually تدل على عادة فالسؤال الأول حاضر بسيط <strong>drinks</strong>، وbut today تدل على مؤقت أو استثناء فالثاني حاضر مستمر <strong>is drinking</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 -->
+  <div class="unit-card" id="m2">
+    <div class="unit-header uhd2" onclick="toggleUnit('m2')">
+      <div class="unit-num uc2">2</div>
+      <div class="unit-info">
+        <h2>Module 2: Technology & Communication (التكنولوجيا والاتصالات)</h2>
+        <div class="unit-meta"><span>📖 القواعد: الماضي البسيط والمستمر</span><span>💻 مصطلحات تقنية هامة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub2">
+        <h3>📌 النص الرئيسي: The Digital Revolution</h3>
+        <p class="en-text">Last decade, technology transformed how we communicate. While scientists were developing high-speed internet protocols, smart devices suddenly appeared in global markets. Today, most individuals cannot abandon their modern tech applications.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          "في العقد الماضي، غيّرت التكنولوجيا طريقة تواصلنا. وبينما كان العلماء يطورون بروتوكولات الإنترنت عالية السرعة، ظهرت الأجهزة الذكية فجأة في الأسواق العالمية. اليوم، لا يستطيع معظم الأفراد التخلي عن تطبيقاتهم التقنية الحديثة."
+        </div>
+      </div>
+
+      <div class="lesson-block ub2">
+        <h3>⚡ التركيز النحوي (Grammar): Past Simple & Past Continuous</h3>
+        <div class="grammar-rule">
+          • <strong>الماضي البسيط:</strong> حدث بدأ وانتهى في الماضي (V2). الكلمات المفتاحية: (yesterday, last year, ago, in 2012).<br>
+          • <strong>الماضي المستمر:</strong> حدث كان مستمراً في الماضي وقطعه حدث آخر قصير. صياغته: (was/were + V-ing).<br>
+          • <strong>الروابط الحاكمة:</strong> <span class="key-vocab">While / As</span> يأتي بعدها ماضي مستمر، بينما <span class="key-vocab">When</span> يأتي بعدها ماضي بسيط.
+        </div>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 تطبيق امتحاني على الروابط الزمنية ▼</button>
+        <div class="translation-box">
+          ❓ السؤال: While they (play) football, it started to rain.<br>
+          💡 الحل: بعد While نضع ماضي مستمر مباشرة لأن الفاعل جمع نستخدم <strong>were playing</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 -->
+  <div class="unit-card" id="m3">
+    <div class="unit-header uhd3" onclick="toggleUnit('m3')">
+      <div class="unit-num uc3">3</div>
+      <div class="unit-info">
+        <h2>Module 3: Media & News (الإعلام والأخبار)</h2>
+        <div class="unit-meta"><span>📖 القواعد: الحاضر التام البسيط والمستمر</span><span>📰 مفردات الصحافة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub3">
+        <h3>📌 النص الرئيسي: Media Influence</h3>
+        <p class="en-text">Journalists have reported news for centuries, but digital media has recently changed the whole industry. Editors have been working all morning to verify the credibility of the articles before printing them on the front page.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          "يقوم الصحفيون بنقل الأخبار منذ قرون، لكن وسائل الإعلام الرقمية غيرت الصناعة بأكملها مؤخراً. يعمل المحررون طوال الصباح للتحقق من مصداقية المقالات قبل طباعتها على الصفحة الأولى."
+        </div>
+      </div>
+
+      <div class="lesson-block ub3">
+        <h3>⚡ التركيز النحوي (Grammar): Present Perfect Simple & Continuous</h3>
+        <div class="grammar-rule">
+          • <strong>الحاضر التام البسيط (Present Perfect Simple):</strong> يركز على نتيجة الحدث أو عدد المرات. الصياغة: (have/has + V3). المؤشرات: (just, already, yet, ever, never, recently).<br>
+          • <strong>الحاضر التام المستمر (Present Perfect Continuous):</strong> يركز على استمرار الفعل والزمن المستغرق. الصياغة: (have/has + been + V-ing). المؤشرات: (all morning, for three hours, since morning).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 -->
+  <div class="unit-card" id="m4">
+    <div class="unit-header uhd4" onclick="toggleUnit('m4')">
+      <div class="unit-num uc4">4</div>
+      <div class="unit-info">
+        <h2>Module 4: The Environment & Nature (البيئة والطبيعة)</h2>
+        <div class="unit-meta"><span>📖 القواعد: صيغ المستقبل وأدوات الشرط</span><span>🌱 حماية البيئة</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub4">
+        <h3>📌 النص الرئيسي: Save Our Planet</h3>
+        <p class="en-text">If people continue polluting oceans, marine ecosystems will collapse. Governments are going to implement strict laws to prevent factories from throwing chemical waste into rivers. We must switch to renewable energy sources instantly.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          "إذا استمر الناس في تلوث المحيطات، ستنهار الأنظمة البيئية البحرية. تعتزم الحكومات تطبيق قوانين صارمة لمنع المصانع من إلقاء النفايات الكيميائية في الأنهار. يجب أن نتحول إلى مصادر الطاقة المتجددة فوراً."
+        </div>
+      </div>
+
+      <div class="lesson-block ub4">
+        <h3>⚡ التركيز النحوي (Grammar): Conditionals Type 0 & 1</h3>
+        <div class="grammar-rule">
+          • <strong>الشرط من النوع صفر (Type 0):</strong> للحقائق العلمية الثابتة. (If + حاضر بسيط -> حاضر بسيط).<br>
+          • <strong>الشرط من النوع الأول (Type 1):</strong> لأحداث محتملة في المستقبل. (If + حاضر بسيط -> will + المصدر V-inf).<br>
+          • <strong>الفرق بين Will و Going to:</strong> نستخدم Will للمستقبل القائم على التنبؤ بدون دليل أو قرار فوري، ونستخدم Going to للخطط المسبقة والنيّة الواضحة المبنية على دليل مرئي.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 -->
+  <div class="unit-card" id="m5">
+    <div class="unit-header uhd5" onclick="toggleUnit('m5')">
+      <div class="unit-num uc5">5</div>
+      <div class="unit-info">
+        <h2>Module 5: Places & Festivals (الأماكن والمهرجانات)</h2>
+        <div class="unit-meta"><span>📖 القواعد: المبني للمجهول Passive Voice</span><span>🏛️ السياحة والآثار</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub5">
+        <h3>📌 النص الرئيسي: Damascus Ancient Heritage</h3>
+        <p class="en-text">Damascus is visited by thousands of tourists every year. Historic monuments are well preserved by local authorities because they represent the architectural identity of the oldest continuously inhabited capital in history.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          "يزور دمشق آلاف السياح كل عام. المعالم التاريخية محفوظة بشكل جيد من قبل السلطات المحلية لأنها تمثل الهوية المعمارية لأقدم عاصمة مأهولة بالسكان باستمرار في التاريخ."
+        </div>
+      </div>
+
+      <div class="lesson-block ub5">
+        <h3>⚡ التركيز النحوي (Grammar): Passive Voice (المبني للمجهول)</h3>
+        <div class="grammar-rule">
+          لتحويل الجملة إلى مبني للمجهول، نبدأ بالمفعول به (Object) ثم نضع فعل كون (Verb to be) متناسب مع زمن الجملة الأصلي، يليه التصريف الثالث للفعل (V3).<br><br>
+          • <strong>حاضر بسيط مجهول:</strong> Object + (am / is / are) + V3<br>
+          • <strong>ماضي بسيط مجهول:</strong> Object + (was / were) + V3<br>
+          • <em>مثال:</em> Romeo wrote the play -> The play <strong>was written</strong> by Romeo.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 -->
+  <div class="unit-card" id="m6">
+    <div class="unit-header uhd6" onclick="toggleUnit('m6')">
+      <div class="unit-num uc6">6</div>
+      <div class="unit-info">
+        <h2>Module 6: Sports & Choices (الرياضة والخيارات الذكية)</h2>
+        <div class="unit-meta"><span>📖 القواعد: أفعال الوجوب والإلزام والمراجعة</span><span>🏆 تحديات وإنجازات</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block ub6">
+        <h3>📌 النص الرئيسي: Professional Athlete Choices</h3>
+        <p class="en-text">Athletes must train intensely to clear high barriers during competitions. You should follow a specialized program if you plan to join the national Olympic team next season. Succeeding requires immense dedication and intelligent career choices.</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)">📋 أظهر الترجمة والتحليل السياقي ▼</button>
+        <div class="translation-box">
+          "يجب على الرياضيين التدرب بشكل مكثف لتجاوز الحواجز العالية أثناء المسابقات. ينبغي عليك اتباع برنامج متخصص إذا كنت تخطط للانضمام إلى المنتخب الأولمبي الوطني في الموسم المقبل. يتطلب النجاح تفانياً هائلاً وخيارات مهنية ذكية."
+        </div>
+      </div>
+
+      <div class="lesson-block ub6">
+        <h3>⚡ التركيز النحوي (Grammar): Modals (Must, Should, Have to)</h3>
+        <div class="grammar-rule">
+          • <strong>Must / Have to:</strong> للإلزام القوي والقوانين الإجبارية التي لا يمكن تجاهلها.<br>
+          • <strong>Should:</strong> لإعطاء النصيحة أو الاقتراح اللطيف.<br>
+          • جميع أفعال المودال يتبعها دائماً الفعل المجرد خالٍ من أي إضافات (V-inf).
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== QUIZ SECTION ========== -->
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2>✅ كويزات تفاعلية ذكية (مراجعة القواعد والمفردات)</h2>
+    <p style="color: #666; margin-bottom: 20px;">اختر الإجابات بدقة لمشاهدة التحليل المباشر للخطأ والصواب طبقاً لقوانين المنهاج السوري المطوّر.</p>
+    <div id="quick-quiz-container"></div>
+  </div>
+</div>
+
+<!-- ========== EXAM SECTION ========== -->
+<div id="exam" class="section">
+  <div class="exam-container">
+    <div class="exam-header">📝 الامتحان التجريبي المؤتمت الموحد لشهادة التعليم الأساسي 2026</div>
+    <div class="exam-body">
+      
+      <div class="exam-section-title">PART I: Reading Comprehension (اقرأ النص التالي ثم اختر الإجابة الصحيحة)</div>
+      <div style="background:#f9f9f9; padding:15px; border-radius:8px; font-family:Poppins; border-right:4px solid var(--red); margin-bottom:15px; text-align:left; direction:ltr;">
+        Solar energy is rapidly growing in Syria. Many solar panels are being installed in rural houses to generate electricity cleanly. If investment expands, the country will overcome its power challenges within two years.
+      </div>
+      
+      <div id="comprehension-container"></div>
+
+      <div class="exam-section-title">PART II: Grammar and Vocabulary (قواعد المنهاج والمفردات والاشتقاق)</div>
+      <div id="grammar-exam-container"></div>
+      
+      <div class="exam-section-title">PART III: Writing & Structure (موضوع التعبير وترتيب الجمل السوري)</div>
+      <div class="lesson-block" style="border-right-color: var(--red);">
+        <p><strong>💡 موضوع التعبير المتوقع لعام 2026:</strong> Write a paragraph of about 50 words about "The role of technology in your daily education".</p>
+        <button class="interactive-btn" onclick="toggleTranslation(this)" style="background:var(--red);">📋 إظهار الهيكل والأفكار المساعدة للعلامة التامة ▼</button>
+        <div class="translation-box" style="background:#fff2f2; border-color:var(--red);">
+          <strong>نموذج موضوع مقترح للحفظ والفهم:</strong><br>
+          <div style="direction:ltr; text-align:left; font-family:Poppins; margin:10px 0;">
+            Technology plays a vital role in my education. I use my smartphone to access interactive educational summaries. It helps me search for global knowledge quickly and interact with online tests. Therefore, technology makes learning easier and more productive.
+          </div>
+          <strong>الترجمة:</strong> تلعب التكنولوجيا دوراً حيوياً في تعليمي. أستخدم هاتفي الذكي للوصول إلى الملخصات التعليمية التفاعلية. إنها تساعدني في البحث عن المعرفة العالمية بسرعة والتفاعل مع الاختبارات عبر الإنترنت. لذلك، فإن التكنولوجيا تجعل التعلم أسهل وأكثر إنتاجية.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========== SIMULATOR SECTION ========== -->
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2>⚙️ محاكي تصريف الأفعال وبناء الجمل الإنجليزية التفاعلي</h2>
+    <p style="color:#666; margin-bottom:20px;">قم باختيار الفاعل والزمن والمؤشر لترى كيف تتغير بنية الجملة الإنجليزية فورياً طبقاً لأسئلة الامتحان السوري.</p>
+    
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>👤 الفاعل (Subject)</label>
+          <select id="sim-sub" onchange="runSimulator()">
+            <option value="He">He (مفرد)</option>
+            <option value="They">They (جمع)</option>
+            <option value="I">I (أنا)</option>
+          </select>
+        </div>
+        <div class="sim-field">
+          <label>⏳ الزمن المستهدف (Tense)</label>
+          <select id="sim-tense" onchange="runSimulator()">
+            <option value="pres_simp">Present Simple (حاضر بسيط)</option>
+            <option value="pres_cont">Present Continuous (حاضر مستمر)</option>
+            <option value="past_simp">Past Simple (ماضي بسيط)</option>
+            <option value="past_cont">Past Continuous (ماضي مستمر)</option>
+          </select>
+        </div>
+        <div class="sim-field">
+          <label>🎬 الفعل الأساسي (Verb)</label>
+          <input type="text" id="sim-verb" value="study" readonly>
+        </div>
+      </div>
+      
+      <div style="margin-top:20px; background:rgba(255,255,255,0.1); padding:15px; border-radius:8px; font-family:'Poppins'; font-size:1.2rem; text-align:left; direction:ltr;" id="sim-output">
+        <!-- Output code via JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STRATEGIES & TIPS ========== -->
+<div id="tips" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2>💡 نصائح ذهبية واستراتيجيات التفوق للامتحان المطور 2026</h2>
+    
+    <div class="gold-tip">
+      <div class="icon">🎯</div>
+      <div class="text"><strong>قاعدة قراءة النص:</strong> عند ورود نص القراءة في الامتحان، اقرأ الأسئلة أولاً قبل قراءة النص لتوفر وقت البحث عن الكلمات المفتاحية كالتواريخ والأسماء.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">🔑</div>
+      <div class="text"><strong>مفاتيح الاختيار المتعدد للجرامر:</strong> إذا رأيت كلمة <em>yesterday</em> أو <em>ago</em> اختر التصريف الثاني حصراً، أما إذا وجدت كلمة <em>now</em> أو <em>at the moment</em> فابحث عن <em>am/is/are + V-ing</em>.</div>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">🧠</div>
+      <div class="text"><strong>التعامل مع المبني للمجهول:</strong> إذا بدأت الجملة بغير عاقل (مثل: The homework / The castle) فإن الجملة مبنية للمجهول وتحتاج غالباً لفعل كون بالإضافة للتصريف الثالث V3.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TRACKER SECTION ========== -->
+<div id="tracker" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2>📊 متتبع المراجعة الذكية للغة الإنجليزية مع الأستاذ عامر</h2>
+    <p style="color:#666; margin-bottom:15px;">حدد الوحدات والمراجعات التي قمت بإنجازها لتقييم جهوزيتك للامتحان النهائي.</p>
+    
+    <div id="tracker-list-box"></div>
+
+    <div style="margin-top:25px; background:var(--navy-pale); border-radius:12px; padding:20px; text-align:center;">
+      <div style="font-size:1.8rem; font-weight:900; color:var(--navy);" id="track-percent">0%</div>
+      <div style="font-weight:bold; margin-top:5px;">نسبة التقدم الكلي وجاهزية الامتحان النهائي</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="track-fill-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// HANDLING SECTIONS SWITCHING
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// TOGGLE UNITS OPEN/CLOSE
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// SHOW OR HIDE BOXES INTERACTIVELY
+function toggleTranslation(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '❌ إخفاء الشرح والترجمة ▲' : '📋 أظهر الترجمة والتحليل السياقي ▼';
+}
+
+// QUIZ ARCHITECTURE DATA
+const quickQuizData = [
+  { q: "Listen! The national Syrian team .......... the match right now.", opts: ["wins", "is winning", "won", "has won"], ans: 1 },
+  { q: "While Amer .......... an English essay, the electricity went out.", opts: ["was writing", "wrote", "is writing", "writes"], ans: 0 },
+  { q: "The historic city of Palmyra .......... by thousands of tourists every season.", opts: ["is visited", "visiting", "visits", "was visit"], ans: 0 },
+  { q: "Students .......... skip classes if they want to pass the 2026 exam successfully.", opts: ["must not", "should", "have to", "must"], ans: 0 }
+];
+
+function buildQuickQuiz() {
+  const container = document.getElementById('quick-quiz-container');
+  container.innerHTML = '';
+  quickQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '20px';
+    card.innerHTML = `
+      <div class="quiz-q-text">س ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkQuickAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkQuickAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === quickQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[quickQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// SIMULATOR FUNCTIONALITY
+function runSimulator() {
+  const sub = document.getElementById('sim-sub').value;
+  const tense = document.getElementById('sim-tense').value;
+  let resultStr = "";
+  
+  if (tense === "pres_simp") {
+    resultStr = sub === "He" ? `${sub} <strong>studies</strong> English every evening.` : `${sub} <strong>study</strong> English every evening.`;
+  } else if (tense === "pres_cont") {
+    let serve = sub === "He" ? "is" : sub === "I" ? "am" : "are";
+    resultStr = `${sub} <strong>${serve} studying</strong> English at the moment.`;
+  } else if (tense === "past_simp") {
+    resultStr = `${sub} <strong>studied</strong> English yesterday for the exam.`;
+  } else if (tense === "past_cont") {
+    let serve = sub === "He" || sub === "I" ? "was" : "were";
+    resultStr = `While ${sub} <strong>${serve} studying</strong> English, the phone rang.`;
+  }
+  document.getElementById('sim-output').innerHTML = resultStr;
+}
+
+// EXPERT EXAM DATA LOAD
+const examCompData = [
+  { q: "1. Solar energy is growing rapidly in Syria to generate electricity ..........", opts: ["pollutingly", "cleanly", "expensively", "dangerously"], ans: 1 },
+  { q: "2. The country will overcome power challenges if .......... expands.", opts: ["pollution", "investment", "waste", "industry"], ans: 1 }
+];
+
+const examGrammarData = [
+  { q: "3. They have .......... in Damascus since 2018.", opts: ["live", "living", "lived", "lives"], ans: 2 },
+  { q: "4. Look at those dark clouds! It .......... rain heavily.", opts: ["is going to", "will", "shall", "is"], ans: 0 },
+  { q: "5. Active factories .......... throw chemical waste into water canals.", opts: ["should", "must not", "have to", "allowed to"], ans: 1 }
+];
+
+function buildFullExam() {
+  const compBox = document.getElementById('comprehension-container');
+  examCompData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-card';
+    div.innerHTML = `<div class="quiz-q-text">${q.q}</div><div class="quiz-options" id="ec-${i}">${q.opts.map((o, j) => `<button class="quiz-opt" onclick="checkExamAns('ec', ${i}, ${j}, this)">${o}</button>`).join('')}</div>`;
+    compBox.appendChild(div);
+  });
+
+  const gramBox = document.getElementById('grammar-exam-container');
+  examGrammarData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-card';
+    div.innerHTML = `<div class="quiz-q-text">${q.q}</div><div class="quiz-options" id="eg-${i}">${q.opts.map((o, j) => `<button class="quiz-opt" onclick="checkExamAns('eg', ${i}, ${j}, this)">${o}</button>`).join('')}</div>`;
+    gramBox.appendChild(div);
+  });
+}
+
+function checkExamAns(type, qi, oi, btn) {
+  const targetData = type === 'ec' ? examCompData : examGrammarData;
+  const options = document.querySelectorAll(`#${type}-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === targetData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[targetData[qi].ans].classList.add('correct');
+  }
+}
+
+// PROGRESS TRACKER LOGIC
+const trackerUnits = [
+  "Module 1: Lifestyles (شرح + قواعد + كلمات مفتاحية)",
+  "Module 2: Technology (شرح + قواعد الماضي المستمر)",
+  "Module 3: Media & News (الحاضر التام والمستمر)",
+  "Module 4: Environment (أدوات الشرط وصيغ المستقبل)",
+  "Module 5: Places & Festivals (المبني للمجهول V3)",
+  "Module 6: Sports & Choices (أفعال الإلزام والنصيحة)",
+  "كتابة وتدريب موضوع التعبير المقترح لعام 2026",
+  "حل الاختبار التجريبي والوزاري الشامل"
+];
+
+let trackedState = {};
+
+function buildTracker() {
+  const container = document.getElementById('tracker-list-box');
+  container.innerHTML = '';
+  trackerUnits.forEach((unit, i) => {
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '15px';
+    row.style.marginBottom = '12px';
+    row.innerHTML = `
+      <div class="check-box ${trackedState[i] ? 'done' : ''}" onclick="toggleTrackItem(${i})">${trackedState[i] ? '✓' : ''}</div>
+      <div style="font-weight:700; font-size:0.95rem;">${unit}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function toggleTrackItem(i) {
+  trackedState[i] = !trackedState[i];
+  buildTracker();
+  updateProgressBar();
+}
+
+function updateProgressBar() {
+  const doneCount = Object.values(trackedState).filter(Boolean).length;
+  const percentage = Math.round((doneCount / trackerUnits.length) * 100);
+  document.getElementById('track-percent').textContent = percentage + '%';
+  document.getElementById('track-fill-bar').style.width = percentage + '%';
+}
+
+// INITIALIZER ON LOAD
+window.onload = function() {
+  buildQuickQuiz();
+  buildFullExam();
+  buildTracker();
+  runSimulator();
+};
+</script>
+</body>
+</html>
