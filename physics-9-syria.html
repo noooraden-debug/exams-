@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚛️ دليلك التفاعلي الشامل في الفيزياء - الصف التاسع | المنهاج السوري 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --purple: #7c3aed;
+    --purple-light: #a78bfa;
+    --purple-pale: #f3e8ff;
+    --red: #e11d48;
+    --green: #10b981;
+    --dark: #1e1b4b;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #c084fc 100%);
+    color: white;
+    padding: 45px 20px 35px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+  .main-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-top: 10px;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 22px; flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 15px 20px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light); border-bottom-color: var(--gold-light); background: rgba(255,255,255,0.05);
+  }
+
+  /* CONTAINER */
+  .container { max-width: 1050px; margin: 0 auto; padding: 25px 15px; }
+
+  /* SECTION MANAGEMENT */
+  .section { display: none; animation: slideUp 0.4s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 30px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--purple-pale); border-right: 5px solid var(--purple); color: var(--purple);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+  }
+  .unit-info h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+  .unit-info .unit-meta { font-size: 0.85rem; opacity: 0.8; display: flex; gap: 15px; flex-wrap: wrap; font-weight: 600; }
+
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LAW BOXES (صناديق القوانين) */
+  .law-box {
+    background: #f8faff; border: 2px dashed var(--purple); border-radius: 12px;
+    padding: 20px; margin: 15px 0; text-align: center;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+  }
+  .law-box h4 { color: var(--purple); font-weight: 900; margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .math-formula { font-size: 1.4rem; color: #1e293b; direction: ltr; display: block; margin: 10px 0; padding: 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 20px; margin-bottom: 20px;
+    border-right: 5px solid var(--purple-light);
+  }
+  .lesson-block h3 { font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+  .lesson-block ul { padding-right: 20px; margin-top: 10px; }
+  .lesson-block li { margin-bottom: 8px; font-weight: 600; }
+
+  /* BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--purple-light), var(--purple));
+    color: white; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700; transition: all 0.3s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); }
+  
+  .reveal-box {
+    display: none; background: #fdf2f8; border: 2px solid var(--red); border-radius: 10px; padding: 15px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .summary-table th { background: var(--purple); color: white; padding: 12px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; font-weight: 600; direction: ltr;}
+  .summary-table tr:nth-child(even) td { background: var(--purple-pale); }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06); border-top: 4px solid var(--purple);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.05rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px 18px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700;
+  }
+  .quiz-opt:hover { border-color: var(--purple-light); background: var(--purple-pale); }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
+  .quiz-opt.wrong { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+
+  /* SIMULATOR (CALCULATORS) */
+  .sim-box { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; border-radius: 14px; padding: 25px; margin: 15px 0; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .sim-field label { font-size: 0.85rem; color: var(--gold-light); font-weight: bold; }
+  .sim-field input { padding: 10px; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.15); color: white; font-family: 'Poppins', sans-serif; text-align: center;}
+  .sim-field input::placeholder { color: rgba(255,255,255,0.4); }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf0, #fff9d0); border: 2px solid var(--gold); border-radius: 12px; padding: 15px 20px; margin: 15px 0; display: flex; gap: 12px; }
+  .gold-tip .icon { font-size: 1.5rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #614d03; font-weight: 700; }
+
+  @media(max-width: 600px) {
+    .sim-row { flex-direction: column; align-items: stretch; }
+    .unit-header { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>⚛️ المنصة التفاعلية للفيزياء</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري المطوّر 2026</div>
+  <div class="badge-row">
+    <span class="badge">📘 6 وحدات متكاملة</span>
+    <span class="badge">🧲 ملخص شامل للقوانين</span>
+    <span class="badge">⚙️ محاكيات وحاسبات ذكية</span>
+    <span class="badge">📝 اختبارات مؤتمتة</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 الوحدات والقوانين</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ اختبر نفسك</button>
+  <button class="nav-btn" onclick="showSection('simulator')">⚙️ حاسبات الفيزياء الذكية</button>
+  <button class="nav-btn" onclick="showSection('tips')">💡 التحويلات الهامة والملاحظات</button>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--purple-light); border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 30px;">
+    <h2 style="color: var(--purple); font-weight: 900; margin-bottom: 12px;">🎓 التوسع الشامل لفيزياء التاسع (منهج 2026)</h2>
+    <p style="color:#475569; font-weight:600;">تم تصميم هذا الملف ليضع بين يديك كل ما يخص مادة الفيزياء بشكل مركز. القوانين، وحدات القياس، التحويلات الرياضية، ومحاكيات ذكية لحساب النتائج فورياً لمساعدتك على التدقيق الذاتي في حل المسائل.</p>
+  </div>
+
+  <div class="gold-tip">
+    <div class="icon">⚠️</div>
+    <div class="text">
+      <strong>القاعدة الذهبية في فيزياء التاسع:</strong> 70% من أخطاء الطلاب في الامتحان النهائي لا تكون بسبب حفظ القانون، بل بسبب إهمال التحويلات (مثل نسيان تحويل السنتيمتر إلى متر) أو الخطأ في فك القوى الرياضية ($10^{-2}$ و $10^{-3}$).
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--purple); margin-top:20px;">
+    <div style="padding: 25px;">
+      <h3 style="margin-bottom:15px; color:var(--purple); font-weight:800;">🗂️ الفهرس العام لوحدات الفيزياء</h3>
+      <table class="summary-table">
+        <thead>
+          <tr><th>رقم الوحدة</th><th>عنوان الوحدة الأساسي</th><th>أهم المفاهيم المتضمنة</th></tr>
+        </thead>
+        <tbody style="direction: rtl;">
+          <tr><td>1️⃣</td><td>الكهرباء والمغناطيسية</td><td>الحقل المغناطيسي للتيارات (المستقيم، الدائري، الوشيعة)</td></tr>
+          <tr><td>2️⃣</td><td>القوة الكهرطيسية والتحريض</td><td>قوة لابلاس، تجربة السكتين، التدفق المغناطيسي</td></tr>
+          <tr><td>3️⃣</td><td>توازن الجسم الصلب</td><td>عزم القوة (Moment)، شروط التوازن الانسحابي والدوراني</td></tr>
+          <tr><td>4️⃣</td><td>ميكانيك الموائع</td><td>الضغط العادي، الضغط في السوائل، دافعة أرخميدس</td></tr>
+          <tr><td>5️⃣</td><td>العمل والاستطاعة</td><td>حساب العمل الميكانيكي، الاستطاعة الميكانيكية</td></tr>
+          <tr><td>6️⃣</td><td>الطاقة</td><td>الطاقة الحركية، الطاقة الكامنة الثقالية، الطاقة الميكانيكية</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الحقل المغناطيسي للتيارات الكهربائية</h2>
+        <div class="unit-meta"><span>📏 الوحدة الأساسية: التسلا (T)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 المفهوم النظري</h3>
+        <p>التيار الكهربائي المار في ناقل يولد حوله حقلاً مغناطيسياً. يختلف شكل الطيف المغناطيسي وقانون حساب الشدة باختلاف شكل الناقل (مستقيم، ملف دائري، وشيعة).</p>
+      </div>
+
+      <div class="law-box">
+        <h4>🧲 صندوق القوانين (Magnetic Field)</h4>
+        <div style="text-align: right; margin-bottom: 10px;"><strong>1. التيار المستقيم (Straight Wire):</strong></div>
+        <span class="math-formula">$$ B = 2 \times 10^{-7} \frac{I}{d} $$</span>
+        
+        <div style="text-align: right; margin-bottom: 10px;"><strong>2. الملف الدائري (Circular Coil):</strong></div>
+        <span class="math-formula">$$ B = 2\pi \times 10^{-7} \frac{N \cdot I}{r} $$</span>
+        
+        <div style="text-align: right; margin-bottom: 10px;"><strong>3. الوشيعة (Solenoid):</strong></div>
+        <span class="math-formula">$$ B = 4\pi \times 10^{-7} \frac{N \cdot I}{L} $$</span>
+        
+        <ul style="text-align:right; font-size:0.9rem; color:#475569; margin-top:10px;">
+          <li>$I$: شدة التيار (أمبير A)</li>
+          <li>$d, r, L$: الأبعاد، ونصف القطر، والطول ويجب أن تكون بالمتر (m).</li>
+          <li>$N$: عدد اللفات (لا وحدة لها).</li>
+        </ul>
+      </div>
+
+      <button class="interactive-btn" onclick="toggleReveal(this)">📋 مسألة نموذجية مع الحل ▼</button>
+      <div class="reveal-box">
+        <strong>المسألة:</strong> وشيعة طولها $0.4\pi$ متر، تحتوي على $500$ لفة، يمر فيها تيار شدته $2\text{ A}$. احسب شدة الحقل المغناطيسي في مركزها.<br><br>
+        <strong>الحل:</strong><br>
+        نكتب القانون: $B = 4\pi \times 10^{-7} \frac{N \cdot I}{L}$ <br>
+        التعويض: $B = 4\pi \times 10^{-7} \frac{500 \times 2}{0.4\pi}$ <br>
+        الاختصار: نختصر $\pi$ مع $\pi$. و $0.4$ تُكتب $4 \times 10^{-1}$. <br>
+        النتيجة النهائية: $B = 2 \times 10^{-3} \text{ Tesla}$
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: القوة الكهرطيسية (قوة لابلاس)</h2>
+        <div class="unit-meta"><span>📏 الوحدة الأساسية: النيوتن (N)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 المفهوم النظري</h3>
+        <p>عند وضع ناقل يمر فيه تيار كهربائي ضمن حقل مغناطيسي، فإنه يخضع لقوة كهرطيسية (Laplace Force) تؤدي إلى تحريكه (كما في تجربة السكتين).</p>
+      </div>
+
+      <div class="law-box">
+        <h4>⚡ قانون قوة لابلاس</h4>
+        <span class="math-formula">$$ F = I \cdot L \cdot B $$</span>
+        <ul style="text-align:right; font-size:0.9rem; color:#475569; margin-top:10px;">
+          <li>$F$: شدة القوة الكهرطيسية (نيوتن N)</li>
+          <li>$L$: طول الجزء الخاضع للحقل المغناطيسي من الناقل (بالمتر m)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: عزم القوة وتوازن الصلب</h2>
+        <div class="unit-meta"><span>📏 الوحدة الأساسية: متر.نيوتن (m.N)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 المفهوم النظري</h3>
+        <p>العزم هو الفعل التدويري للقوة حول محور دوران ثابت. يزداد العزم بزيادة شدة القوة أو بزيادة طول ذراعها.</p>
+      </div>
+
+      <div class="law-box">
+        <h4>🔄 قانون عزم القوة (Moment)</h4>
+        <span class="math-formula">$$ \Gamma = d \cdot F $$</span>
+        <ul style="text-align:right; font-size:0.9rem; color:#475569; margin-top:10px;">
+          <li>$\Gamma$: عزم القوة ($m \cdot N$)</li>
+          <li>$d$: ذراع القوة (البعد العمودي بين محور الدوران وحامل القوة) بالمتر ($m$)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: الضغط ودافعة أرخميدس</h2>
+        <div class="unit-meta"><span>📏 الوحدات: باسكال (Pa)، نيوتن (N)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="law-box">
+        <h4>🌊 القوانين الأساسية للموائع</h4>
+        <div style="text-align: right; margin-bottom: 10px;"><strong>1. الضغط (Pressure):</strong></div>
+        <span class="math-formula">$$ P = \frac{F}{S} $$</span>
+        
+        <div style="text-align: right; margin-bottom: 10px;"><strong>2. دافعة أرخميدس (قوتان):</strong></div>
+        <span class="math-formula">$$ F_A = W_{real} - W_{apparent} $$</span>
+        <span class="math-formula">$$ F_A = \rho \cdot V \cdot g $$</span>
+        
+        <ul style="text-align:right; font-size:0.9rem; color:#475569; margin-top:10px;">
+          <li>$P$: الضغط (باسكال Pa)، $S$: السطح ($m^2$)</li>
+          <li>$F_A$: دافعة أرخميدس (نيوتن)</li>
+          <li>$\rho$: الكتلة الحجمية للسائل ($kg/m^3$)، $V$: حجم الجزء المغمور ($m^3$)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header" onclick="toggleUnit('u5')">
+      <div class="unit-num">5</div>
+      <div class="unit-info">
+        <h2>الوحدة الخامسة والسادسة: العمل، الاستطاعة، والطاقة</h2>
+        <div class="unit-meta"><span>📏 الوحدات الأساسية: جول (J)، واط (W)</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="law-box">
+        <h4>⚡ قوانين الطاقة والميكانيك</h4>
+        
+        <div style="text-align: right; margin-bottom: 5px;"><strong>العمل (Work):</strong></div>
+        <span class="math-formula">$$ W = F \cdot d $$</span>
+        
+        <div style="text-align: right; margin-bottom: 5px;"><strong>الاستطاعة (Power):</strong></div>
+        <span class="math-formula">$$ P = \frac{W}{t} $$</span>
+        
+        <div style="text-align: right; margin-bottom: 5px;"><strong>الطاقة الحركية (Kinetic Energy):</strong></div>
+        <span class="math-formula">$$ E_k = \frac{1}{2} m \cdot v^2 $$</span>
+
+        <div style="text-align: right; margin-bottom: 5px;"><strong>الطاقة الكامنة الثقالية (Potential Energy):</strong></div>
+        <span class="math-formula">$$ E_p = m \cdot g \cdot h = W_{weight} \cdot h $$</span>
+        
+        <ul style="text-align:right; font-size:0.9rem; color:#475569; margin-top:10px;">
+          <li>$W$ و $E$: تقاس بالجول ($J$)</li>
+          <li>$P$: الاستطاعة تقاس بالواط ($W$)</li>
+          <li>$v$: السرعة بالمتر على الثانية ($m/s$)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--purple); margin-bottom:20px;">✅ اختبار المعلومات المؤتمت (قوانين ووحدات)</h2>
+    <div id="quick-quiz-container"></div>
+  </div>
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--purple); font-weight:900; margin-bottom:15px;">⚙️ حاسبات الفيزياء الذكية (للتحقق من نواتج المسائل)</h2>
+    
+    <div class="sim-box">
+      <h3 style="color:var(--gold-light); margin-bottom:15px;">1. حاسبة الطاقة الحركية ($E_k$)</h3>
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>الكتلة $m$ (بـ kg)</label>
+          <input type="number" id="sim1-m" placeholder="مثال: 4">
+        </div>
+        <div class="sim-field">
+          <label>السرعة $v$ (بـ m/s)</label>
+          <input type="number" id="sim1-v" placeholder="مثال: 10">
+        </div>
+      </div>
+      <button class="interactive-btn" onclick="calcEk()" style="background:var(--gold); color:var(--dark);">احسب الطاقة (J) ⚡</button>
+      <div id="sim1-out" style="margin-top:15px; font-size:1.1rem; font-weight:bold; color:white;"></div>
+    </div>
+
+    <div class="sim-box">
+      <h3 style="color:var(--gold-light); margin-bottom:15px;">2. حاسبة الحقل المغناطيسي لتيار مستقيم ($B$)</h3>
+      <p style="font-size:0.85rem; color:#ccc; margin-bottom:15px;">(ملاحظة: الحاسبة تقوم بالتحويل من cm إلى m تلقائياً)</p>
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>التيار $I$ (بـ Ampere)</label>
+          <input type="number" id="sim2-i" placeholder="مثال: 5">
+        </div>
+        <div class="sim-field">
+          <label>البعد $d$ (بـ السنتيمتر cm)</label>
+          <input type="number" id="sim2-d" placeholder="مثال: 2">
+        </div>
+      </div>
+      <button class="interactive-btn" onclick="calcB()" style="background:var(--gold); color:var(--dark);">احسب الحقل (T) 🧲</button>
+      <div id="sim2-out" style="margin-top:15px; font-size:1.1rem; font-weight:bold; color:white; direction:ltr; text-align:right;"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tips" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--red); font-weight:900; margin-bottom:20px;">💡 التحويلات والاختصارات الرياضية المنقذة</h2>
+    
+    <table class="summary-table" style="direction:ltr;">
+      <thead>
+        <tr><th>To (إلى)</th><th>Operation (العملية)</th><th>From (من)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Meter ($m$)</td><td>$\times 10^{-2}$</td><td>Centimeter ($cm$)</td></tr>
+        <tr><td>Kilogram ($kg$)</td><td>$\times 10^{-3}$</td><td>Gram ($g$)</td></tr>
+        <tr><td>Ampere ($A$)</td><td>$\times 10^{-3}$</td><td>Milliampere ($mA$)</td></tr>
+        <tr><td>Square Meter ($m^2$)</td><td>$\times 10^{-4}$</td><td>Square Centimeter ($cm^2$)</td></tr>
+        <tr><td>Cubic Meter ($m^3$)</td><td>$\times 10^{-6}$</td><td>Cubic Centimeter ($cm^3$)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="gold-tip">
+      <div class="icon">📐</div>
+      <div class="text"><strong>اختصار رياضي هام (قيمة $\pi$):</strong> في مسائل الوشيعة والملف، دائماً نختصر $\pi$ الموجودة في البسط مع $\pi$ الموجودة في قيمة الطول (إن وجدت). وفي مسائل أخرى نعتبر أن $\pi^2 \approx 10$ لتسهيل الجذور. وتذكر أن تسارع الجاذبية $g$ يُعطى غالباً كـ $10 \text{ m/s}^2$.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleReveal(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? '❌ إخفاء الحل ▲' : '📋 مسألة نموذجية مع الحل ▼';
+}
+
+// QUIZ DATA
+const quickQuizData = [
+  { q: "وحدة قياس شدة الحقل المغناطيسي ($B$) هي:", opts: ["أمبير (A)", "تسلا (T)", "جول (J)", "نيوتن (N)"], ans: 1 },
+  { q: "في قانون الوشيعة، للتحويل من السنتيمتر ($cm$) إلى المتر ($m$) نضرب بـ:", opts: ["10<sup>-2</sup>", "10<sup>-3</sup>", "10<sup>-6</sup>", "10<sup>2</sup>"], ans: 0 },
+  { q: "ذراع القوة ($d$) هو:", opts: ["المسافة بين نقطة التأثير ونقطة أخرى", "البعد المائل عن المحور", "البعد العمودي بين محور الدوران وحامل القوة", "لا شيء مما سبق"], ans: 2 },
+  { q: "دافعة أرخميدس تتعلق بـ:", opts: ["شكل الجسم فقط", "الكتلة الحجمية للسائل وحجم الجزء المغمور", "عمق السائل فقط", "نوع مادة الجسم"], ans: 1 },
+  { q: "الطاقة الميكانيكية لجسم يسقط سقوطاً حراً (بإهمال مقاومة الهواء):", opts: ["تتزايد", "تتناقص", "تبقى ثابتة", "تصبح صفراً"], ans: 2 }
+];
+
+function buildQuickQuiz() {
+  const container = document.getElementById('quick-quiz-container');
+  container.innerHTML = '';
+  quickQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '20px';
+    card.innerHTML = `
+      <div class="quiz-q-text">س ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkQuickAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkQuickAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === quickQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[quickQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// SIMULATOR FUNCTIONS
+function calcEk() {
+  let m = parseFloat(document.getElementById('sim1-m').value);
+  let v = parseFloat(document.getElementById('sim1-v').value);
+  let out = document.getElementById('sim1-out');
+  if(isNaN(m) || isNaN(v)) { out.innerHTML = "⚠️ الرجاء إدخال أرقام صحيحة."; return; }
+  let Ek = 0.5 * m * (v * v);
+  out.innerHTML = `الطاقة الحركية = <strong>${Ek}</strong> جول (Joules)`;
+}
+
+function calcB() {
+  let I = parseFloat(document.getElementById('sim2-i').value);
+  let d_cm = parseFloat(document.getElementById('sim2-d').value);
+  let out = document.getElementById('sim2-out');
+  if(isNaN(I) || isNaN(d_cm) || d_cm === 0) { out.innerHTML = "⚠️ الرجاء إدخال أرقام صحيحة والبعد لا يساوي صفر."; return; }
+  
+  let d_m = d_cm * 0.01; // Convert to meters
+  let B = (2 * Math.pow(10, -7) * I) / d_m;
+  out.innerHTML = `B = <strong>${B.toExponential(2)}</strong> Tesla`;
+}
+
+window.onload = function() {
+  buildQuickQuiz();
+};
+</script>
+</body>
+</html>
