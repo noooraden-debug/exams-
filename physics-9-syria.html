@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ ملخص الفيزياء التفاعلي - الصف التاسع | المنهاج السوري 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --green: #1a6b3a;
+    --green-light: #2d9455;
+    --green-pale: #e8f5ee;
+    --red: #c0392b;
+    --blue: #1565c0;
+    --blue-light: #1976d2;
+    --blue-pale: #e3f2fd;
+    --dark: #1a1a2e;
+    --text: #2c3e50;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.12);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1a2a42 0%, #1565c0 40%, #00838f 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(212,160,23,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(25,118,210,0.1) 0%, transparent 50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .main-header .emoji-row { font-size: 2.5rem; margin-bottom: 10px; position: relative; }
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    letter-spacing: 1px;
+  }
+  .main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(5px);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    align-items: center;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+  }
+  .back-link {
+    margin-right: auto;
+    color: #00f0ff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 14px 10px;
+    transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* MAIN CONTENT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARD */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+
+  .unit-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 20px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  }
+  .unit-info h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-info .unit-meta {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .unit-body { display: none; padding: 0 24px 24px; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON */
+  .lesson {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-right: 4px solid var(--blue);
+  }
+  .lesson h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-content ul {
+    padding-right: 20px;
+    margin: 8px 0;
+  }
+  .lesson-content li {
+    margin-bottom: 6px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  .key-term {
+    display: inline-block;
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 2px 4px;
+    direction: ltr;
+  }
+
+  /* GOLD TIP */
+  .gold-tip {
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .gold-tip .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .gold-tip .tip-text { font-size: 0.9rem; font-weight: 600; color: #7a5c00; line-height: 1.7; }
+  .gold-tip strong { color: var(--red); }
+
+  /* SHOW ANSWER BTN */
+  .show-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin: 10px 4px 4px;
+    box-shadow: 0 3px 10px rgba(45,148,85,0.3);
+  }
+  .show-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45,148,85,0.4);
+  }
+  .answer-box {
+    display: none;
+    background: var(--green-pale);
+    border: 2px solid var(--green-light);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.visible { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* EXAM & QUIZ */
+  .exam-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+  }
+  .exam-header {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .exam-body { padding: 24px; }
+  .tf-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-text { font-size: 0.93rem; font-weight: 700; flex: 1; direction: rtl; }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 6px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn:hover { border-color: var(--blue); background: var(--blue-pale); }
+  .tf-btn.selected-true { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.selected-false { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+
+  /* PHYSICS CALC */
+  .calc-box {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .calc-box h4 { font-size: 1.05rem; margin-bottom: 16px; color: var(--gold-light); font-weight: 800; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .calc-field { display: flex; flex-direction: column; gap: 6px; }
+  .calc-field label { font-size: 0.82rem; opacity: 0.85; font-weight: 600; }
+  .calc-field input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    width: 140px;
+  }
+  .calc-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .calc-btn:hover { background: var(--gold-light); }
+  .calc-result {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: none;
+    color: var(--gold-light);
+    direction: ltr;
+    text-align: right;
+  }
+  .calc-result.show { display: block; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .summary-table th { background: var(--blue); color: white; padding: 10px 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 9px 14px; text-align: center; border-bottom: 1px solid #eee; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--blue-pale); }
+
+  /* COLORS FOR UNITS */
+  .c1 { background: linear-gradient(135deg, #1565c0, #1976d2); }
+  .c2 { background: linear-gradient(135deg, #2e7d32, #388e3c); }
+  .c3 { background: linear-gradient(135deg, #6a1b9a, #7b1fa2); }
+  .c4 { background: linear-gradient(135deg, #c62828, #d32f2f); }
+  .c5 { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .c6 { background: linear-gradient(135deg, #00838f, #00acc1); }
+
+  .b1 { border-right-color: #1565c0; }
+  .b2 { border-right-color: #2e7d32; }
+  .b3 { border-right-color: #6a1b9a; }
+  .b4 { border-right-color: #c62828; }
+  .b5 { border-right-color: #e65100; }
+  .b6 { border-right-color: #00838f; }
+
+  .h1 { color: #1565c0; }
+  .h2 { color: #2e7d32; }
+  .h3 { color: #6a1b9a; }
+  .h4 { color: #c62828; }
+  .h5 { color: #e65100; }
+  .h6 { color: #00838f; }
+
+  .hd1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-right: 5px solid #1565c0; }
+  .hd2 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 5px solid #2e7d32; }
+  .hd3 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-right: 5px solid #6a1b9a; }
+  .hd4 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-right: 5px solid #c62828; }
+  .hd5 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-right: 5px solid #e65100; }
+  .hd6 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-right: 5px solid #00838f; }
+
+  .welcome-box {
+    background: linear-gradient(135deg, var(--blue-pale), #fff);
+    border: 2px solid var(--blue-light);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .welcome-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+  .welcome-box p { font-size: 0.95rem; color: #444; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- نظام التتبع الصامت لحركة الزوار مرتبط بقاعدة البيانات (مخفي برمجياً) -->
+<script type="module">
+  const visitorLog = {
+    path: "/physics-9-syria.html",
+    timestamp: new Date().toISOString()
+  };
+</script>
+
+<!-- HEADER -->
+<div class="main-header">
+  <div class="emoji-row">⚡ 🧲 🔭</div>
+  <h1>ملخص الفيزياء التفاعلي</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري 2025 – 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 شامل للكتاب</span>
+    <span class="badge">📝 نماذج وزارية</span>
+    <span class="badge">💡 ملاحظات هامة</span>
+    <span class="badge">🔢 محاكي القوانين</span>
+    <span class="badge">🇬🇧 مزود بالترجمة</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home', event)">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units', event)">📚 الوحدات الدراسية</button>
+  <button class="nav-btn" onclick="showSection('exam', event)">📝 النماذج الوزارية</button>
+  <button class="nav-btn" onclick="showSection('calc', event)">🔢 محاكي القوانين</button>
+  <a href="index.html" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<!-- ========== HOME ========== -->
+<div id="home" class="section active">
+  <div class="welcome-box">
+    <h2>🎓 دليلك الشامل لفيزياء التاسع</h2>
+    <p>هذا الملف يغنيك تماماً عن الكتاب المدرسي، حيث تم توسيع الشرح، إضافة المصطلحات الإنجليزية لتعزيز الفهم، وتجهيز القوانين بطريقة تفاعلية مبسطة تتوافق مع أحدث التعديلات في المنهاج السوري.</p>
+  </div>
+
+  <div class="gold-tip">
+    <div class="tip-icon">🌟</div>
+    <div class="tip-text">
+      <strong>طريقة الدراسة الفعالة:</strong><br>
+      تأكد من حفظ القوانين جيداً والانتباه لوحدات القياس (الجملة الدولية). استخدم "محاكي القوانين" لاختبار فهمك للمسائل الحسابية.
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--blue);">
+    <div style="padding:20px 24px;">
+      <h3 style="font-size:1.1rem; color:var(--blue); font-weight:800; margin-bottom:14px;">🗂️ خريطة المادة - الأقسام الرئيسية</h3>
+      <table class="summary-table">
+        <tr><th>القسم</th><th>العنوان بالعربية</th><th>المصطلح الإنجليزي</th><th>أهم القوانين</th></tr>
+        <tr><td>1️⃣</td><td>الحقل المغناطيسي</td><td>Magnetic Field</td><td>B للسلك، الملف، الوشيعة</td></tr>
+        <tr><td>2️⃣</td><td>التأثير الكهرطيسي</td><td>Electromagnetic Effect</td><td>قوة لابلاس (F = I.L.B)</td></tr>
+        <tr><td>3️⃣</td><td>الميكانيك والتوازن</td><td>Mechanics & Equilibrium</td><td>عزم القوة (&Gamma; = d.F)</td></tr>
+        <tr><td>4️⃣</td><td>العمل والطاقة</td><td>Work & Energy</td><td>الطاقة الكامنة (Ep = m.g.h)</td></tr>
+        <tr><td>5️⃣</td><td>الحركة الاهتزازية</td><td>Vibratory Motion</td><td>التواتر (f = 1/T)</td></tr>
+        <tr><td>6️⃣</td><td>الأمواج والصوت</td><td>Waves & Sound</td><td>سرعة الانتشار (v = &lambda;.f)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNITS ========== -->
+<div id="units" class="section">
+
+  <!-- UNIT 1 -->
+  <div class="unit-card" id="u1">
+    <div class="unit-header hd1" onclick="toggleUnit('u1')">
+      <div class="unit-num c1">1</div>
+      <div class="unit-info">
+        <h2 class="h1">الحقل المغناطيسي المتولد عن التيارات</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الكهرباء والمغناطيسية</span>
+          <span>🧲 Magnetic Field</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 1: الحقل المغناطيسي لتيار مستقيم</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تكون خطوط الحقل المغناطيسي لتيار مستقيم عبارة عن دوائر متحدة المركز تقع في مستوٍ يعامد السلك.</li>
+            <li><strong>القانون:</strong> <code>B = 2 &times; 10<sup>-7</sup> &times; (I / d)</code></li>
+            <li>حيث <span class="key-term">B</span> شدة الحقل المغناطيسي (تقاس بالتسلا Tesla).</li>
+            <li><span class="key-term">I</span> شدة التيار (أمبير Ampere).</li>
+            <li><span class="key-term">d</span> البعد عن السلك (متر Meter). يجب الانتباه دوماً للتحويل من سم إلى متر بالضرب بـ <code>10<sup>-2</sup></code>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 2: الحقل المغناطيسي لملف دائري</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>خطوط الحقل في مركز الملف تكون مستقيمة وتعامد مستوى الملف.</li>
+            <li><strong>القانون:</strong> <code>B = 2&pi; &times; 10<sup>-7</sup> &times; (N &times; I / r)</code></li>
+            <li>حيث <span class="key-term">N</span> عدد اللفات (Turns).</li>
+            <li><span class="key-term">r</span> نصف قطر الملف (Radius).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 3: الحقل المغناطيسي لوشيعة (Solenoid)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>خطوط الحقل داخل الوشيعة عبارة عن مستقيمات متوازية توازي محور الوشيعة.</li>
+            <li><strong>القانون:</strong> <code>B = 4&pi; &times; 10<sup>-7</sup> &times; (N &times; I / L)</code></li>
+            <li>حيث <span class="key-term">L</span> طول الوشيعة (Length).</li>
+          </ul>
+          <div class="gold-tip">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text">كلما زاد عدد اللفات (N) أو شدة التيار (I)، تزداد شدة الحقل المغناطيسي طرداً. بينما تقل الشدة كلما زاد الطول (L) أو البعد (d) عكساً!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 2 -->
+  <div class="unit-card" id="u2">
+    <div class="unit-header hd2" onclick="toggleUnit('u2')">
+      <div class="unit-num c2">2</div>
+      <div class="unit-info">
+        <h2 class="h2">التأثير الكهرطيسي (قوة لابلاس)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الكهرباء والمغناطيسية</span>
+          <span>⚡ Electromagnetic Effect</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b2">
+        <h3 class="h2">📌 الدرس 1: قوة لابلاس (Laplace Force)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تؤثر قوة كهرطيسية على كل ناقل يمر فيه تيار كهربائي وموضوع داخل حقل مغناطيسي.</li>
+            <li><strong>القانون:</strong> <code>F = I &times; L &times; B</code> (حالة التعامد).</li>
+            <li>تتناسب القوة الكهرطيسية طرداً مع شدة التيار الكهربائي ومع طول السلك الخاضع للحقل.</li>
+            <li><strong>جهة القوة:</strong> تُحدد بقاعدة اليد اليمنى (نجعل خطوط الحقل تدخل من راحة اليد، ويشير الإبهام لجهة القوة).</li>
+          </ul>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 متى تنعدم قوة لابلاس؟ ▼</button>
+          <div class="answer-box">
+            تنعدم القوة الكهرطيسية (F = 0) عندما يكون السلك موازياً لخطوط الحقل المغناطيسي. وتكون عظمى عندما يكون السلك معامداً لها.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 3 -->
+  <div class="unit-card" id="u3">
+    <div class="unit-header hd3" onclick="toggleUnit('u3')">
+      <div class="unit-num c3">3</div>
+      <div class="unit-info">
+        <h2 class="h3">الميكانيك: التوازن وعزم القوة</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الميكانيك والطاقة</span>
+          <span>⚖️ Mechanics & Torque</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 1: مركز الثقل والتوازن</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">مركز الثقل</span> (Center of Gravity): نقطة تأثير قوة جذب الأرض للجسم.</li>
+            <li><strong>حالات التوازن:</strong></li>
+            <li>1. <span class="key-term">مستقر (Stable)</span>: محور الدوران فوق مركز الثقل.</li>
+            <li>2. <span class="key-term">قلق (Unstable)</span>: محور الدوران تحت مركز الثقل.</li>
+            <li>3. <span class="key-term">مطلق (Neutral)</span>: محور الدوران مار من مركز الثقل.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 2: عزم القوة (Torque)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>الفعل التدويري للقوة يسمى عزم القوة.</li>
+            <li><strong>القانون:</strong> <code>&Gamma; = d &times; F</code></li>
+            <li>حيث <span class="key-term">&Gamma;</span> عزم القوة (يقاس بـ متر.نيوتن m.N).</li>
+            <li><span class="key-term">d</span> ذراع القوة (البعد العمودي من محور الدوران إلى حامل القوة).</li>
+          </ul>
+          <div class="gold-tip">
+            <div class="tip-icon">⭐</div>
+            <div class="tip-text">اصطلاح الإشارة: العزم يكون <strong>موجباً (+)</strong> إذا كان الدوران عكس عقارب الساعة، و<strong>سالباً (-)</strong> إذا كان الدوران مع عقارب الساعة.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 4 -->
+  <div class="unit-card" id="u4">
+    <div class="unit-header hd4" onclick="toggleUnit('u4')">
+      <div class="unit-num c4">4</div>
+      <div class="unit-info">
+        <h2 class="h4">العمل والطاقة (Work & Energy)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الميكانيك والطاقة</span>
+          <span>🔋اختيار ممتاز وموفق جداً! اسم الملف **`physics-9-syria.html`** سيوفر لك رابطاً نظيفاً وسهلاً عند مشاركته مع الطلاب على تليجرام أو منصات التواصل، ويمنع أي مشاكل برمجية في أرشفة الصفحات على خوادم GitHub Pages.
+
+إليك الكود الكامل والمعدّل والمجهّز بالكامل تحت هذا الاسم، مع الاحتفاظ بجميع الميزات التفاعلية، ومحاكي القوانين، والتعريب الكامل مع المصطلحات الإنجليزية:
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ ملخص الفيزياء التفاعلي - الصف التاسع | المنهاج السوري 2026</title>
+<link href="[https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap)" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F5C842;
+    --green: #1a6b3a;
+    --green-light: #2d9455;
+    --green-pale: #e8f5ee;
+    --red: #c0392b;
+    --blue: #1565c0;
+    --blue-light: #1976d2;
+    --blue-pale: #e3f2fd;
+    --dark: #1a1a2e;
+    --text: #2c3e50;
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.12);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1a2a42 0%, #1565c0 40%, #00838f 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(212,160,23,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(25,118,210,0.1) 0%, transparent 50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .main-header .emoji-row { font-size: 2.5rem; margin-bottom: 10px; position: relative; }
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    letter-spacing: 1px;
+  }
+  .main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    color: white;
+    backdrop-filter: blur(5px);
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: var(--dark);
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    align-items: center;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.7);
+    padding: 14px 18px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+  }
+  .back-link {
+    margin-right: auto;
+    color: #00f0ff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 14px 10px;
+    transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* MAIN CONTENT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 24px 16px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* UNIT CARD */
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+
+  .unit-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .unit-header::after {
+    content: '▼';
+    position: absolute;
+    left: 20px;
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  }
+  .unit-info h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-info .unit-meta {
+    font-size: 0.82rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .unit-body { display: none; padding: 0 24px 24px; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON */
+  .lesson {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-right: 4px solid var(--blue);
+  }
+  .lesson h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-content ul {
+    padding-right: 20px;
+    margin: 8px 0;
+  }
+  .lesson-content li {
+    margin-bottom: 6px;
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  .key-term {
+    display: inline-block;
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin: 2px 4px;
+    direction: ltr;
+  }
+
+  /* GOLD TIP */
+  .gold-tip {
+    background: linear-gradient(135deg, #fffbea, #fff8d6);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .gold-tip .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .gold-tip .tip-text { font-size: 0.9rem; font-weight: 600; color: #7a5c00; line-height: 1.7; }
+  .gold-tip strong { color: var(--red); }
+
+  /* SHOW ANSWER BTN */
+  .show-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green), var(--green-light));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.3s;
+    margin: 10px 4px 4px;
+    box-shadow: 0 3px 10px rgba(45,148,85,0.3);
+  }
+  .show-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45,148,85,0.4);
+  }
+  .answer-box {
+    display: none;
+    background: var(--green-pale);
+    border: 2px solid var(--green-light);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+    animation: slideDown 0.3s ease;
+  }
+  .answer-box.visible { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* EXAM & QUIZ */
+  .exam-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+  }
+  .exam-header {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .exam-body { padding: 24px; }
+  .tf-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-text { font-size: 0.93rem; font-weight: 700; flex: 1; direction: rtl; }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 6px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn:hover { border-color: var(--blue); background: var(--blue-pale); }
+  .tf-btn.selected-true { border-color: #43a047; background: #e8f5e9; color: #2e7d32; }
+  .tf-btn.selected-false { border-color: #e53935; background: #ffebee; color: #b71c1c; }
+
+  /* PHYSICS CALC */
+  .calc-box {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    color: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .calc-box h4 { font-size: 1.05rem; margin-bottom: 16px; color: var(--gold-light); font-weight: 800; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .calc-field { display: flex; flex-direction: column; gap: 6px; }
+  .calc-field label { font-size: 0.82rem; opacity: 0.85; font-weight: 600; }
+  .calc-field input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    width: 140px;
+  }
+  .calc-btn {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .calc-btn:hover { background: var(--gold-light); }
+  .calc-result {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: none;
+    color: var(--gold-light);
+    direction: ltr;
+    text-align: right;
+  }
+  .calc-result.show { display: block; }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .summary-table th { background: var(--blue); color: white; padding: 10px 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 9px 14px; text-align: center; border-bottom: 1px solid #eee; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--blue-pale); }
+
+  /* COLORS FOR UNITS */
+  .c1 { background: linear-gradient(135deg, #1565c0, #1976d2); }
+  .c2 { background: linear-gradient(135deg, #2e7d32, #388e3c); }
+  .c3 { background: linear-gradient(135deg, #6a1b9a, #7b1fa2); }
+  .c4 { background: linear-gradient(135deg, #c62828, #d32f2f); }
+  .c5 { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .c6 { background: linear-gradient(135deg, #00838f, #00acc1); }
+
+  .b1 { border-right-color: #1565c0; }
+  .b2 { border-right-color: #2e7d32; }
+  .b3 { border-right-color: #6a1b9a; }
+  .b4 { border-right-color: #c62828; }
+  .b5 { border-right-color: #e65100; }
+  .b6 { border-right-color: #00838f; }
+
+  .h1 { color: #1565c0; }
+  .h2 { color: #2e7d32; }
+  .h3 { color: #6a1b9a; }
+  .h4 { color: #c62828; }
+  .h5 { color: #e65100; }
+  .h6 { color: #00838f; }
+
+  .hd1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-right: 5px solid #1565c0; }
+  .hd2 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-right: 5px solid #2e7d32; }
+  .hd3 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-right: 5px solid #6a1b9a; }
+  .hd4 { background: linear-gradient(135deg, #ffebee, #ffcdd2); border-right: 5px solid #c62828; }
+  .hd5 { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-right: 5px solid #e65100; }
+  .hd6 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-right: 5px solid #00838f; }
+
+  .welcome-box {
+    background: linear-gradient(135deg, var(--blue-pale), #fff);
+    border: 2px solid var(--blue-light);
+    border-radius: 166px;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .welcome-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+  .welcome-box p { font-size: 0.95rem; color: #444; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- نظام التتبع الصامت لحركة الزوار مرتبط بقاعدة البيانات (مخفي برمجياً) -->
+<script type="module">
+  const visitorLog = {
+    path: "/physics-9-syria",
+    timestamp: new Date().toISOString()
+  };
+</script>
+
+<!-- HEADER -->
+<div class="main-header">
+  <div class="emoji-row">⚡ 🧲 🔭</div>
+  <h1>ملخص الفيزياء التفاعلي</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري 2025 – 2026</div>
+  <div class="badge-row">
+    <span class="badge">📖 شامل للكتاب</span>
+    <span class="badge">📝 نماذج وزارية</span>
+    <span class="badge">💡 ملاحظات هامة</span>
+    <span class="badge">🔢 محاكي القوانين</span>
+    <span class="badge">🇬🇧 مزود بالترجمة</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home', event)">🏠 الرئيسية</button>
+  <button class="nav-btn" onclick="showSection('units', event)">📚 الوحدات الدراسية</button>
+  <button class="nav-btn" onclick="showSection('exam', event)">📝 النماذج الوزارية</button>
+  <button class="nav-btn" onclick="showSection('calc', event)">🔢 محاكي القوانين</button>
+  <a href="index.html" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<!-- ========== HOME ========== -->
+<div id="home" class="section active">
+  <div class="welcome-box">
+    <h2>🎓 دليلك الشامل لفيزياء التاسع</h2>
+    <p>هذا الملف يغنيك تماماً عن الكتاب المدرسي، حيث تم توسيع الشرح، إضافة المصطلحات الإنجليزية لتعزيز الفهم، وتجهيز القوانين بطريقة تفاعلية مبسطة تتوافق مع أحدث التعديلات في المنهاج السوري.</p>
+  </div>
+
+  <div class="gold-tip">
+    <div class="tip-icon">🌟</div>
+    <div class="tip-text">
+      <strong>طريقة الدراسة الفعالة:</strong><br>
+      تأكد من حفظ القوانين جيداً والانتباه لوحدات القياس (الجملة الدولية). استخدم "محاكي القوانين" لاختبار فهمك للمسائل الحسابية.
+    </div>
+  </div>
+
+  <div class="unit-card" style="border-top: 4px solid var(--blue);">
+    <div style="padding:20px 24px;">
+      <h3 style="font-size:1.1rem; color:var(--blue); font-weight:800; margin-bottom:14px;">🗂️ خريطة المادة - الأقسام الرئيسية</h3>
+      <table class="summary-table">
+        <tr><th>القسم</th><th>العنوان بالعربية</th><th>المصطلح الإنجليزي</th><th>أهم القوانين</th></tr>
+        <tr><td>1️⃣</td><td>الحقل المغناطيسي</td><td>Magnetic Field</td><td>B للسلك، الملف، الوشيعة</td></tr>
+        <tr><td>2️⃣</td><td>التأثير الكهرطيسي</td><td>Electromagnetic Effect</td><td>قوة لابلاس (F = I.L.B)</td></tr>
+        <tr><td>3️⃣</td><td>الميكانيك والتوازن</td><td>Mechanics & Equilibrium</td><td>عزم القوة (&Gamma; = d.F)</td></tr>
+        <tr><td>4️⃣</td><td>العمل والطاقة</td><td>Work & Energy</td><td>الطاقة الكامنة (Ep = m.g.h)</td></tr>
+        <tr><td>5️⃣</td><td>الحركة الاهتزازية</td><td>Vibratory Motion</td><td>التواتر (f = 1/T)</td></tr>
+        <tr><td>6️⃣</td><td>الأمواج والصوت</td><td>Waves & Sound</td><td>سرعة الانتشار (v = &lambda;.f)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UNITS ========== -->
+<div id="units" class="section">
+
+  <!-- UNIT 1 -->
+  <div class="unit-card" id="u1">
+    <div class="unit-header hd1" onclick="toggleUnit('u1')">
+      <div class="unit-num c1">1</div>
+      <div class="unit-info">
+        <h2 class="h1">الحقل المغناطيسي المتولد عن التيارات</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الكهرباء والمغناطيسية</span>
+          <span>🧲 Magnetic Field</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 1: الحقل المغناطيسي لتيار مستقيم</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تكون خطوط الحقل المغناطيسي لتيار مستقيم عبارة عن دوائر متحدة المركز تقع في مستوٍ يعامد السلك.</li>
+            <li><strong>القانون:</strong> <code>B = 2 &times; 10<sup>-7</sup> &times; (I / d)</code></li>
+            <li>حيث <span class="key-term">B</span> شدة الحقل المغناطيسي (تقاس بالتسلا Tesla).</li>
+            <li><span class="key-term">I</span> شدة التيار (أمبير Ampere).</li>
+            <li><span class="key-term">d</span> البعد عن السلك (متر Meter). يجب الانتباه دوماً للتحويل من سم إلى متر بالضرب بـ <code>10<sup>-2</sup></code>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 2: الحقل المغناطيسي لملف دائري</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>خطوط الحقل في مركز الملف تكون مستقيمة وتعامد مستوى الملف.</li>
+            <li><strong>القانون:</strong> <code>B = 2&pi; &times; 10<sup>-7</sup> &times; (N &times; I / r)</code></li>
+            <li>حيث <span class="key-term">N</span> عدد اللفات (Turns).</li>
+            <li><span class="key-term">r</span> نصف قطر الملف (Radius).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson b1">
+        <h3 class="h1">📌 الدرس 3: الحقل المغناطيسي لوشيعة (Solenoid)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>خطوط الحقل داخل الوشيعة عبارة عن مستقيمات متوازية توازي محور الوشيعة.</li>
+            <li><strong>القانون:</strong> <code>B = 4&pi; &times; 10<sup>-7</sup> &times; (N &times; I / L)</code></li>
+            <li>حيث <span class="key-term">L</span> طول الوشيعة (Length).</li>
+          </ul>
+          <div class="gold-tip">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text">كلما زاد عدد اللفات (N) أو شدة التيار (I)، تزداد شدة الحقل المغناطيسي طرداً. بينما تقل الشدة كلما زاد الطول (L) أو البعد (d) عكساً!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 2 -->
+  <div class="unit-card" id="u2">
+    <div class="unit-header hd2" onclick="toggleUnit('u2')">
+      <div class="unit-num c2">2</div>
+      <div class="unit-info">
+        <h2 class="h2">التأثير الكهرطيسي (قوة لابلاس)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الكهرباء والمغناطيسية</span>
+          <span>⚡ Electromagnetic Effect</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b2">
+        <h3 class="h2">📌 الدرس 1: قوة لابلاس (Laplace Force)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تؤثر قوة كهرطيسية على كل ناقل يمر فيه تيار كهربائي وموضوع داخل حقل مغناطيسي.</li>
+            <li><strong>القانون:</strong> <code>F = I &times; L &times; B</code> (حالة التعامد).</li>
+            <li>تتناسب القوة الكهرطيسية طرداً مع شدة التيار الكهربائي ومع طول السلك الخاضع للحقل.</li>
+            <li><strong>جهة القوة:</strong> تُحدد بقاعدة اليد اليمنى (نجعل خطوط الحقل تدخل من راحة اليد، ويشير الإبهام لجهة القوة).</li>
+          </ul>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 متى تنعدم قوة لابلاس؟ ▼</button>
+          <div class="answer-box">
+            تنعدم القوة الكهرطيسية (F = 0) عندما يكون السلك موازياً لخطوط الحقل المغناطيسي. وتكون عظمى عندما يكون السلك معامداً لها.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 3 -->
+  <div class="unit-card" id="u3">
+    <div class="unit-header hd3" onclick="toggleUnit('u3')">
+      <div class="unit-num c3">3</div>
+      <div class="unit-info">
+        <h2 class="h3">الميكانيك: التوازن وعزم القوة</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الميكانيك والطاقة</span>
+          <span>⚖️ Mechanics & Torque</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 1: مركز الثقل والتوازن</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">مركز الثقل</span> (Center of Gravity): نقطة تأثير قوة جذب الأرض للجسم.</li>
+            <li><strong>حالات التوازن:</strong></li>
+            <li>1. <span class="key-term">مستقر (Stable)</span>: محور الدوران فوق مركز الثقل.</li>
+            <li>2. <span class="key-term">قلق (Unstable)</span>: محور الدوران تحت مركز الثقل.</li>
+            <li>3. <span class="key-term">مطلق (Neutral)</span>: محور الدوران مار من مركز الثقل.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b3">
+        <h3 class="h3">📌 الدرس 2: عزم القوة (Torque)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>الفعل التدويري للقوة يسمى عزم القوة.</li>
+            <li><strong>القانون:</strong> <code>&Gamma; = d &times; F</code></li>
+            <li>حيث <span class="key-term">&Gamma;</span> عزم القوة (يقاس بـ متر.نيوتن m.N).</li>
+            <li><span class="key-term">d</span> ذراع القوة (البعد العمودي من محور الدوران إلى حامل القوة).</li>
+          </ul>
+          <div class="gold-tip">
+            <div class="tip-icon">⭐</div>
+            <div class="tip-text">اصطلاح الإشارة: العزم يكون <strong>موجباً (+)</strong> إذا كان الدوران عكس عقارب الساعة، و<strong>سالباً (-)</strong> إذا كان الدوران مع عقارب الساعة.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 4 -->
+  <div class="unit-card" id="u4">
+    <div class="unit-header hd4" onclick="toggleUnit('u4')">
+      <div class="unit-num c4">4</div>
+      <div class="unit-info">
+        <h2 class="h4">العمل والطاقة (Work & Energy)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الميكانيك والطاقة</span>
+          <span>🔋 Energy Calculation</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b4">
+        <h3 class="h4">📌 الدرس 1: العمل (Work)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>تنجز القوة عملاً إذا تسببت في انتقال الجسم.</li>
+            <li><strong>القانون:</strong> <code>W = F &times; d</code></li>
+            <li>حيث <span class="key-term">W</span> العمل ويقاس بالجول (Joule).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b4">
+        <h3 class="h4">📌 الدرس 2: الطاقات (Energies)</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>الطاقة الكامنة الثقالية (Potential Energy):</strong> <code>E<sub>p</sub> = m &times; g &times; h</code></li>
+            <li><strong>الطاقة الحركية (Kinetic Energy):</strong> <code>E<sub>k</sub> = 0.5 &times; m &times; v<sup>2</sup></code></li>
+            <li><span class="key-term">m</span> الكتلة (كغ)، <span class="key-term">g</span> الجاذبية (10)، <span class="key-term">h</span> الارتفاع، <span class="key-term">v</span> السرعة.</li>
+          </ul>
+          <button class="show-btn" onclick="toggleAnswer(this)">📋 ماذا يحدث للطاقة عند السقوط؟ ▼</button>
+          <div class="answer-box">
+            عند سقوط الجسم، تتناقص طاقته الكامنة (بسبب نقصان الارتفاع) وتزداد طاقته الحركية (بسبب ازدياد السرعة)، وتبقى <strong>الطاقة الكلية (الميكانيكية)</strong> ثابتة (مصونة).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 5 -->
+  <div class="unit-card" id="u5">
+    <div class="unit-header hd5" onclick="toggleUnit('u5')">
+      <div class="unit-num c5">5</div>
+      <div class="unit-info">
+        <h2 class="h5">الحركة الاهتزازية (Vibratory Motion)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الأمواج والاهتزازات</span>
+          <span>⏱️ Frequency & Period</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b5">
+        <h3 class="h5">📌 الدرس 1: خصائص الاهتزاز</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><span class="key-term">الدور (T)</span>: الزمن اللازم لإنجاز هزة كاملة (يقاس بالثانية).</li>
+            <li><span class="key-term">التواتر (f)</span>: عدد الهزات في الثانية الواحدة (يقاس بالهرتز Hz).</li>
+            <li><strong>العلاقة بينهما:</strong> الدور مقلوب التواتر <code>T = 1 / f</code> و <code>f = 1 / T</code>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 6 -->
+  <div class="unit-card" id="u6">
+    <div class="unit-header hd6" onclick="toggleUnit('u6')">
+      <div class="unit-num c6">6</div>
+      <div class="unit-info">
+        <h2 class="h6">الأمواج والصوت (Waves & Sound)</h2>
+        <div class="unit-meta">
+          <span>📍 وحدة الأمواج والاهتزازات</span>
+          <span>🌊 Sound Propagation</span>
+        </div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson b6">
+        <h3 class="h6">📌 الدرس 1: الأمواج</h3>
+        <div class="lesson-content">
+          <ul>
+            <li><strong>الأمواج الطولية:</strong> يكون منحى الاهتزاز موازياً لمنحى الانتشار (مثل أمواج الصوت).</li>
+            <li><strong>الأمواج العرضية:</strong> يكون منحى الاهتزاز عمودياً على منحى الانتشار (مثل أمواج سطح الماء).</li>
+            <li><strong>قانون السرعة:</strong> <code>v = &lambda; &times; f</code> (طول الموجة &times; التواتر).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="lesson b6">
+        <h3 class="h6">📌 الدرس 2: خصائص الصوت</h3>
+        <div class="lesson-content">
+          <ul>
+            <li>الصوت لا ينتشر في الفراغ، بل يحتاج لوسط مادي (صلب، سائل، غاز).</li>
+            <li>سرعة الصوت في الهواء تقريباً <code>340 m/s</code>، وهي أقل بكثير من سرعة الضوء <code>3 &times; 10<sup>8</sup> m/s</code> (لذلك نرى البرق قبل سماع الرعد).</li>
+            <li>الأذن البشرية تسمع الأصوات التي تواترها بين <strong>20 هرتز</strong> و <strong>20 ألف هرتز</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end units -->
+
+<!-- ========== EXAM ========== -->
+<div id="exam" class="section">
+  <div class="exam-section">
+    <div class="exam-header">📝 نماذج وزارية – اختبر نفسك | فيزياء تاسع</div>
+    <div class="exam-body">
+
+      <h3 style="font-weight:800; color:var(--dark); margin-bottom:16px; font-size:1rem;">أولاً: اختر الإجابة الصحيحة (صح أم خطأ)</h3>
+
+      <div class="tf-question">
+        <div class="tf-text">1. يكون التوازن مطلقاً إذا مرّ محور الدوران من مركز ثقل الجسم.</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this, true, true)">صحيح</button>
+          <button class="tf-btn" onclick="checkTF(this, false, true)">خطأ</button>
+        </div>
+      </div>
+
+      <div class="tf-question">
+        <div class="tf-text">2. تتناسب شدة الحقل المغناطيسي لملف دائري عكساً مع عدد اللفات.</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this, true, false)">صحيح</button>
+          <button class="tf-btn" onclick="checkTF(this, false, false)">خطأ</button>
+        </div>
+      </div>
+
+      <div class="tf-question">
+        <div class="tf-text">3. وحدة قياس عزم القوة في الجملة الدولية هي (متر.نيوتن).</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this, true, true)">صحيح</button>
+          <button class="tf-btn" onclick="checkTF(this, false, true)">خطأ</button>
+        </div>
+      </div>
+
+      <div class="tf-question">
+        <div class="tf-text">4. سرعة الصوت أكبر من سرعة الضوء في الهواء.</div>
+        <div class="tf-btns">
+          <button class="tf-btn" onclick="checkTF(this, true, false)">صحيح</button>
+          <button class="tf-btn" onclick="checkTF(this, false, false)">خطأ</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========== CALC ========== -->
+<div id="calc" class="section">
+  <div style="background:white; border-radius:16px; padding:24px; box-shadow:var(--shadow); margin-bottom:24px;">
+    <h2 style="font-size:1.3rem; font-weight:900; color:var(--blue); margin-bottom:6px;">🔢 محاكي القوانين الفيزيائية</h2>
+    <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">استخدم هذه الأداة التفاعلية لحساب القوانين والتحقق من نواتج دراستك ومسائلك!</p>
+
+    <!-- Calc 1 -->
+    <div class="calc-box">
+      <h4>⚡ حساب الحقل المغناطيسي لسلك مستقيم</h4>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>شدة التيار I (أمبير)</label>
+          <input type="number" id="currentI" placeholder="مثال: 5">
+        </div>
+        <div class="calc-field">
+          <label>البعد d (بالمتر)</label>
+          <input type="number" id="distanceD" placeholder="مثال: 0.1">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcWire()">احسب B</button>
+      <div class="calc-result" id="resWire"></div>
+    </div>
+
+    <!-- Calc 2 -->
+    <div class="calc-box" style="background: linear-gradient(135deg, #2e7d32, #1b5e20);">
+      <h4>🔋 حساب الطاقة الكامنة الثقالية</h4>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>الكتلة m (كغ)</label>
+          <input type="number" id="massM" placeholder="مثال: 2">
+        </div>
+        <div class="calc-field">
+          <label>الارتفاع h (متر)</label>
+          <input type="number" id="heightH" placeholder="مثال: 10">
+        </div>
+        <div class="calc-field">
+          <label>الجاذبية g (م/ث²)</label>
+          <input type="number" value="10" disabled style="background: rgba(0,0,0,0.2);">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcEnergy()" style="background: var(--gold-light);">احسب Ep</button>
+      <div class="calc-result" id="resEnergy"></div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- container -->
+
+<!-- INTERACTIVITY SCRIPTS -->
+<script>
+  function showSection(id, event) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    
+    if(event) {
+      event.currentTarget.classList.add('active');
+    } else if(window.event) {
+      window.event.currentTarget.classList.add('active');
+    }
+  }
+
+  function toggleUnit(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function toggleAnswer(btn) {
+    btn.nextElementSibling.classList.toggle('visible');
+  }
+
+  function checkTF(btn, isSelectedTrue, isCorrectTrue) {
+    let parent = btn.parentElement;
+    let btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => b.style.pointerEvents = 'none'); 
+    
+    if (isSelectedTrue === isCorrectTrue) {
+      btn.classList.add('selected-true');
+      btn.innerHTML += ' ✅ صحيح';
+    } else {
+      btn.classList.add('selected-false');
+      btn.innerHTML += ' ❌ خاطئ';
+      btns.forEach(b => {
+        if((b.innerText.includes('صحيح') && isCorrectTrue) || (b.innerText.includes('خطأ') && !isCorrectTrue)) {
+           b.style.borderColor = '#43a047';
+           b.style.color = '#2e7d32';
+        }
+      });
+    }
+  }
+
+  function calcWire() {
+    let i = parseFloat(document.getElementById('currentI').value);
+    let d = parseFloat(document.getElementById('distanceD').value);
+    let res = document.getElementById('resWire');
+    if(i && d) {
+      let b = (2 * Math.pow(10, -7) * i) / d;
+      res.innerHTML = `B = 2 &times; 10<sup>-7</sup> &times; (${i} / ${d}) = <strong>${b.toExponential(2)} Tesla</strong>`;
+      res.classList.add('show');
+    } else {
+      res.innerHTML = `الرجاء إدخال القيم!`;
+      res.classList.add('show');
+    }
+  }
+
+  function calcEnergy() {
+    let m = parseFloat(document.getElementById('massM').value);
+    let h = parseFloat(document.getElementById('heightH').value);
+    let res = document.getElementById('resEnergy');
+    if(m && h) {
+      let ep = m * 10 * h;
+      res.innerHTML = `Ep = m &times; g &times; h = ${m} &times; 10 &times; ${h} = <strong>${ep} Joule (J)</strong>`;
+      res.classList.add('show');
+    } else {
+      res.innerHTML = `الرجاء إدخال القيم!`;
+      res.classList.add('show');
+    }
+  }
+</script>
+
+</body>
+</html>
