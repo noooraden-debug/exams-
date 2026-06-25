@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏛️ الموسوعة التفاعلية في التربية الوطنية - التاسع الأساسي | المنهاج السوري المطوّر 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0f172a;
+    --primary-light: #2563eb;
+    --primary-pale: #eff6ff;
+    --accent: #047857;
+    --accent-light: #10b981;
+    --accent-pale: #ecfdf5;
+    --red: #e11d48;
+    --dark: #0f172a;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1d4ed8 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16,185,129,0.1) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: #3b82f6; border-bottom-color: #3b82f6; background: rgba(255,255,255,0.03);
+  }
+  .back-link {
+    margin-right: auto; color: #3b82f6; text-decoration: none; font-size: 0.85rem; font-weight: 700; padding: 16px 10px; transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary-light); color: #1e4ed8;
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary-light), #3b82f6);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    border-right: 4px solid #3b82f6;
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .lesson-block p { margin-bottom: 10px; font-weight: 500; color: #475569; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 10px 0; font-weight: 600; }
+  .lesson-block li { margin-bottom: 8px; }
+
+  .key-term {
+    display: inline-block; background: linear-gradient(135deg, var(--primary-light), #3b82f6);
+    color: white; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; font-weight: 700; margin: 2px 4px;
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary-light); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; }
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 15px 20px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 600;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX (RESPONSIBLE CITIZENSHIP) */
+  .sim-box { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .sim-field label { font-size: 0.88rem; color: var(--accent-light); font-weight: bold; }
+  .sim-field select { padding: 12px; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif; font-weight: bold;}
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin-top: 20px; border-right: 4px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 25px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary-light);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 14px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
+  .quiz-opt.wrong { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 2px solid var(--accent-light); border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; }
+  .gold-tip .icon { font-size: 1.6rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #065f46; font-weight: 700; }
+
+  @media(max-width: 600px) { .sim-row { flex-direction: column; align-items: stretch; } }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🏛️ موسوعة التربية الوطنية والمدنية التفاعلية</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري المطوّر 2026</div>
+  <div class="badge-row">
+    <span class="badge">⚖️ الدستور السوري والحقوق المدنية</span>
+    <span class="badge">🤝 المواطنة والانتماء الوطني</span>
+    <span class="badge">🌐 الوعي الرقمي والأمن السيبراني</span>
+    <span class="badge">🛡️ الأمن الفكري وحماية الهوية الوطنية</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الفهرس والتأسيس</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 تفصيل الوحدات والدروس</button>
+  <button class="nav-btn" onclick="showSection('simulator')">🛡️ محاكي المسؤولية المجتمعية</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الاختبارات المؤتمتة</button>
+  <a href="index.html" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary-light); font-weight: 900; margin-bottom: 12px; text-align: center;">🎯 الركيزة التأسيسية للمواطنة والوعي الفكري لعام 2026</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569;">تعتمد مادة التربية الوطنية المطوّرة على التحليل الفكري، فهم الواجبات القانونية والدستورية، وربط المفاهيم النظرية بالمواقف اليومية والرقمية. إليك خريطة الوزن الامتحاني الشاملة:</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>المحور الرئيسي للوحدات</th>
+            <th>التركيز الامتحاني التحليلي</th>
+            <th>نوع الأسئلة المتوقعة (أتمتة وحل مواقف)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1. الدولة والدستور ⚖️</td><td>الدستور، مبدأ سيادة القانون، وفصل السلطات الثلاث</td><td>تحديد مهام مجلس الشعب والقضاء، أهمية الدستور</td></tr>
+          <tr><td>2. المواطنة والانتماء 🤝</td><td>الحقوق والواجبات، تكافؤ الفرص، والمشاركة السياسية</td><td>التمييز بين الحق والواجب، شروط المواطنة الفاعلة</td></tr>
+          <tr><td>3. الأمن الفكري والرقمي 🌐</td><td>المواطنة الرقمية، مكافحة الشائعات، والأمن المجتمعي</td><td>تحليل مواقف تقنية، التعامل القانوني مع الابتزاز</td></tr>
+          <tr><td>4. الثقافة والهوية الوطنية 🇸🇾</td><td>التراث اللامادي، حماية الممتلكات العامة، والتكافل</td><td>طرق صون الهوية، استنتاج أهمية العمل التطوعي</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>سر التفوق في التربية الوطنية المطورة:</strong> انتقل المنهاج من الحفظ التلقيني إلى فقه <span class="key-term">الحق والالتزام القانوني</span>. ركّز على دورك كمواطن واعي رقمياً ومجتمعياً، حيث يرتكز الامتحان على كيفية حل المشكلات السلوكية وحماية النسيج المجتمعي.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الدولة والدستور والمنظومة القانونية</h2>
+        <div class="unit-meta"><span>⚖️ سمو الدستور السوري</span><span>🏛️ تكامل السلطات العامة الثلاث</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الدستور السوري وأهميته العليا في الدولة</h3>
+        <p><span class="key-term">الدستور</span> هو القانون الأساسي والأسمى في الدولة، وتخضع له جميع القوانين الأخرى. تكمن أهميته في:</p>
+        <ul>
+          <li>تحديد شكل الدولة (الجمهورية العربية السورية دولة ديمقراطية ذات سيادة كاملة).</li>
+          <li>رسم نظام الحكم وتنظيم عمل السلطات العامة وعلاقتها ببعضها.</li>
+          <li>ضمان وصون الحقوق الأساسية والحريات العامة لجميع المواطنين دون تمييز.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 مبدأ فصل السلطات وتكاملها في الجمهورية العربية السورية</h3>
+        <p>يقوم نظام الحكم على توزيع الاختصاصات بين ثلاث سلطات رئيسية لضمان عدم الاستبداد وتحقيق التوازن:</p>
+        <ol>
+          <li><strong>السلطة التشريعية (مجلس الشعب):</strong> يُنتخب شعبياً وتتمثل مهامه في: تشريع وإقرار القوانين، إقرار الموازنة العامة للدولة، وحجب الثقة أو منحها للوزارة.</li>
+          <li><strong>السلطة التنفيذية (رئيس الجمهورية ومجلس الوزراء):</strong> تتولى توجيه السياسة العامة للدولة، تنفيذ القوانين والأنظمة الصادرة عن السلطة التشريعية، وإدارة المرافق العامة.</li>
+          <li><strong>السلطة القضائية (المحاكم ومجلس القضاء الأعلى):</strong> سلطة مستقلة يتولاها القضاة، وظيفتها تطبيق القانون وتحقيق العدالة وحل النزاعات بين الأفراد أو الجهات.</li>
+        </ol>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u1')">⚖️ تعليل استنتاجي: لماذا يُعد القضاء المستقل ركيزة لسيادة القانون؟ ▼</button>
+        <div class="reveal-box" id="rev-u1">
+          <strong>الجواب التحليلي المعتمد:</strong> لأن استقلال القضاء يحمي الأفراد من أي تغوّل أو تجاوز، ويضمن تطبيق القوانين بنزاهة وحيادية تامة على الجميع (حكاماً ومحكومين)، مما يبث الطمأنينة ويعزز ثقة المواطنين بالمؤسسات الوطنية ويحقق الاستقرار الاجتماعي والاقتصادي.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: قيم المواطنة الفاعلة وحقوق الإنسان</h2>
+        <div class="unit-meta"><span>🤝 العلاقة التبادلية بين الحق والواجب</span><span>📊 مبدأ تكافؤ الفرص</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 مفهوم المواطنة وأبعادها القانونية والاجتماعية</h3>
+        <p><span class="key-term">المواطنة</span> هي رابطة قانونية واجتماعية وسياسية تربط الفرد بالدولة، وتتحدد من خلالها مجموعة من الحقوق والالتزامات بالتساوي التام.</p>
+        <p><strong>عناصر المواطنة الفاعلة:</strong> الانتماء الصادق للوطن، الالتزام بالقوانين، والمشاركة الإيجابية والشجاعة في الشأن العام وتطوير المجتمع.</p>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 جدلية الحقوق والواجبات في الدستور المطوّر</h3>
+        <p>لا توجد حقوق بدون واجبات، والمواطنة الصالحة توازن بينهما بشكل دقيق:</p>
+        <table class="summary-table">
+          <tr><th>صنف الميزة القانونية</th><th>أبرز الأمثلة في المنهاج السوري</th><th>الهدف السامي والغاية</th></tr>
+          <tr><td>حقوق المواطن على الدولة</td><td>التعليم المجاني الإلزامي، الرعاية الصحية، الترشح والانتخاب، حرية الرأي والتعبير.</td><td>تأمين حياة كريمة وتطوير مهارات الفرد وإشراكه في بناء الوطن.</td></tr>
+          <tr><td>واجبات المواطن تجاه الدولة</td><td>الدفاع عن وحدة الوطن وأداء الخدمة الإلزامية، دفع الضرائب، احترام القوانين، الحفاظ على الممتلكات العامة.</td><td>حماية سيادة الدولة، تمويل الخدمات العامة، واستمرار النظام والاستقرار.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الأمن الفكري والمجتمعي والوعي الرقمي</h2>
+        <div class="unit-meta"><span>🌐 تكتيكات المواطنة الرقمية المسؤولية</span><span>🛡️ درع الأمن الفكري ضد الشائعات</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الأمن الفكري وحماية النسيج المجتمعي السوري</h3>
+        <p>يُقصد بـ <span class="key-term">الأمن الفكري</span> سلامة عقول وأفكار أفراد المجتمع من الانحراف أو التطرف، وحماية المنظومة الأخلاقية والوطنية.</p>
+        <p><strong>مهددات الأمن الفكري المعاصر:</strong> الغزو الثقافي الإلكتروني، بث الكراهية، والتطرف الفكري الذي يسعى لتفكيك التلاحم الشعبي.</p>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 المواطنة الرقمية واستراتيجيات الفضاء السيبراني 2026</h3>
+        <p>مع التحول التقني، أصبح من الواجب على طالب الصف التاسع الإلمام بـ <span class="key-term">المواطنة الرقمية</span> وهي ضوابط الاستخدام الأمثل والمسؤول للتكنولوجيا، وتتلخص في:</p>
+        <ul>
+          <li><strong>المسؤولية الرقمية:</strong> عدم التشهير بالآخرين، والابتعاد التام عن الجرائم الإلكترونية كالابتزاز واختراق الخصوصية.</li>
+          <li><strong>التثبت ومحاربة الشائعات:</strong> عدم مشاركة أي خبر مجهول المصدر أو يهدف لزعزعة الاستقرار، واعتماد المنصات الرسمية للدولة فقط كمصدر للمعلومة.</li>
+          <li><strong>الأمان الرقمي:</strong> حماية البيانات الشخصية وعدم مشاركتها مع الغرباء في الفضاء الرقمي لتجنب القرصنة.</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u3')">🌐 موقف امتحاني: كيف تصرف كمواطن رقمي ذكي عند رصد شائعة؟ ▼</button>
+        <div class="reveal-box" id="rev-u3">
+          <strong>خطوات الموقف السلوكي الصحيح:</strong><br>
+          1. <strong>أتوقف:</strong> لا أساهم مطلقاً في إعادة نشر الخبر أو إرساله في مجموعات التواصل الاجتماعي.<br>
+          2. <strong>أتحقق:</strong> أتوجه فوراً للمنصات والمواقع الإعلامية الرسمية المعتمدة للتأكد من صحة الخبر أو نفيها.<br>
+          3. <strong>أوعّي:</strong> أنصح زملائي وأصدقائي بعدم الانجرار وراء الأخبار الكاذبة والمضللة التي تستهدف وعي المجتمع وأمنه.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: الهوية الثقافية، التراث والتكافل الاجتماعي</h2>
+        <div class="unit-meta"><span>🇸🇾 صون التراث اللامادي</span><span>🌱 مبادرات العمل التطوعي</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الهوية الوطنية السورية وحماية التراث الثقافي اللامادي</h3>
+        <p>تتميز سورية بتنوعها الثقافي الفريد الذي يشكل أساساً لهويتها الوطنية المتماسكة عبر التاريخ:</p>
+        <ul>
+          <li><strong>التراث الثقافي اللامادي:</strong> يشمل الممارسات، الفنون الشعبية، المهارات الحرفية التقليدية، الحكايا، والعادات المتوارثة عبر الأجيال.</li>
+          <li><strong>أهمية التراث:</strong> يمثل مخزون الذاكرة الوطنية، يعزز الانتماء، ويشكل حائط صد متين ضد محاولات الذوبان أو التشويه الثقافي في عصر العولمة.</li>
+        </ul>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 المسؤولية المجتمعية والعمل التطوعي</h3>
+        <p><span class="key-term">العمل التطوعي</span> هو الجهد الإنساني المبذول برغبة حرة ودون مقابل مادي لخدمة الآخرين وتطوير المجتمع.</p>
+        <p><strong>أهم آثاره الإيجابية:</strong> تعزيز روابط التكافل الاجتماعي، تخفيف الأعباء عن الفئات الأكثر احتياجاً، إكساب الشباب مهارات قيادية وتوظيف طاقاتهم في مسارات تنموية تخدم خطط التنمية الوطنية المستدامة لعام 2026.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary-light); font-weight:900; margin-bottom:15px; text-align:center;">🛡️ محاكي المسؤولية المجتمعية والوعي السلوكي الذكي</h2>
+    <p style="text-align:center; margin-bottom:20px; font-weight:600; color:#64748b;">أداة تفاعلية لتحليل المواقف الحياتية والرقمية، تمكنك من اختبار مدى مطابقة قراراتك للقوانين السورية وقيم المواطنة الفاعلة.</p>
+
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>🚨 اختر الموقف أو المشكلة الحياتية المطروحة:</label>
+          <select id="citizenScenario" onchange="evaluateCitizenDecision()">
+            <option value="none" selected disabled>-- اضغط هنا لاختيار موقف --</option>
+            <option value="rumor">وصلتك رسالة على الواتساب تفيد بتعديل عاجل لموعد الامتحان دون مصدر رسمي</option>
+            <option value="volunteer">أطلقت بلدية حيك حملة لتشجير الساحات العامة وتنظيفها</option>
+            <option value="cyber">تعرض أحد زملائك في الصف لابتزاز إلكتروني من حساب مجهول</option>
+            <option value="property">رأيت شخصاً يقوم بالكتابة وإتلاف المقاعد في الحديقة العامة</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="calc-result-box">
+        <h3 style="color:var(--accent-light); margin-bottom:10px;">📉 التقييم القانوني والمدني المستنتج للموقف:</h3>
+        <p id="citizen-sim-output" style="font-weight:700; font-size:1.15rem; color: white;">يرجى تحديد موقف من القائمة بالأعلى ليعمل المحاكي التفاعلي على قياس مدى وعيك الوطني...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary-light); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة المطور - التربية الوطنية 2026</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبارات موضوعية شاملة ومطورة تحاكي بشكل دقيق نمط الورقة الامتحانية المؤتمتة لشهادة التعليم الأساسي:</p>
+    <div id="civic-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام والتأثيرات الزرية
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event && event.target.classList.contains('nav-btn')) { event.target.classList.add('active'); }
+}
+
+// التحكم بفتح الكروت للوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// إظهار وإخفاء الإجابات الاستنتاجية والمسائل والمواقف
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  if(boxId === 'rev-u1') {
+    btn.innerHTML = box.classList.contains('visible') ? '❌ إخفاء التحليل القضائي ▲' : '⚖️ تعليل استنتاجي: لماذا يُعد القضاء المستقل ركيزة لسيادة القانون؟ ▼';
+  } else {
+    btn.innerHTML = box.classList.contains('visible') ? '❌ إخفاء الحل والموقف السلوكي ▲' : '🌐 موقف امتحاني: كيف تصرف كمواطن رقمي ذكي عند رصد شائعة؟ ▼';
+  }
+}
+
+// محاكي تقييم المسؤولية المدنية والوعي الوطني
+function evaluateCitizenDecision() {
+  const scenario = document.getElementById('citizenScenario').value;
+  let output = "";
+  
+  switch(scenario) {
+    case "rumor":
+      output = "🛡️ <span style='color:var(--accent-light);'>السلوك المعتمد:</span> تجاهل الرسالة تماماً والتثبت عبر صفحة وزارة التربية السورية الرسمية. إعادة نشرها يعرضك للمسؤولية القانونية لترويج الأخبار الكاذبة وفق قانون مكافحة الجرائم الإلكترونية.";
+      break;
+    case "volunteer":
+      output = "🌱 <span style='color:var(--accent-light);'>السلوك المعتمد:</span> المبادرة بالمشاركة الفاعلة وحث الأصدقاء. هذا السلوك يجسد مفهوم 'المواطنة الفاعلة والمسؤولية المجتمعية'، ويساهم مباشرة في التنمية البيئية المستدامة.";
+      break;
+    case "cyber":
+      output = "⚖️ <span style='color:var(--accent-light);'>السلوك المعتمد:</span> نصح الزميل بعدم التجاوب مع المبتز، وإبلاغ أولياء الأمور فورا للتوجه إلى قسم مكافحة الجريمة المعلوماتية المختص، تطبيقاً لمبدأ حماية الأمن الرقمي والمجتمعي.";
+      break;
+    case "property":
+      output = "🏛️ <span style='color:var(--accent-light);'>السلوك المعتمد:</span> تنبيهه بلطف وتذكيره بأن الممتلكات العامة ملك لكل المواطنين وبُنيت بأموال الدولة لخدمتهم، فالحفاظ عليها واجب وطني وأخلاقي نص عليه الدستور السوري.";
+      break;
+    default:
+      output = "يرجى اختيار موقف صحيح.";
+  }
+  
+  document.getElementById('citizen-sim-output').innerHTML = output;
+}
+
+// قاعدة بيانات بنك الأسئلة المؤتمتة للتربية الوطنية
+const civicQuizData = [
+  { q: "يُعد القانون الأساسي والأسمى في الدولة والذي تخضع له جميع التشريعات والقوانين الأخرى هو:", opts: ["قانون الإدارة المحلية", "الدستور", "قانون العقوبات العام", "القانون المدني"], ans: 1 },
+  { q: "إقرار الموازنة العامة للدولة ومناقشة وتمرير التشريعات والقوانين هي من المهام الدستورية الأساسية لـ:", opts: ["السلطة القضائية مستقلة", "مجلس الوزراء (السلطة التنفيذية)", "مجلس الشعب (السلطة التشريعية)", "المجالس المحلية للبلديات"], ans: 2 },
+  { q: "أي مما يلي يُصنف دستورياً وقانونياً ضمن خانة 'الواجبات' التي يلتزم بها المواطن تجاه الدولة السورية؟", opts: ["الحصول على التعليم الأساسي المجاني", "أداء الخدمة الإلزامية والدفاع عن سلامة الوطن", "الاستفادة من خدمات الرعاية الطبية", "حرية التعبير والصحافة السلمية"], ans: 1 },
+  { q: "الالتزام بضوابط ومعايير الاستخدام المسؤول والأمن للتقنية وشبكات التواصل، والابتعاد عن الشائعات يسمى:", opts: ["المواطنة الرقمية", "التكافل التقليدي", "الاستهلاك التنموي", "التراث اللامادي الرقمي"], ans: 0 },
+  { q: "يُصنف كل من (الفنون الشعبية، المهارات الحرفية، الحكايات الشعبية المتوارثة في سورية) تحت مفهوم التراث:", opts: ["المادي المعماري", "اللامادي (الثقافة الحية)", "الجيولوجي الطبيعي", "الاقتصادي التجاري"], ans: 1 }
+];
+
+function buildCivicQuiz() {
+  const container = document.getElementById('civic-quiz-box');
+  container.innerHTML = '';
+  civicQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkCivicAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkCivicAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === civicQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[civicQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل الفوري والتحميل المبدئي عند فتح التطبيق
+window.onload = function() {
+  buildCivicQuiz();
+};
+</script>
+</body>
+</html>
