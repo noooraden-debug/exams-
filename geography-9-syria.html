@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 الموسوعة التفاعلية في الجغرافيا - التاسع الأساسي | المنهاج السوري المطوّر 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0284c7;
+    --primary-light: #0ea5e9;
+    --primary-pale: #f0f9ff;
+    --accent: #b45309;
+    --accent-light: #f59e0b;
+    --accent-pale: #fffbeb;
+    --red: #e11d48;
+    --dark: #0f172a;
+    --text: #334155;
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #0369a1 100%);
+    color: white;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+    overflow: hidden;
+  }
+  .main-header::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245,158,11,0.1) 0%, transparent 50%);
+    animation: pulse 8s linear infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+  
+  .main-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 900;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .main-header .subtitle {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    margin-top: 12px;
+    color: var(--accent-light);
+    font-weight: 700;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 6px 18px;
+    font-size: 0.88rem; color: white; backdrop-filter: blur(5px); font-weight: bold;
+  }
+
+  /* NAV BAR */
+  .nav-bar {
+    background: var(--dark); padding: 0 15px; display: flex; overflow-x: auto;
+    scrollbar-width: none; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    color: rgba(255,255,255,0.75); padding: 16px 20px; cursor: pointer;
+    font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: 700;
+    white-space: nowrap; border: none; background: none; border-bottom: 4px solid transparent; transition: all 0.3s;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    color: var(--primary-light); border-bottom-color: var(--primary-light); background: rgba(255,255,255,0.03);
+  }
+  .back-link {
+    margin-right: auto; color: var(--primary-light); text-decoration: none; font-size: 0.85rem; font-weight: 700; padding: 16px 10px; transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  /* CONTAINER & SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 15px; }
+  .section { display: none; animation: slideIn 0.35s ease-out; }
+  .section.active { display: block; }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* UNIT CARDS */
+  .unit-card {
+    background: white; border-radius: 16px; margin-bottom: 25px; box-shadow: var(--shadow);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.03); transition: box-shadow 0.3s;
+  }
+  .unit-card:hover { box-shadow: var(--shadow-hover); }
+  
+  .unit-header {
+    padding: 22px 25px; display: flex; align-items: center; gap: 18px; cursor: pointer; position: relative;
+    background: var(--primary-pale); border-right: 5px solid var(--primary); color: var(--primary);
+  }
+  .unit-header::after {
+    content: '▼'; position: absolute; left: 25px; font-size: 0.85rem; transition: transform 0.3s; opacity: 0.7;
+  }
+  .unit-card.open .unit-header::after { transform: rotate(180deg); }
+
+  .unit-num {
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: white; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
+  }
+  .unit-info h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+  .unit-meta { font-size: 0.85rem; color: #64748b; font-weight: 600; display: flex; gap: 10px; flex-wrap: wrap;}
+  
+  .unit-body { display: none; padding: 25px; background: #ffffff; }
+  .unit-card.open .unit-body { display: block; }
+
+  /* LESSON BLOCKS */
+  .lesson-block {
+    background: var(--bg); border-radius: 12px; padding: 22px; margin-bottom: 20px;
+    border-right: 4px solid var(--primary-light);
+  }
+  .lesson-block h3 { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+  .lesson-block p { margin-bottom: 10px; font-weight: 500; color: #475569; }
+  .lesson-block ul, .lesson-block ol { padding-right: 25px; margin: 10px 0; font-weight: 600; }
+  .lesson-block li { margin-bottom: 8px; }
+
+  .key-term {
+    display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; font-weight: 700; margin: 2px 4px;
+  }
+
+  /* TABLES */
+  .summary-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .summary-table th { background: var(--primary); color: white; padding: 14px; font-weight: 800; text-align: center; }
+  .summary-table td { padding: 12px; text-align: center; border-bottom: 1px solid #f1f5f9; font-weight: 700; }
+  .summary-table tr:nth-child(even) td { background: var(--primary-pale); }
+
+  /* INTERACTIVE BUTTONS & REVEALS */
+  .interactive-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white; border: none; border-radius: 8px; padding: 10px 22px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700; transition: all 0.25s; margin: 10px 0;
+  }
+  .interactive-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+  
+  .reveal-box {
+    display: none; background: var(--accent-pale); border: 2px solid var(--accent-light); border-radius: 10px; padding: 15px 20px; margin: 10px 0; font-size: 0.95rem; animation: fadeIn 0.3s ease; font-weight: 600;
+  }
+  .reveal-box.visible { display: block; }
+
+  /* SIMULATOR BOX (TIME ZONE CALCULATOR) */
+  .sim-box { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
+  .sim-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end; }
+  .sim-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+  .sim-field label { font-size: 0.88rem; color: var(--accent-light); font-weight: bold; }
+  .sim-field select, .sim-field input { padding: 12px; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif; font-weight: bold;}
+  .sim-field select option { background: var(--dark); color: white; }
+  
+  .calc-result-box {
+    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin-top: 20px; border-right: 4px solid var(--accent-light);
+  }
+
+  /* QUIZ SYSTEM */
+  .quiz-card {
+    background: white; border-radius: 14px; padding: 25px; margin-bottom: 25px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--primary);
+  }
+  .quiz-q-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 15px; color: var(--dark); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--bg); border: 2px solid #e2e8f0; border-radius: 8px; padding: 14px 20px; cursor: pointer;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; text-align: right; transition: all 0.2s; font-weight: 700;
+  }
+  .quiz-opt:hover { border-color: var(--primary-light); background: var(--primary-pale); }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981; color: #065f46; }
+  .quiz-opt.wrong { background: #ffe4e6; border-color: #e11d48; color: #881337; }
+
+  /* GOLD TIPS */
+  .gold-tip { background: linear-gradient(135deg, #fffdf5, #fef3c7); border: 2px solid var(--accent-light); border-radius: 12px; padding: 20px; margin: 20px 0; display: flex; gap: 15px; }
+  .gold-tip .icon { font-size: 1.6rem; }
+  .gold-tip .text { font-size: 0.95rem; color: #78350f; font-weight: 700; }
+
+  @media(max-width: 600px) { .sim-row { flex-direction: column; align-items: stretch; } }
+</style>
+</head>
+<body>
+
+<div class="main-header">
+  <h1>🌍 موسوعة الجغرافيا التفاعلية</h1>
+  <div class="subtitle">الصف التاسع الأساسي | المنهاج السوري المطوّر 2026</div>
+  <div class="badge-row">
+    <span class="badge">☀️ الجغرافيا الفلكية وحساب الوقت</span>
+    <span class="badge">🏞️ التضاريس والمناخ في سورية</span>
+    <span class="badge">💧 الهيدروغرافيا والأمن المائي</span>
+    <span class="badge">📊 محاكي التوقيت الزمني الذكي</span>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 الفهرس والتأسيس</button>
+  <button class="nav-btn" onclick="showSection('units')">📚 تفصيل الوحدات والدروس</button>
+  <button class="nav-btn" onclick="showSection('simulator')">⏰ محاكي التوقيت الجغرافي</button>
+  <button class="nav-btn" onclick="showSection('quiz')">✅ بنك الاختبارات المؤتمتة</button>
+  <a href="index.html" class="back-link">↩️ اللوحة الرئيسية</a>
+</nav>
+
+<div class="container">
+
+<div id="home" class="section active">
+  <div style="background: white; border: 2px solid var(--primary-light); border-radius: 16px; padding: 30px; margin-bottom: 25px;">
+    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 12px; text-align: center;">🎯 الركيزة التأسيسية للامتحان النهائي لعام 2026</h2>
+    <p style="text-align: center; font-weight: 600; color: #475569;">تعتمد مادة الجغرافيا المطوّرة على الاستنتاج، قراءة الخرائط، تحليل الأشكال البيانية، وحل المسائل الزمنية والتنموية. هذه هي ركائز ورقة الامتحان الدورية:</p>
+    
+    <div style="overflow-x: auto;">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>الوحدة الدراسية</th>
+            <th>التركيز الامتحاني الاستراتيجي</th>
+            <th>نوع الأسئلة المتوقعة (أتمتة واستنتاج)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1. جغرافية الفلك والكون ☀️</td><td>خطوط الطول، دوائر العرض، وحساب مسائل التوقيت</td><td>حل مسألة زمنية، مقارنة التوقيت بين المدن</td></tr>
+          <tr><td>2. المناخ والتضاريس 🏞️</td><td>أثر التضاريس في توزع الأمطار والرياح بسورية</td><td>تعاليل جغرافية، تحديد مناطق الضغط الجوي</td></tr>
+          <tr><td>3. الهيدروغرافيا (المياه) 💧</td><td>الأنهار الدولية والمحلية، السدود والأمن المائي</td><td>تتبع مسار الأنهار (الفرات، العاصي)، مصبات الأنهار</td></tr>
+          <tr><td>4. السكان والتنمية 👥</td><td>أهرامات السكان، مشكلات التوسع العمراني والهجرة</td><td>تحليل هرم سكاني، استنتاج الحلول المستدامة</td></tr>
+          <tr><td>5. الأنشطة الاقتصادية ⚙️</td><td>المحاصيل الاستراتيجية، الطاقة المتجددة، التنمية</td><td>توزع الثروات الباطنية، أهمية قطاع النقل والموانئ</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="gold-tip">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>سر التفوق في الجغرافيا المطورة:</strong> لم يعد الحفظ البصم كافياً؛ ركّز على علاقة <span class="key-term">السبب والنتيجة</span>. على سبيل المثال: (ما سبب بناء سد الفرات؟ النتيجة: توليد الطاقة وتنظيم الري وإنشاء بحيرة الأسد).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="units" class="section">
+
+  <div class="unit-card" id="u1">
+    <div class="unit-header" onclick="toggleUnit('u1')">
+      <div class="unit-num">1</div>
+      <div class="unit-info">
+        <h2>الوحدة الأولى: الجغرافيا الفلكية والكونية</h2>
+        <div class="unit-meta"><span>🌐 خطوط الطول ودوائر العرض</span><span>⏰ الحركة المحورية للأنظمة الزمنية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 حركة الأرض التدويرية والنتائج المترتبة</h3>
+        <p>تدور الأرض حول محورها من الغرب إلى الشرق دورة كاملة كل 24 ساعة، مما ينتج عنه:</p>
+        <ul>
+          <li>تعاقب الليل والنهار بشكل مستمر.</li>
+          <li>انحراف الرياح والأجسام المتحركة بفعل <span class="key-term">قوة كوريوليس</span>.</li>
+          <li>فارق التوقيت بين بقاع الأرض (كل 15 خط طول يعادل ساعة زمنية واحدة، وخط الطول الواحد = 4 دقائق).</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u1')">⏰ مسألة نموذجية: كيف يُحسب فرق الوقت؟ ▼</button>
+        <div class="reveal-box" id="rev-u1">
+          <strong>نص المسألة:</strong> إذا كانت الساعة في مدينة دمشق (على خط طول 36° شرقاً) هي 10 صباحاً، فكم تكون الساعة في مدينة تقع على خط غرينتش (0°)؟<br><br>
+          <strong>طريقة الحل الاستنتاجية:</strong><br>
+          1. حساب فرق الخطوط: $36 - 0 = 36$ خط طول.<br>
+          2. تحويل الخطوط إلى دقائق: $36 \times 4 = 144$ دقيقة.<br>
+          3. تحويل الدقائق إلى ساعات: $144 \div 60 = 2.4$ ساعات (أي ساعتين و24 دقيقة).<br>
+          4. بما أن خط غرينتش يقع إلى الغرب من دمشق، نطرح الوقت: 10:00 صباحاً - ساعتين و24 دقيقة = <strong>7:36 صباحاً</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u2">
+    <div class="unit-header" onclick="toggleUnit('u2')">
+      <div class="unit-num">2</div>
+      <div class="unit-info">
+        <h2>الوحدة الثانية: التضاريس والمناخ في سورية والوطن العربي</h2>
+        <div class="unit-meta"><span>🏔️ السلاسل الجبلية والسهول</span><span>🌤️ الأقاليم المناخية وتأثير الحواجز</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 الوحدات التضاريسية الكبرى في الجمهورية العربية السورية</h3>
+        <p>تنقسم التضاريس في سورية إلى أربعة قطاعات متكاملة بيئياً:</p>
+        <ol>
+          <li><strong>السهول الساحلية:</strong> ضيقة، تتميز بخصوبتها العالية ومناخها المتوسطي الرطب.</li>
+          <li><strong>الجبال الغربية (الساحلية والشاطئية):</strong> مثل جبل الزاوية وجبال الساحل، وتعمل كحاجز تضاريسي يمنع التوغل الكامل للمؤثرات البحرية الرطبة نحو الداخل.</li>
+          <li><strong>المنخفض الخسفي (سهل الغاب):</strong> منطقة زراعية استراتيجية يمر عبرها نهر العاصي.</li>
+          <li><strong>الهضاب والبادية الداخلية:</strong> تشغل المساحة الأكبر، وتتميز بالجفاف وتبعثر الأودية السيلية.</li>
+        </ol>
+      </div>
+      <div class="lesson-block">
+        <h3>📌 الأقاليم المناخية السائدة وأثرها</h3>
+        <table class="summary-table">
+          <tr><th>الإقليم المناخي</th><th>الموقع الجغرافي بسورية</th><th>معدل الأمطار والحرارة</th><th>الغطاء النباتي والزراعات</th></tr>
+          <tr><td>المتوسطي الرطب</td><td>المنطقة الساحلية والغربية</td><td>أمطار غزيرة شتاءً، معتدل صيفاً</td><td>الغابات (السنديان، الصنوبر)، الحمضيات، الزيتون</td></tr>
+          <tr><td>شبه الجاف (السهوب)</td><td>المناطق الداخلية (حلب، حمص، حماة)</td><td>أمطار متوسطة (250-400 مم)</td><td>حشائش قصيرة، زراعة الحبوب الاستراتيجية كالقمح والشعير</td></tr>
+          <tr><td>الجاف (الصحراوي)</td><td>البادية السورية والشرقية</td><td>نادرة جداً (أقل من 200 مم)</td><td>شجيرات شوكية مقاومة للجفاف، رعي الأغنام</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u3">
+    <div class="unit-header" onclick="toggleUnit('u3')">
+      <div class="unit-num">3</div>
+      <div class="unit-info">
+        <h2>الوحدة الثالثة: الهيدروغرافيا والأمن المائي العربي</h2>
+        <div class="unit-meta"><span>💧 الأنهار الدولية والمحلية</span><span>🌊 السدود والبحيرات الاصطناعية</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 شبكة الأنهار الجارية وأهميتها الجيوسياسية</h3>
+        <p>تُصنف المجاري المائية في سورية حسب طبيعة المنبع والمصب:</p>
+        <ul>
+          <li><strong>نهر الفرات (نهر دولي):</strong> ينبع من تركيا، يدخل سورية عند جرابلس، ويصب في شط العرب بالعراق. أُقيم عليه <span class="key-term">سد الفرات</span> الذي شكل <span class="key-term">بحيرة الأسد</span> لتنظيم الري وتوليد الطاقة الكهرومائية.</li>
+          <li><strong>نهر العاصي (نهر دولي):</strong> ينبع من لبنان، يمر عبر سورية (حمص، حماة، سهل الغاب)، ويصب في البحر الأبيض المتوسط. سمي عاصياً لأنه يجري من الجنوب إلى الشمال عكس اتجاه معظم أنهار المنطقة.</li>
+          <li><strong>نهر بردى (نهر محلي):</strong> ينبع من مغارة بردى في السلسلة الغربية ويصب في بحيرة العتيبة، وهو شريان الحياة التاريخي لغوطة دمشق.</li>
+        </ul>
+        <button class="interactive-btn" onclick="toggleReveal(this, 'rev-u3')">💧 تعليل امتحاني: أهمية تحقيق الأمن المائي في سورية؟ ▼</button>
+        <div class="reveal-box" id="rev-u3">
+          <strong>الجواب الاستنتاجي:</strong> بسبب وقوع منابع الأنهار الرئيسية (كالفرات ودجلة والخابور) خارج الحدود الوطنية، مما يتطلب استراتيجيات حديثة مثل: ترشيد الاستهلاك، التحول للري الحديث (الرذاذ والتنقيط)، معالجة مياه الصرف الصحي، وبناء السدود التخزينية لمواجهة سنوات الجفاف.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u4">
+    <div class="unit-header" onclick="toggleUnit('u4')">
+      <div class="unit-num">4</div>
+      <div class="unit-info">
+        <h2>الوحدة الرابعة: جغرافيا السكان والتنمية المستدامة</h2>
+        <div class="unit-meta"><span>👥 الهرم السكاني والهجرة</span><span>🏢 التوسع العمراني والتخطيط</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 التركيب السكاني والتحولات الديموغرافية</h3>
+        <p>تتم دراسة المجتمع عبر تحليل بنية السكان:</p>
+        <ul>
+          <li><strong>التركيب العمري والنوعي:</strong> يُمثل عبر <span class="key-term">الهرم السكاني</span>. المجتمع السوري يوصف بأنه مجتمع فتي لاتساع قاعدة الهرم (فئة الأطفال والشباب)، مما يتطلب زيادة الاستثمارات في التعليم والصحة.</li>
+          <li><strong>الهجرة الداخلية (من الريف إلى المدينة):</strong> تسببها الرغبة في البحث عن فرص عمل وخدمات أفضل. النتائج: ظهور العشوائيات حول المدن الكبرى، تراجع القطاع الزراعي في الريف، والضغط على البنية التحتية للمدن.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="unit-card" id="u5">
+    <div class="unit-header" onclick="toggleUnit('u5')">
+      <div class="unit-num">5</div>
+      <div class="unit-info">
+        <h2>الوحدة الخامسة: الثروات الباطنية والأنشطة الاقتصادية</h2>
+        <div class="unit-meta"><span>⚙️ المحاصيل الاستراتيجية</span><span>☀️ الطاقة المتجددة والموانئ</span></div>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="lesson-block">
+        <h3>📌 مقومات الاقتصاد السوري الحديث</h3>
+        <p>يتكامل الاقتصاد من خلال الاستغلال الأمثل للموارد المتاحة:</p>
+        <ol>
+          <li><strong>الزراعة الاستراتيجية:</strong> ترتكز على محاصيل كالقمح، القطن، الشوندر السكري، والزيتون، وهي ركيزة أساسية لتحقيق <span class="key-term">الأمن الغذائي</span>.</li>
+          <li><strong>الثروات الباطنية:</strong> تتركز في سورية حول الفوسفات (شرق حمص)، النفط والغاز الطبيعي (المنطقة الوسطى والشرقية).</li>
+          <li><strong>التحول للطاقة المتجددة:</strong> وفق خطة 2026 المطورة، تتوسع سورية في مشاريع الطاقة الشمسية وطاقة الرياح (مثل مزارع الرياح في قطينة بحمص) للحد من التلوث وتوفير بدائل مستدامة.</li>
+          <li><strong>النقل والموانئ التجارية:</strong> تلعب موانئ (اللاذقية وطرطوس) دوراً محورياً كبوابات تجارية للترانزيت والتبادل الدولي.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="simulator" class="section">
+  <div style="background:white; border-radius:16px; padding:25px; box-shadow:var(--shadow);">
+    <h2 style="color:var(--primary); font-weight:900; margin-bottom:15px; text-align:center;">⏰ محاكي التوقيت الجغرافي والخطوط الطولية الآلي</h2>
+    <p style="text-align:center; margin-bottom:20px; font-weight:600; color:#64748b;">أداة تفاعلية ذكية لحساب فرق التوقيت الفوري بين المدن بناءً على خطوط الطول وقوانين الحركة المحورية للأرض.</p>
+
+    <div class="sim-box">
+      <div class="sim-row">
+        <div class="sim-field">
+          <label>🏙️ المدينة المعلومة (أ)</label>
+          <select id="cityA" onchange="calculateTimeDifference()">
+            <option value="36" selected>دمشق (36° شرقاً)</option>
+            <option value="30">القاهرة (30° شرقاً)</option>
+            <option value="45">بغداد (45° شرقاً)</option>
+            <option value="0">غرينتش / لندن (0°)</option>
+          </select>
+        </div>
+        <div class="sim-field">
+          <label>⏱️ توقيت المدينة (أ) [بالساعات]</label>
+          <input type="number" id="timeA" value="12" min="1" max="24" oninput="calculateTimeDifference()">
+        </div>
+        <div class="sim-field">
+          <label>🏙️ المدينة المراد حسابها (ب)</label>
+          <select id="cityB" onchange="calculateTimeDifference()">
+            <option value="36">دمشق (36° شرقاً)</option>
+            <option value="30">القاهرة (30° شرقاً)</option>
+            <option value="45">بغداد (45° شرقاً)</option>
+            <option value="0" selected>غرينتش / لندن (0°)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="calc-result-box">
+        <h3 style="color:var(--accent-light); margin-bottom:10px;">📉 نتيجة التحليل الفلكي المستنتجة:</h3>
+        <p id="geo-calc-output" style="font-weight:700; font-size:1.15rem; color: white;"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="quiz-card">
+    <h2 style="color:var(--primary); margin-bottom:10px; text-align:center;">✅ بنك أسئلة الأتمتة المطور - جغرافية سورية والوطن العربي</h2>
+    <p style="text-align:center; margin-bottom:25px; font-weight:600; color:#475569;">اختبارات موضوعية شاملة تحاكي تماماً طبيعة الورقة الامتحانية المؤتمتة لعام 2026:</p>
+    <div id="geography-quiz-box"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// التنقل بين الأقسام والتأثيرات الزرية
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(event) { event.target.classList.add('active'); }
+}
+
+// التحكم بفتح الكروت للوحدات الدراسية
+function toggleUnit(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// إظهار وإخفاء الإجابات الاستنتاجية والمسائل
+function toggleReveal(btn, boxId) {
+  const box = document.getElementById(boxId);
+  box.classList.toggle('visible');
+  if(boxId === 'rev-u1') {
+    btn.innerHTML = box.classList.contains('visible') ? '❌ إخفاء المسألة والحل الجغرافي ▲' : '⏰ مسألة نموذجية: كيف يُحسب فرق الوقت؟ ▼';
+  } else {
+    btn.innerHTML = box.classList.contains('visible') ? '❌ إخفاء الحل والتعليل ▲' : '💧 تعليل امتحاني: أهمية تحقيق الأمن المائي في سورية؟ ▼';
+  }
+}
+
+// محاكي حساب فرق التوقيت الجغرافي الآلي
+function calculateTimeDifference() {
+  const longA = parseFloat(document.getElementById('cityA').value);
+  const timeA = parseFloat(document.getElementById('timeA').value);
+  const longB = parseFloat(document.getElementById('cityB').value);
+  
+  let diffLines = Math.abs(longA - longB);
+  let diffMinutes = diffLines * 4;
+  let diffHours = diffMinutes / 60;
+  
+  let finalTime;
+  if (longB >= longA) {
+    finalTime = timeA + diffHours; // التوجه شرقاً يزيد الوقت
+  } else {
+    finalTime = timeA - diffHours; // التوجه غرباً يقلل الوقت
+  }
+  
+  // ضبط تنسيق الوقت ضمن 24 ساعة
+  if (finalTime > 24) finalTime -= 24;
+  if (finalTime <= 0) finalTime += 24;
+  
+  let hoursInt = Math.floor(finalTime);
+  let minsInt = Math.round((finalTime - hoursInt) * 60);
+  if(minsInt < 10) minsInt = '0' + minsInt;
+
+  document.getElementById('geo-calc-output').innerHTML = 
+    `فرق خطوط الطول: <span style="color:var(--accent-light);">${diffLines}° خط</span> | ` +
+    `الوقت المتوقع في المدينة (ب) هو تقريباً: <span style="color:#0ea5e9;">${hoursInt}:${minsInt}</span> (بنظام 24 ساعة)`;
+}
+
+// قاعدة بيانات بنك الأسئلة المؤتمتة للجغرافيا
+const geoQuizData = [
+  { q: "تنشأ القوة الانحرافية (كوريوليس) التي تؤدي لإنحراف الرياح يميناً في نصف الكرة الشمالي بسبب:", opts: ["دوران الأرض حول الشمس", "دوران الأرض حول محورها", "جاذبية القمر للأرض", "ميل المحور القطبي"], ans: 1 },
+  { q: "يُصنف سهل الغاب الخصيب في سورية جغرافياً وبيئياً ضمن قطاع:", opts: ["السهول الساحلية الضيقة", "الهضاب البادئية الداخلية", "المنخفض الخسفي الانكساري", "السلاسل الجبلية العالية"], ans: 2 },
+  { q: "الميزة الهيدروغرافية الأساسية لنهر العاصي والتي ميزته عن غيره هي أنه يجري من:", opts: ["الشرق إلى الغرب نحو المصب", "الجنوب إلى الشمال عكس اتجاه معظم الأنهار", "الشمال إلى الجنوب نحو البادية", "الغرب إلى الشرق نحو الجزيرة السورية"], ans: 1 },
+  { q: "ما هي النتيجة الديموغرافية المباشرة المترتبة على الهجرة المستمرة من الريف إلى المدينة؟", opts: ["اتساع المساحات الزراعية المستغلة", "ظهور الأحياء العشوائية والضغط على الخدمات", "تحول الهرم السكاني إلى مجتمع هرم", "تساوي الكثافة السكانية العامة"], ans: 1 },
+  { q: "تتركز مناجم استخراج ثروة الفوسفات الكبرى في سورية في المنطقة:", opts: ["الساحلية بالقرب من طرطوس", "الوسطى في شرق حمص (خنيفيس والصوانة)", "الجنوبية في درعا والسويداء", "الشمالية الشرقية في الحسكة"], ans: 1 }
+];
+
+function buildGeoQuiz() {
+  const container = document.getElementById('geography-quiz-box');
+  container.innerHTML = '';
+  geoQuizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.style.marginBottom = '25px';
+    card.innerHTML = `
+      <div class="quiz-q-text">السؤال ${i+1}: ${q.q}</div>
+      <div class="quiz-options" id="qo-${i}">
+        ${q.opts.map((opt, j) => `<button class="quiz-opt" onclick="checkGeoAnswer(${i}, ${j}, this)">${opt}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkGeoAnswer(qi, oi, btn) {
+  const options = document.querySelectorAll(`#qo-${qi} .quiz-opt`);
+  options.forEach(opt => opt.disabled = true);
+  if (oi === geoQuizData[qi].ans) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    options[geoQuizData[qi].ans].classList.add('correct');
+  }
+}
+
+// التشغيل الفوري والتحميل المبدئي عند فتح التطبيق
+window.onload = function() {
+  buildGeoQuiz();
+  calculateTimeDifference();
+};
+</script>
+</body>
+</html>
